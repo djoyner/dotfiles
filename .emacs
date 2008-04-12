@@ -16,6 +16,7 @@
   (add-path "emacs/site-lisp")			;; elisp stuff from the net
   (add-path "emacs/site-lisp/color-theme")	;; http://www.emacswiki.org/cgi-bin/wiki?ColorTheme
   (add-path "emacs/site-lisp/erlang")		;; file:/usr/lib64/erlang/lib/tools-2.5.2/emacs
+  (add-path "emacs/site-lisp/git-emacs")	;; git://github.com/tsgates/git-emacs.git
   (add-path "emacs/site-lisp/nxml-mode")	;; http://www.thaiopensource.com/nxml-mode
   (add-path "emacs/site-lisp/speedbar")		;; http://cedet.sourceforge.net/speedbar.shtml
   )
@@ -32,6 +33,7 @@
 (load-library "my-pymode")			;; Python mode config
 (load-library "my-xmlmode")			;; XML mode config
 (load-library "p4")				;; Perforce package
+(load-library "my-gitmode")			;; Git package
 
 (when (eq system-type 'windows-nt)
   (server-start)				;; start the emacs server running

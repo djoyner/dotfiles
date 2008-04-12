@@ -1,0 +1,52 @@
+8
+
+dir
+19
+svn://straylight/djoyner-home/emacs/site-lisp/erlang
+svn://straylight
+
+
+
+2007-05-25T17:02:20.939696Z
+12
+djoyner
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+ce6f4be2-a11b-0410-a1ca-82a468da3a2a
+
+erlang-start.el
+file
+
+
+
+
+2008-01-25T00:05:42.000000Z
+4b4c78a2055371cd191f495dfa73a10f
+2007-05-25T17:02:20.939696Z
+12
+djoyner
+
+erlang.el
+file
+
+
+
+
+2008-01-25T00:05:42.000000Z
+e250fa3e9c8c0763d2e87cabd7d31dad
+2007-05-25T17:02:20.939696Z
+12
+djoyner
+

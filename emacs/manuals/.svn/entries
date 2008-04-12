@@ -1,0 +1,54 @@
+8
+
+dir
+19
+svn://straylight/djoyner-home/emacs/manuals
+svn://straylight
+
+
+
+2007-06-26T18:27:04.600731Z
+16
+djoyner
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+ce6f4be2-a11b-0410-a1ca-82a468da3a2a
+
+elisp.pdf
+file
+
+
+
+
+2008-01-25T00:05:42.000000Z
+1112ef067b6e3660aebbe213d71a98a1
+2007-06-26T18:27:04.600731Z
+16
+djoyner
+has-props
+
+emacs-lisp-intro.pdf
+file
+
+
+
+
+2008-01-25T00:05:42.000000Z
+901cd71e6989046275944dd83d874dd7
+2007-06-26T18:27:04.600731Z
+16
+djoyner
+has-props
+

@@ -1,0 +1,102 @@
+8
+
+dir
+19
+svn://straylight/djoyner-home/emacs/site-lisp
+svn://straylight
+
+
+
+2007-06-22T17:21:34.936095Z
+15
+djoyner
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+ce6f4be2-a11b-0410-a1ca-82a468da3a2a
+
+nxml-mode
+dir
+
+p4.el
+file
+
+
+
+
+2008-01-25T00:05:42.000000Z
+ad7f7576c13ebd1d27afd2887a02af65
+2006-08-22T21:44:32.837917Z
+2
+djoyner
+
+speedbar
+dir
+
+defshell.el
+file
+
+
+
+
+2008-01-25T00:05:42.000000Z
+5b97dba42ba03a63fe94b1a180180855
+2006-08-22T21:44:32.837917Z
+2
+djoyner
+
+p4.elc
+file
+
+
+
+
+2008-01-25T00:05:42.000000Z
+f774e85814b100ff6ac92ea7848a90a5
+2006-09-12T18:58:16.261844Z
+7
+djoyner
+has-props
+
+erlang
+dir
+
+defshell.elc
+file
+
+
+
+
+2008-01-25T00:05:42.000000Z
+0983072a92da506afd51a579b99130e8
+2006-09-12T18:58:16.261844Z
+7
+djoyner
+has-props
+
+htmlize.el
+file
+
+
+
+
+2008-01-25T00:05:42.000000Z
+7cc77e3e44beecb688b744464159af9e
+2007-06-22T17:21:34.936095Z
+15
+djoyner
+
+color-theme
+dir
+

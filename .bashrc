@@ -41,7 +41,14 @@ case "$OSTYPE" in
     cygwin*)
 	;;
 esac
-	
+
+## git path setup
+if [ -d /usr/local/git ];
+then
+    PATH=$PATH:/usr/local/git/bin
+    export MANPATH=$MANPATH:/usr/local/git/man
+fi
+
 ## Phoenix cross tools setup
 if [ -d /export/crosstools ];
 then

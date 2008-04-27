@@ -33,6 +33,7 @@
 (define-key ctrl-o-map "h" 'hscroll-mode)
 (define-key ctrl-o-map "m" 'compile)
 (define-key ctrl-o-map "r" 'query-replace-regexp)
+(define-key ctrl-o-map "t" 'toggle-selective-display)
 (define-key ctrl-o-map "w" 'delete-rectangle)
 (define-key ctrl-o-map "\C-o" 'open-line)
 

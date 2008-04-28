@@ -24,9 +24,9 @@ case "$OSTYPE" in
 	CORES=`grep processor /proc/cpuinfo | wc -l`
 	if [ $CORES -gt 2 ];
 	then
-	    export SCONSFLAGS="-j$CORES distcc=0 opt=0 debug=1"
+	    export SCONSFLAGS="-j$CORES distcc=0"
 	else
-	    export SCONSFLAGS="-j0 distcc=0 opt=0 debug=1"
+	    export SCONSFLAGS="-j0 distcc=0"
 	fi
 
 	export LD_LIBRARY_PATH=$P2_CORE/build/il/bld_ccpu_x86/lib:$LD_LIBRARY_PATH

@@ -32,8 +32,8 @@
 (load-library "my-erlmode")			;; Erlang mode config
 (load-library "my-pymode")			;; Python mode config
 (load-library "my-xmlmode")			;; XML mode config
-(load-library "p4")				;; Perforce package
-(load-library "my-gitmode")			;; Git package
+(load-library "my-p4mode")			;; Perforce mode config
+(load-library "my-gitmode")			;; Git mode config
 
 (when (eq system-type 'windows-nt)
   (server-start)				;; start the emacs server running

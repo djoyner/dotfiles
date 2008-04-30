@@ -7,5 +7,5 @@
 (autoload 'git-blame-mode "git-blame"
   "Minor mode for incremental blame for Git." t)
 
-;;; end ~/emacs/lisp/my-erlmode.el
+;;; end ~/emacs/lisp/my-gitmode.el
 

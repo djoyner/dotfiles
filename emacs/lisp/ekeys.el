@@ -28,6 +28,7 @@
 (fset 'ctrl-o-prefix ctrl-o-map)
 (define-key global-map "\^o" 'ctrl-o-prefix)
 (define-key ctrl-o-map "a" 'auto-fill-mode)
+(define-key ctrl-o-map "c" 'shell-clear-region)
 (define-key ctrl-o-map "f" 'c-mark-function)
 (define-key ctrl-o-map "g" 'goto-line)
 (define-key ctrl-o-map "h" 'hscroll-mode)

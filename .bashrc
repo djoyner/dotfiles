@@ -24,13 +24,13 @@ case "$OSTYPE" in
 	CORES=`grep processor /proc/cpuinfo | wc -l`
 	if [ $CORES -gt 2 ];
 	then
-	    export SCONSFLAGS="-j$CORES distcc=0"
+	    export SCONSFLAGS="--warn=no-deprecated-copy -j$CORES distcc=0"
 	else
-	    export SCONSFLAGS="-j0 distcc=0"
+	    export SCONSFLAGS="--warn=no-deprecated-copy -j0 distcc=0"
 	fi
 
 	export LD_LIBRARY_PATH=$P2_CORE/build/il/bld_ccpu_x86/lib:$LD_LIBRARY_PATH
-	export PYTHONPATH=$P2_CORE/build/il/pytest
+	export PYTHONPATH=/usr/lib/python2.5/site-packages/oldxml:$P2_CORE/build/il/pytest
 	export SPT_BOARD_TYPE=mock
 	export HAL_HWINFO_FILE=$P2_CORE/framework/il/platform/initscripts/testmodule/mcpu/hwinfo/800-5135-1.ini
 	;;

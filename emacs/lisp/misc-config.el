@@ -30,11 +30,6 @@
 ;; Set up tramp
 (setq tramp-default-method "ssh")
 
-;; Set up recentf so I can get a list of recent files when I start
-(recentf-mode 1)
-(recentf-open-files nil "*Recent Files*")
-(setq recentf-max-saved-items 1200)
-
 ;; Define inferior shells
 (require 'defshell)
 

@@ -134,6 +134,7 @@ alias p4log='p4 filelog'
 alias p4o='p4 opened'
 alias p4r='p4 changes -s submitted -m 50'
 alias p4uo='p4 fstat `find . -type f -perm -u+w -print` | grep "no such"'
+alias p4which='p4 changes -m1 ...'
 
 alias tc='cd $P2_CORE'
 alias il='cd $P2_CORE/framework/il'

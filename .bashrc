@@ -133,7 +133,7 @@ alias p4cl='p4 changes -s pending -u $P4USER'
 alias p4log='p4 filelog'
 alias p4o='p4 opened'
 alias p4r='p4 changes -s submitted -m 50'
-alias p4uo='p4 fstat `find . -type f -perm -u+w -print` | grep "no such"'
+alias p4uo='exec 3>&1; find . -type f -print0 | xargs -0 p4 fstat 2>&1 >&3 3>&1- | cut -f1 -d" " 3>&-; exec 3>&-'
 alias p4which='p4 changes -m1 ...'
 
 alias tc='cd $P2_CORE'

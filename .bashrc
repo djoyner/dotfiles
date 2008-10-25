@@ -49,6 +49,9 @@ then
     export MANPATH=$MANPATH:/usr/local/git/man
 fi
 
+## Ruby setup
+export RUBYOPT=rubygems
+
 ## Phoenix cross tools setup
 if [ -d /export/crosstools ];
 then

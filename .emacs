@@ -33,6 +33,7 @@
 (load-library "my-xmlmode")			;; XML mode config
 (load-library "my-p4mode")			;; Perforce mode config
 (load-library "my-gitmode")			;; Git mode config
+(load-library "my-rubymode")			;; Ruby mode config
 
 (when (eq system-type 'windows-nt)
   (server-start)				;; start the emacs server running

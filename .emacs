@@ -18,6 +18,7 @@
   (add-path "emacs/site-lisp/erlang")		;; file:/usr/lib64/erlang/lib/tools-2.5.2/emacs
   (add-path "emacs/site-lisp/git-emacs")	;; git://github.com/tsgates/git-emacs.git
   (add-path "emacs/site-lisp/nxml-mode")	;; http://www.thaiopensource.com/nxml-mode
+  (add-path "emacs/site-lisp/ruby-mode")	;; http://svn.ruby-lang.org/repos/ruby/trunk/misc/ruby-mode
   (add-path "emacs/site-lisp/speedbar")		;; http://cedet.sourceforge.net/speedbar.shtml
   )
 

@@ -131,8 +131,8 @@ case "$OSTYPE" in
 esac
 
 alias screen='TERM=screen screen'
-alias screen-straylight='ssh straylight -t screen -DR'
-alias screen-trajan='ssh trajan -t screen -DR'
+alias screen-straylight='ssh straylight -t TERM=screen screen -DR'
+alias screen-trajan='ssh trajan -t TERM=screen screen -DR'
 
 alias z='clear'
 

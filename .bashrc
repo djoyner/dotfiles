@@ -130,6 +130,10 @@ case "$OSTYPE" in
 
 esac
 
+alias screen='TERM=screen screen'
+alias screen-straylight='ssh straylight -t screen -DR'
+alias screen-trajan='ssh trajan -t screen -DR'
+
 alias z='clear'
 
 alias p4cl='p4 changes -s pending -u $P4USER'
@@ -140,9 +144,7 @@ alias p4uo='exec 3>&1; find . -type f -print0 | xargs -0 p4 fstat 2>&1 >&3 3>&1-
 alias p4which='p4 changes -m1 ...'
 
 alias tc='cd $P2_CORE'
-alias il='cd $P2_CORE/framework/il'
 alias kernel='cd $P2_CORE/framework/il/kernel/linux-2.6.10_mvl401'
-alias learn='cd $P2_CORE/content/traffic/l2l3/il/Generator/Learning'
 
 if [ -n "$PHX_CROSS_TOOLS" ];
 then

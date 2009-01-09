@@ -1,0 +1,6 @@
+escape ^]^]
+defscrollback 100000
+startup_message off
+hardstatus on
+hardstatus alwayslastline
+hardstatus string '%{=b kR}[%{-b}%{W}%l%{b R}][%= %{= kw}%?%-Lw%?%{=b kR}(%{W}%n*%f %t%?(%u)%?%{=b kR})%{= kw}%?%+Lw%?%?%= %{=b R}]%{=b R}[%{-b W} %d %M %c %{=b R}]%{W}'

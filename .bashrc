@@ -3,7 +3,6 @@
 ## Development environment setup
 export P4CONFIG=.p4env
 export P4USER=DJoyner
-export P4EDITOR="emacs -nw"
 export P4VRES=/usr/local/share/P4VResources
 
 if [ "$OSTYPE" != "cygwin" ];
@@ -109,6 +108,14 @@ shopt -s checkwinsize
 
 ## Misc setup
 export LS_COLORS="no=00:fi=00:di=01;34:ln=01;36:pi=40;33:so=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arj=01;31:*.taz=01;31:*.lzh=01;31:*.zip=01;31:*.z=01;31:*.Z=01;31:*.gz=01;31:*.bz2=01;31:*.deb=01;31:*.rpm=01;31:*.jpg=01;35:*.png=01;35:*.gif=01;35:*.bmp=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.png=01;35:*.mpg=01;35:*.avi=01;35:*.fli=01;35:*.gl=01;35:*.dl=01;35:"
+
+if [ -z "$DISPLAY" ]; then
+    export EDITOR=emacs P4EDITOR=emacs VISUAL=emacs
+    export ALTERNATE_EDITOR=emacs 
+else
+    export EDITOR=emacsclient P4EDITOR=emacsclient VISUAL=emacsclient
+    export ALTERNATE_EDITOR=emacs 
+fi
 
 export PAGER=less
 

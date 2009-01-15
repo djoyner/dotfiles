@@ -36,8 +36,6 @@
 (load-library "my-gitmode")			;; Git mode config
 (load-library "my-rubymode")			;; Ruby mode config
 
-(when (eq system-type 'windows-nt)
-  (server-start)				;; start the emacs server running
-  (global-set-key "\C-x\C-c" nil))		;; remove the binding of C-x C-c, which normally exits emacs
+(server-start)					;; start the emacs server running
 
 ;;; end ~/.emacs

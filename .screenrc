@@ -1,6 +1,9 @@
-escape ^]^]
+escape ^a^a
+bind a other
 defscrollback 100000
 startup_message off
+vbell off
+shell -$SHELL
 hardstatus on
 hardstatus alwayslastline
-hardstatus string '%{=b kR}[%{-b}%{W}%l%{b R}][%= %{= kw}%?%-Lw%?%{=b kR}(%{W}%n*%f %t%?(%u)%?%{=b kR})%{= kw}%?%+Lw%?%?%= %{=b R}]%{=b R}[%{-b W} %d %M %c %{=b R}]%{W}'
+hardstatus string '%{=b kR}[%{-b}%{W} %H: %l %{b R}][%= %{= kw}%?%-Lw%?%{=b kR}(%{W}%n*%f %t%?(%u)%?%{=b kR})%{= kw}%?%+Lw%?%?%= %{=b R}]%{=b R}[%{-b W} %d %M %c %{=b R}]%{W}'

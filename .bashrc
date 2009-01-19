@@ -23,9 +23,9 @@ case "$OSTYPE" in
 	CORES=`grep processor /proc/cpuinfo | wc -l`
 	if [ $CORES -gt 2 ];
 	then
-	    export SCONSFLAGS="--warn=no-deprecated-copy -j$CORES distcc=0"
+	    export SCONSFLAGS="--warn=no-deprecated -j$CORES distcc=0"
 	else
-	    export SCONSFLAGS="--warn=no-deprecated-copy -j0 distcc=0"
+	    export SCONSFLAGS="--warn=no-deprecated -j0 distcc=0"
 	fi
 
 	export LD_LIBRARY_PATH=$P2_CORE/build/il/bld_ccpu_x86/lib:$LD_LIBRARY_PATH
@@ -139,6 +139,7 @@ esac
 
 alias screen='TERM=screen screen'
 alias screen-straylight='ssh straylight -t TERM=screen screen -DR'
+alias screen-straylight-inet='ssh straylight.joynerhome.net -t TERM=screen screen -DR'
 alias screen-trajan='ssh trajan -t TERM=screen screen -DR'
 
 alias z='clear'

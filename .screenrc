@@ -1,5 +1,4 @@
-escape ^a^a
-bind a other
+escape ^z^z
 defscrollback 100000
 startup_message off
 vbell off

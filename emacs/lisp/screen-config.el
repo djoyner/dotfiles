@@ -64,7 +64,7 @@
       (setq default-frame-alist (append '((vertical-scroll-bars . nil) 
 					  (cursor-type . box)
 					  (width . 180)
-					  (height . 80)) default-frame-alist))
+					  (height . 60)) default-frame-alist))
 
       (cond ((eq window-system 'w32) (setq default-frame-alist (append '((font . "fixed613")) default-frame-alist)))
 	    ((eq window-system 'x) (setq default-frame-alist (append '((font . "fixed")) default-frame-alist))))

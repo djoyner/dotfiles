@@ -1,4 +1,4 @@
-;;; ~/emacs/lisp/my-xnlmode.el
+;;; ~/emacs/lisp/xml-config.el
 
 (load-library "rng-auto")
 
@@ -6,4 +6,4 @@
       (cons '("\\.\\(xml\\|xsl\\|rng\\|xhtml\\|idl\\)\\'" . nxml-mode)
 	    auto-mode-alist))
 
-;;; end ~/emacs/lisp/my-xmlmode.el
+;;; end ~/emacs/lisp/xml-config.el

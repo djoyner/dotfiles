@@ -119,6 +119,23 @@ fi
 
 export PAGER=less
 
+## Misc functions
+function find_walk_up()
+{
+    curr=''
+    next=$PWD
+    while [ "$curr" != "$next" ];
+    do
+	curr=$next
+	if [ -e $curr/$1 ];
+	then
+	    cd $curr
+	else
+	    next=`dirname $curr`
+	fi
+    done
+}
+
 ## Alias setup
 case "$OSTYPE" in
     linux*|cygwin*)
@@ -151,7 +168,8 @@ alias p4r='p4 changes -s submitted -m 50'
 alias p4uo='exec 3>&1; find . -type f -print0 | xargs -0 p4 fstat 2>&1 >&3 3>&1- | cut -f1 -d" " 3>&-; exec 3>&-'
 alias p4which='p4 changes -m1 ...'
 
-alias tc='cd $P2_CORE'
+alias stc='cd $P2_CORE'
+alias stctop='find_walk_up .p4env'
 alias kernel='cd $P2_CORE/framework/il/kernel/linux-2.6.10_mvl401'
 
 if [ -n "$PHX_CROSS_TOOLS" ];

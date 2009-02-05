@@ -30,39 +30,12 @@
 ;; Set up tramp
 (setq tramp-default-method "ssh")
 
-;; Define inferior shells
-(require 'defshell)
-
-(setq defshell-reuse-buffer nil
-      defshell-rename-buffer-uniquely t)
-
-;; Translate ansi color sequences into text properties (for shells)
-(autoload 'ansi-color-for-comint-mode-on "ansi-color" nil t)
-(add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
-
-;; Set up tags
-(require 'etags)
-(defun build-tags (dir-name)
-     "Build tags file."
-     (interactive "DDirectory: ")
-     (eshell-command 
-      (format "find %s -type f -name \\*.\\* | ctags --langmap=c++:+.tcc -e -L -" dir-name)))
-
-;; Set Perforce environment variables in the current environment
-(if (not (getenv "P4CONFIG"))
-    (setenv "P4CONFIG" ".p4env"))
-
-(if (not (getenv "P4USER"))
-    (setenv "P4USER" "DJoyner"))
-
 ;; Other miscellaneous stuff
-(setq compile-command "scons -ku"
-      make-backup-files nil
+(setq make-backup-files nil
       next-line-add-newlines nil
       find-file-use-truenames nil
       find-file-compare-truenames t
       minibuffer-confirm-incomplete t
-      ;ps-print-landscape t
       win32-alt-is-meta nil)
 
 ;;; end ~/emacs/lisp/misc-config.el

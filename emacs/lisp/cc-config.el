@@ -1,4 +1,4 @@
-;;; ~/emacs/lisp/my-ccmode.el
+;;; ~/emacs/lisp/cc-config.el
 
 (defconst my-c-style
   '((c-tab-always-indent        . nil)
@@ -45,4 +45,4 @@
 
 (add-hook 'c-mode-common-hook 'my-c-mode-common-hook)
 
-;;; end ~/emacs/lisp/my-ccmode.el
+;;; end ~/emacs/lisp/cc-config.el

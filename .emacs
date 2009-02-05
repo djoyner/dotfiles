@@ -25,16 +25,19 @@
 ;; The remainder of my config is in libraries
 (load-library "efuncs")				;; custom functions
 (load-library "ekeys")				;; key bindings
-(load-library "screen-config")			;; window config for all platforms
-(load-library "skeleton-config")		;; skeleton config
+(load-library "cc-config")			;; C/C++ mode config
+(load-library "dired-config")			;; dired-mode config
+(load-library "erl-config")			;; Erlang mode config
+(load-library "git-config")			;; Git mode config
 (load-library "irc-config")			;; IRC client config
 (load-library "misc-config")			;; miscellaneous one-off config settings
-(load-library "my-ccmode")			;; C/C++ mode config
-(load-library "my-erlmode")			;; Erlang mode config
-(load-library "my-xmlmode")			;; XML mode config
-(load-library "my-p4mode")			;; Perforce mode config
-(load-library "my-gitmode")			;; Git mode config
-(load-library "my-rubymode")			;; Ruby mode config
+(load-library "p4-config")			;; Perforce config
+(load-library "ruby-config")			;; Ruby mode config
+(load-library "scons-config")			;; scons-related config
+(load-library "screen-config")			;; window config
+(load-library "shell-config")			;; shell config
+(load-library "skeleton-config")		;; skeleton config
+(load-library "xml-config")			;; XML mode config
 
 (server-start)					;; start the emacs server running
 

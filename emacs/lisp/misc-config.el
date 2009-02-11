@@ -30,6 +30,9 @@
 ;; Set up tramp
 (setq tramp-default-method "ssh")
 
+;; Set up pastie
+(autoload 'pastie-region "pastie" "Post the current region as a new paste at pastie.org. Copies the URL into the kill ring." t)
+
 ;; Other miscellaneous stuff
 (setq make-backup-files nil
       next-line-add-newlines nil

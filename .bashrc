@@ -62,13 +62,6 @@ then
     PATH=$PATH:$PHX_CROSS_TOOLS/mips/fp_be/bin
     PATH=$PATH:$PHX_CROSS_TOOLS/ppc/405/bin
     PATH=$PATH:$PHX_CROSS_TOOLS/x86/pentium3/bin
-
-    if [ -d "$PHX_CROSS_TOOLS/intel" ];
-    then
-	source $PHX_CROSS_TOOLS/intel/cce/current/bin/iccvars.sh
-	source $PHX_CROSS_TOOLS/intel/idbe/current/bin/idbvars.sh
-	[ -d "$PHX_CROSS_TOOLS/intel/vtune" ] && source $PHX_CROSS_TOOLS/intel/vtune/bin/vtunevars.sh
-    fi
 fi
 
 if [ -d "$P2_CORE/build/il/cli" ];
@@ -102,9 +95,13 @@ else
     unset PROMPT_COMMAND
 fi
 
+[ -r ~/bin/j.sh ] && source ~/bin/j.sh
+
 ## bash setup
 set -b
 shopt -s checkwinsize
+shopt -s histappend
+export HISTCONTROL=ignoreboth
 
 ## Misc setup
 export LS_COLORS="no=00:fi=00:di=01;34:ln=01;36:pi=40;33:so=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arj=01;31:*.taz=01;31:*.lzh=01;31:*.zip=01;31:*.z=01;31:*.Z=01;31:*.gz=01;31:*.bz2=01;31:*.deb=01;31:*.rpm=01;31:*.jpg=01;35:*.png=01;35:*.gif=01;35:*.bmp=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.png=01;35:*.mpg=01;35:*.avi=01;35:*.fli=01;35:*.gl=01;35:*.dl=01;35:"
@@ -118,6 +115,7 @@ else
 fi
 
 export PAGER=less
+[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
 ## Misc functions
 function find_walk_up()
@@ -155,6 +153,7 @@ case "$OSTYPE" in
 esac
 
 alias screen='TERM=screen screen'
+alias screen-gollum='ssh gollum -t TERM=screen screen -DR'
 alias screen-straylight='ssh straylight -t TERM=screen screen -DR'
 alias screen-straylight-inet='ssh straylight.joynerhome.net -t TERM=screen screen -DR'
 alias screen-trajan='ssh trajan -t TERM=screen screen -DR'

@@ -9,4 +9,5 @@
 !.screenrc
 !.xmonad
 !.xsession
+!bin/*.sh
 !emacs

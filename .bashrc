@@ -29,7 +29,6 @@ case "$OSTYPE" in
 	fi
 
 	export LD_LIBRARY_PATH=$P2_CORE/build/il/bld_ccpu_x86/lib:$LD_LIBRARY_PATH
-	export PYTHONPATH=/usr/lib/python2.5/site-packages/oldxml:$P2_CORE/build/il/pytest
 	export SPT_BOARD_TYPE=mock
 	export HAL_HWINFO_FILE=$P2_CORE/framework/il/platform/initscripts/testmodule/mcpu/hwinfo/800-5135-1.ini
 	;;
@@ -154,8 +153,10 @@ esac
 
 alias screen='TERM=screen screen'
 alias screen-gollum='ssh gollum -t TERM=screen screen -DR'
+alias screen-gollum-local='ssh gollum.local -t TERM=screen screen -DR'
+alias screen-gollum-inet='ssh gollum.joynerhome.net -t TERM=screen screen -DR'
 alias screen-straylight='ssh straylight -t TERM=screen screen -DR'
-alias screen-straylight-inet='ssh straylight.joynerhome.net -t TERM=screen screen -DR'
+alias screen-straylight-local='ssh straylight.local -t TERM=screen screen -DR'
 alias screen-trajan='ssh trajan -t TERM=screen screen -DR'
 
 alias z='clear'
@@ -173,7 +174,7 @@ alias kernel='cd $P2_CORE/framework/il/kernel/linux-2.6.10_mvl401'
 
 if [ -n "$PHX_CROSS_TOOLS" ];
 then
-    alias buildkernel='(cd $P2_CORE; rm build/il/bld_ccpu_mips/kernel/vmlinux; cd $P2_CORE/framework/il/kernel/linux-2.6.10_mvl401; scons -u target=ccpu makeclean=0)'
+    alias buildkernel='(cd $P2_CORE; rm build/il/bld_ccpu_broadcom_kernel_mips_fp_be/kernel/vmlinux; scons target=ccpu_broadcom_kernel arch=mips makeclean=0)'
 fi
 
 ### end ~/.bashrc

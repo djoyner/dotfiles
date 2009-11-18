@@ -46,6 +46,7 @@
 	   (font-lock-type-face ((t (:foreground "#cae682"))))
 	   (font-lock-variable-name-face ((t (:foreground "#cae682"))))
 	   (font-lock-warning-face ((t (:foreground "#e5786d" :bold t))))
+	   (paren-face-match-light ((t (:background "#857b6f"))))
 	   (show-paren-match-face ((t (:foreground "#f6f3e8" :background "#857b6f" :bold t))))
 	   (show-paren-mismatch-face ((t (:foreground "#e5786d" :background "#857b6f" :bold t)))))))
 
@@ -55,7 +56,7 @@
       (highlight-current-line-on t)
 
       ;; Disable blinking cursor
-      (blink-cursor-mode nil)
+      (blink-cursor-mode 0)
 
       ;; Drive out the mouse when it's too near to the cursor
       (mouse-avoidance-mode 'animate)

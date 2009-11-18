@@ -28,7 +28,7 @@ case "$OSTYPE" in
 	    export SCONSFLAGS="--warn=no-deprecated -j0 distcc=0"
 	fi
 
-	export LD_LIBRARY_PATH=$P2_CORE/build/il/bld_ccpu_x86/lib:$LD_LIBRARY_PATH
+	export LD_LIBRARY_PATH=$P2_CORE/build/il/bld_ccpu_i386_pentium3/lib:$LD_LIBRARY_PATH
 	export SPT_BOARD_TYPE=mock
 	export HAL_HWINFO_FILE=$P2_CORE/framework/il/platform/initscripts/testmodule/mcpu/hwinfo/800-5135-1.ini
 	;;

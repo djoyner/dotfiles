@@ -18,10 +18,23 @@
 ;; Set up ibuffer
 (autoload 'ibuffer "ibuffer" "List buffers." t)
 
+
 (setq ibuffer-formats '((mark modified read-only " " (name 40 40) " " (size 6 -1 :right) " " (mode 16 16 :center) " " (process 8 -1) " " filename)
 			(mark " " (name 16 -1) " " filename))
+      ibuffer-saved-filter-groups '(("default"
+				     ("dired" (mode . dired-mode))
+				     ("python" (mode . python-mode))
+				     ("c/c++" (or
+					       (mode . c-mode)
+					       (mode . c++-mode)))
+				     ("emacs" (or
+					       (name . "^\\*scratch\\*$")
+					       (name . "^\\*Messages\\*$")))))
       ibuffer-elide-long-columns t
       ibuffer-eliding-string "&")
+
+(add-hook 'ibuffer-mode-hook (lambda ()
+			       (ibuffer-switch-to-saved-filter-groups "default")))
 
 ;; Set up iswitchb
 (iswitchb-mode 1)

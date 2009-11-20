@@ -73,10 +73,4 @@
       ;; Spruce up the title bar and mode line
       (setq frame-title-format '("%b (" system-name ")"))))
 
-;; Miscellaneous stuff, regardless of display type
-(setq ring-bell-function 'ignore
-      line-number-mode t
-      column-number-mode t
-      scroll-step 1)
-
 ;;; end ~/emacs/lisp/screen-config.el

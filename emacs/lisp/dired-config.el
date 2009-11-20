@@ -2,7 +2,7 @@
 
 (require 'dired)
 
-; remap 'o' in dired mode to open a file
+; Remap 'o' in dired mode to open a file
 (defun dired-open-mac ()
   (interactive)
   (let ((file-name (dired-get-file-for-visit)))

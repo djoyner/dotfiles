@@ -22,19 +22,16 @@
 (setq ibuffer-formats '((mark modified read-only " " (name 40 40) " " (size 6 -1 :right) " " (mode 16 16 :center) " " (process 8 -1) " " filename)
 			(mark " " (name 16 -1) " " filename))
       ibuffer-saved-filter-groups '(("default"
-				     ("dired" (mode . dired-mode))
+				     ("c" (mode . c-mode))
+				     ("c++" (mode . c++-mode))
 				     ("python" (mode . python-mode))
-				     ("c/c++" (or
-					       (mode . c-mode)
-					       (mode . c++-mode)))
-				     ("emacs" (or
-					       (name . "^\\*scratch\\*$")
-					       (name . "^\\*Messages\\*$")))))
+				     ("haskell" (mode . haskell-mode))
+				     ("emacs" (or (name . "^\\*scratch\\*$") (name . "^\\*Messages\\*$"))))
+				     ("dired" (mode . dired-mode)))
       ibuffer-elide-long-columns t
       ibuffer-eliding-string "&")
 
-(add-hook 'ibuffer-mode-hook (lambda ()
-			       (ibuffer-switch-to-saved-filter-groups "default")))
+(add-hook 'ibuffer-mode-hook (lambda () (ibuffer-switch-to-saved-filter-groups "default")))
 
 ;; Set up iswitchb
 (iswitchb-mode 1)
@@ -47,7 +44,13 @@
 (autoload 'pastie-region "pastie" "Post the current region as a new paste at pastie.org. Copies the URL into the kill ring." t)
 
 ;; Other miscellaneous stuff
-(setq make-backup-files nil
+(setq inhibit-splash-screen t
+      ring-bell-function 'ignore
+      line-number-mode t
+      column-number-mode t
+      scroll-preserve-screen-position t
+      scroll-step 1
+      make-backup-files nil
       next-line-add-newlines nil
       find-file-use-truenames nil
       find-file-compare-truenames t

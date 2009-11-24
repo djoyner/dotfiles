@@ -17,6 +17,7 @@
   (add-path "emacs/site-lisp/color-theme")	;; http://www.emacswiki.org/cgi-bin/wiki?ColorTheme
   (add-path "emacs/site-lisp/erlang")		;; file:/usr/lib64/erlang/lib/tools-2.5.2/emacs
   (add-path "emacs/site-lisp/git-emacs")	;; git://github.com/tsgates/git-emacs.git
+  (add-path "emacs/site-lisp/haskell-mode")	;; http://projects.haskell.org/haskellmode-emacs
   (add-path "emacs/site-lisp/nxml-mode")	;; http://www.thaiopensource.com/nxml-mode
   (add-path "emacs/site-lisp/ruby-mode")	;; http://svn.ruby-lang.org/repos/ruby/trunk/misc/ruby-mode
   (add-path "emacs/site-lisp/speedbar")		;; http://cedet.sourceforge.net/speedbar.shtml
@@ -26,14 +27,15 @@
 (load-library "efuncs")				;; custom functions
 (load-library "ekeys")				;; key bindings
 (load-library "cc-config")			;; C/C++ mode config
+(load-library "compile-config")			;; compile-related config
 (load-library "dired-config")			;; dired-mode config
 (load-library "erl-config")			;; Erlang mode config
 (load-library "git-config")			;; Git mode config
+(load-library "haskell-config")			;; Haskell mode config
 (load-library "irc-config")			;; IRC client config
 (load-library "misc-config")			;; miscellaneous one-off config settings
 (load-library "p4-config")			;; Perforce config
 (load-library "ruby-config")			;; Ruby mode config
-(load-library "scons-config")			;; scons-related config
 (load-library "screen-config")			;; window config
 (load-library "shell-config")			;; shell config
 (load-library "skeleton-config")		;; skeleton config

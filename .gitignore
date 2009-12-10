@@ -11,4 +11,5 @@
 !.xmonad
 !.xsession
 !bin/*.sh
+!bin/epylint
 !emacs

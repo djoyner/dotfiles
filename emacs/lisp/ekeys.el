@@ -13,6 +13,7 @@
 (global-set-key [end] 'end-of-line)
 (global-set-key [del] 'delete-char)
 
+(global-set-key [S-f1] 'man)
 (global-set-key [f3] 'kmacro-start-macro-or-insert-counter)
 (global-set-key [f4] 'kmacro-end-or-call-macro)
 (global-set-key [f5] 'undo)
@@ -32,9 +33,7 @@
 (defun logitech-mx-mouse-present-p ()
   "Returns t when Logitech Performance Mouse MX is present."
   (interactive)
-  (condition-case nil
-      (eq 0 (call-process "lsusb" nil nil nil "-d" "046d:c52b"))
-    (error nil)))
+  (ignore-errors (eq 0 (call-process "lsusb" nil nil nil "-d" "046d:c52b"))))
 
 (and window-system 
      (progn

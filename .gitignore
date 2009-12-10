@@ -6,8 +6,10 @@
 !.emacs
 !.gitignore
 !.inputrc
+!.pylintrc
 !.screenrc
 !.xmonad
 !.xsession
 !bin/*.sh
+!bin/epylint
 !emacs

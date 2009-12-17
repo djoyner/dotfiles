@@ -34,6 +34,7 @@ case "$OSTYPE" in
 	;;
 
     darwin*)
+	export PY_USE_XMLPLUS=1
 	;;
 
     cygwin*)
@@ -75,7 +76,7 @@ case "$OSTYPE" in
 	;;
 
     darwin*)
-	PATH=$PATH:/opt/local/bin:$HOME/bin:.
+	PATH=$PATH:/opt/local/bin:/opt/local/sbin:$HOME/bin:.
 	;;
 
     cygwin*)

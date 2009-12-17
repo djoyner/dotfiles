@@ -134,6 +134,18 @@ function find_walk_up()
     done
 }
 
+function rscreen()
+{
+    if [ $# -ge 1 ];
+    then
+	rhost=$1
+	shift 1
+	ssh $rhost -t TERM=screen /usr/bin/screen -DR $@
+    else
+	echo "usage: rscreen host [args...]"
+    fi
+}
+
 ## Alias setup
 case "$OSTYPE" in
     linux*|cygwin*)
@@ -152,14 +164,7 @@ case "$OSTYPE" in
 
 esac
 
-alias screen='TERM=screen screen'
-alias screen-gollum='ssh gollum -t TERM=screen screen -DR'
-alias screen-gollum-local='ssh gollum.local -t TERM=screen screen -DR'
-alias screen-gollum-inet='ssh gollum.joynerhome.net -t TERM=screen screen -DR'
-alias screen-straylight='ssh straylight -t TERM=screen screen -DR'
-alias screen-straylight-local='ssh straylight.local -t TERM=screen screen -DR'
-alias screen-trajan='ssh trajan -t TERM=screen screen -DR'
-
+alias screen='TERM=screen /usr/bin/screen'
 alias z='clear'
 
 alias p4cl='p4 changes -s pending -u $P4USER'

@@ -25,7 +25,7 @@
 				     ("c++" (mode . c++-mode))
 				     ("dired" (mode . dired-mode))
 				     ("elisp" (mode . emacs-lisp-mode))
-				     ("haskell" (mode . haskell-mode))
+				     ("haskell" (or (mode . haskell-mode) (mode . cabal-mode)))
 				     ("python" (mode . python-mode))
 				     ("*buffer*" (name . "\\*.*\\*"))))
       ibuffer-elide-long-columns t

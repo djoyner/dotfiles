@@ -6,6 +6,11 @@
 (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 
 ;; Additional customizations for windowed systems
+(defun font-family-exists-p (font)
+  (if (null (list-fonts (font-spec :family font)))
+      nil
+    t))
+
 (and window-system 
     (progn 
 
@@ -67,8 +72,20 @@
 					  (width . 180)
 					  (height . 60)) default-frame-alist))
 
-      (cond ((eq window-system 'w32) (setq default-frame-alist (append '((font . "fixed613")) default-frame-alist)))
-	    ((eq window-system 'x) (setq default-frame-alist (append '((font . "fixed")) default-frame-alist))))
+      ;; Setup Consolas as the default font with platform-specific fallback to something reasonable
+      (cond ((eq window-system 'w32) 
+	     (if (font-family-exists-p "Consolas")
+		 (setq default-frame-alist (append '((font . "-microsoft-Consolas-normal-normal-normal-*-13-*-*-*-m-0-iso10646-1")) default-frame-alist))
+	       (setq default-frame-alist (append '((font . "-outline-Courier New-normal-r-normal-normal-12-90-96-96-c-*-iso8859-1")) default-frame-alist))))
+	    ((eq window-system 'x) 
+	     (if (font-family-exists-p "Consolas")
+		 (setq default-frame-alist (append '((font . "Consolas-9")) default-frame-alist))
+	       (setq default-frame-alist (append '((font . "DejaVu Sans Mono-9")) default-frame-alist))))
+	    ((eq window-system 'ns) 
+	     (if (font-family-exists-p "Consolas")
+		 (setq default-frame-alist (append '((font . "-apple-Consolas-normal-normal-normal-*-13-*-*-*-m-0-iso10646-1")) default-frame-alist))
+	       (setq default-frame-alist (append '((font . "fixed")) default-frame-alist))))
+	    )
 
       ;; Spruce up the title bar and mode line
       (setq frame-title-format '("%b (" system-name ")"))))

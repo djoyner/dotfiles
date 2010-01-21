@@ -17,6 +17,7 @@
 (global-set-key [f3] 'kmacro-start-macro-or-insert-counter)
 (global-set-key [f4] 'kmacro-end-or-call-macro)
 (global-set-key [f5] 'undo)
+(global-set-key [S-f5] 'redo)
 (global-set-key [f6] 'other-window)
 (global-set-key [f7] 'next-buffer)
 (global-set-key [S-f7] 'previous-buffer)

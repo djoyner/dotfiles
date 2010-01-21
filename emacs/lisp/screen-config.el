@@ -7,7 +7,7 @@
 
 ;; Additional customizations for windowed systems
 (defun font-family-exists-p (font)
-  (if (null (list-fonts (font-spec :family font)))
+  (if (null (list-fonts (font-spec :family font))) 
       nil
     t))
 
@@ -16,7 +16,6 @@
 
       ;; Turn on the color works
       (require 'color-theme)
-      (color-theme-initialize)
       (setq color-theme-is-global t)
       (global-font-lock-mode t)
 

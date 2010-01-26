@@ -17,7 +17,8 @@
 (global-set-key [f3] 'kmacro-start-macro-or-insert-counter)
 (global-set-key [f4] 'kmacro-end-or-call-macro)
 (global-set-key [f5] 'undo)
-(global-set-key [S-f5] 'redo)
+(when (try-require `redo)
+  (global-set-key [S-f5] 'redo))
 (global-set-key [f6] 'other-window)
 (global-set-key [f7] 'next-buffer)
 (global-set-key [S-f7] 'previous-buffer)
@@ -36,24 +37,23 @@
   (interactive)
   (ignore-errors (eq 0 (call-process "lsusb" nil nil nil "-d" "046d:c52b"))))
 
-(and window-system 
-     (progn
-       ; Change the behavior of mouse yanks, so that they insert the selection at point 
-       ; (where the text cursor is), instead of at the position clicked
-       (setq mouse-yank-at-point t)
+(when window-system 
+  ; Change the behavior of mouse yanks, so that they insert the selection at point 
+  ; (where the text cursor is), instead of at the position clicked
+  (setq mouse-yank-at-point t)
 
-       ; Make kill/yank interact with the clipboard
-       (global-set-key "\C-w" 'clipboard-kill-region)
-       (global-set-key "\M-w" 'clipboard-kill-ring-save)
-       (global-set-key "\C-y" 'clipboard-yank)
+  ; Make kill/yank interact with the clipboard
+  (global-set-key "\C-w" 'clipboard-kill-region)
+  (global-set-key "\M-w" 'clipboard-kill-ring-save)
+  (global-set-key "\C-y" 'clipboard-yank)
 
-       ; Setup additional mouse button bindings when Logitech Performance Mouse MX is present
-       (when (logitech-mx-mouse-present-p)
-	 (global-set-key [mouse-8] 'end-of-buffer)		;; "down arrow"
-	 (global-set-key [mouse-9] 'beginning-of-buffer)	;; "up arrow"
-	 (global-set-key [mouse-13] 'delete-other-windows)  	;; "zoom"
-	 (global-set-key [mouse-10] 'ibuffer)) 			;; "window list"
-       ))
+  ; Setup additional mouse button bindings when Logitech Performance Mouse MX is present
+  (when (logitech-mx-mouse-present-p)
+    (global-set-key [mouse-8] 'end-of-buffer)		;; "down arrow"
+    (global-set-key [mouse-9] 'beginning-of-buffer)	;; "up arrow"
+    (global-set-key [mouse-13] 'delete-other-windows)  	;; "zoom"
+    (global-set-key [mouse-10] 'ibuffer)) 		;; "window list"
+  )
 
 ;; Put personal favorites in the CTRL-O keymap
 (defvar ctrl-o-map (make-keymap) 

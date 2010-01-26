@@ -1,18 +1,18 @@
 ;;; ~/emacs/lisp/shell-config.el
 
+;; Define inferior shells
 (require 'defshell)
 
-; Define inferior shells
 (setq defshell-reuse-buffer nil
       defshell-rename-buffer-uniquely t)
 
 (defshell "/bin/bash" "bash")
 
-; Translate ansi color sequences into text properties (for shells)
+;; Translate ansi color sequences into text properties
 (autoload 'ansi-color-for-comint-mode-on "ansi-color" nil t)
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 
-; Smarter up/down bindings for shells -- scroll through command history if at command line, otherwise scroll through buffer
+;; Smarter up/down bindings for shells -- scroll through command history if at command line, otherwise scroll through buffer
 (defun shell-maybe-up (arg)
   (interactive "p")
   (if (comint-after-pmark-p)

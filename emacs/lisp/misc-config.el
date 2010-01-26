@@ -15,6 +15,9 @@
 ;; Show matching parens
 (show-paren-mode t)
 
+;; Show trailing whitespace
+(setq-default show-trailing-whitespace t)
+
 ;; Set up ibuffer
 (autoload 'ibuffer "ibuffer" "List buffers." t)
 
@@ -25,7 +28,7 @@
 				     ("c++" (mode . c++-mode))
 				     ("dired" (mode . dired-mode))
 				     ("elisp" (mode . emacs-lisp-mode))
-				     ("haskell" (or (mode . haskell-mode) (mode . cabal-mode)))
+				     ("haskell" (or (mode . haskell-mode) (mode . haskell-cabal-mode)))
 				     ("python" (mode . python-mode))
 				     ("*buffer*" (name . "\\*.*\\*"))))
       ibuffer-elide-long-columns t

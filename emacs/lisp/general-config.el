@@ -6,7 +6,7 @@
 (put 'upcase-region 'disabled nil)
 
 ;; Miscellaneous settings
-(setq debug-on-error t
+(setq debug-on-error nil
       win32-alt-is-meta nil)
 
 ;;; end ~/emacs/lisp/general-config.el

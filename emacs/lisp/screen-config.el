@@ -11,21 +11,25 @@
 ;; Show trailing whitespace
 (setq-default show-trailing-whitespace t)
 
-;; Other screen-related settings
-(setq inhibit-splash-screen t
-      ring-bell-function 'ignore
-      line-number-mode t
-      column-number-mode t
-      scroll-preserve-screen-position t
-      scroll-step 1)
+;; Use cursor color to indicate read-only, insert and overwrite modes
+(setq my-set-cursor-color-color "")
+(setq my-set-cursor-color-buffer "")
+
+(defun my-set-cursor-color-according-to-mode ()
+  "Change cursor color according to some minor modes."
+  (let ((color
+	 (if buffer-read-only "red"	;; read-only
+	   (if overwrite-mode "purple1"	;; overwrite
+	     "#656565"))))  		;; insert
+    (unless (and (string= color my-set-cursor-color-color)
+		 (string= (buffer-name) my-set-cursor-color-buffer))
+      (set-cursor-color (setq my-set-cursor-color-color color))
+      (setq my-set-cursor-color-buffer (buffer-name)))))
+
+(add-hook 'post-command-hook 'my-set-cursor-color-according-to-mode)
 
 ;; Additional customizations for windowed systems
-(defun font-family-exists-p (font)
-  (if (null (list-fonts (font-spec :family font))) 
-      nil
-    t))
-
-(when window-system 
+(when window-system
   ;; Turn on the color works
   (require 'color-theme)
   (setq color-theme-is-global t)
@@ -78,12 +82,17 @@
   (mouse-avoidance-mode 'animate)
 
   ;; Setup frame attributes
-  (setq default-frame-alist (append '((vertical-scroll-bars . nil) 
+  (setq default-frame-alist (append '((vertical-scroll-bars . nil)
 				      (cursor-type . box)
 				      (width . 180)
 				      (height . 60)) default-frame-alist))
 
   ;; Setup Consolas as the default font with platform-specific fallback to something reasonable
+  (defun font-family-exists-p (font)
+    (if (null (list-fonts (font-spec :family font)))
+	nil
+      t))
+
   (when-ms-windows
    (if (font-family-exists-p "Consolas")
        (setq default-frame-alist (append '((font . "-microsoft-Consolas-normal-normal-normal-*-13-*-*-*-m-0-iso10646-1")) default-frame-alist))
@@ -101,5 +110,15 @@
 
   ;; Spruce up the title bar and mode line
   (setq frame-title-format '("%b (" system-name ")")))
+
+;; Other screen-related settings
+(setq inhibit-splash-screen t
+      ring-bell-function 'ignore
+      line-number-mode t
+      column-number-mode t
+      scroll-preserve-screen-position t
+      scroll-step 1
+      temp-buffer-resize-mode t
+      echo-keystrokes 0.1)
 
 ;;; end ~/emacs/lisp/screen-config.el

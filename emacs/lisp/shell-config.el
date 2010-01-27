@@ -27,6 +27,12 @@
     (next-line arg)
     ))
 
+;; Clear shell contents
+(defun shell-clear-region ()
+  (interactive)
+  (delete-region (point-min) (point-max))
+  (comint-send-input))
+
 (define-key shell-mode-map [up] 'shell-maybe-up)
 (define-key shell-mode-map [down] 'shell-maybe-down)
 

@@ -1,10 +1,10 @@
 ;;; ~/emacs/lisp/cc-config.el
 
-(setq auto-mode-alist (cons '("\\.c$" . c-mode) auto-mode-alist))
-(setq auto-mode-alist (cons '("\\.h$" . c++-mode) auto-mode-alist))
-(setq auto-mode-alist (cons '("\\.tcc$" . c++-mode) auto-mode-alist))
+(add-to-list 'auto-mode-alist '("\\.c$" . c-mode))
+(add-to-list 'auto-mode-alist '("\\.h$" . c++-mode))
+(add-to-list 'auto-mode-alist '("\\.tcc$" . c++-mode))
 
-(c-add-style "my-cc-style" 
+(c-add-style "my-cc-style"
 	     '("bsd"
 	       (tab-width . 8)
 	       (indent-tabs-mode . nil)

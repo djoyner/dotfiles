@@ -32,12 +32,12 @@
 (add-to-list 'load-path my-lisp-directory)
 (add-to-list 'load-path my-site-lisp-directory 'append)
 
-(dolist (p '("erlang"		;; file:/usr/lib64/erlang/lib/tools-2.5.2/emacs
-	     "haskell-mode"	;; http://projects.haskell.org/haskellmode-emacs
-	     "nxml-mode"	;; http://www.thaiopensource.com/nxml-mode
-	     "ruby-mode"	;; http://svn.ruby-lang.org/repos/ruby/trunk/misc/ruby-mode
-	     ))
-  (add-to-list 'load-path (concat my-site-lisp-directory "/" p) 'append))
+(dolist (dir '("erlang"			;; file:/usr/lib64/erlang/lib/tools-2.5.2/emacs
+	       "haskell-mode"		;; http://projects.haskell.org/haskellmode-emacs
+	       "nxml-mode"		;; http://www.thaiopensource.com/nxml-mode
+	       "ruby-mode"		;; http://svn.ruby-lang.org/repos/ruby/trunk/misc/ruby-mode
+	       ))
+  (add-to-list 'load-path (concat my-site-lisp-directory "/" dir) 'append))
 
 ;; Attempt to load a feature/library, failing silently
 (defvar try-require-missing-packages-list nil
@@ -48,12 +48,14 @@
 library given as argument is successfully loaded. If not, instead
 of an error, just add the package to a list of missing packages."
   (condition-case err
-      (if (stringp feature)
-	  (load-library feature)
-	(require feature))
+      (progn
+	(if (stringp feature)
+	    (load-library feature)
+	  (require feature))
+	t)
     (file-error
      (progn
-       (message "Checking for library `%s'... MISSING" feature)
+       (message "try-require failed to load library `%s'" feature)
        (add-to-list 'try-require-missing-packages-list feature 'append))
      nil)))
 
@@ -63,24 +65,31 @@ of an error, just add the package to a list of missing packages."
     (add-to-list 'load-path bcc-cache-directory))
 
 ;; The remainder of config is loaded from libraries
-(try-require "efuncs")				;; custom functions
-(try-require "ekeys")				;; key bindings
-(try-require "cc-config")			;; C/C++ mode config
-(try-require "compile-config")			;; compile-related config
-(try-require "dired-config")			;; dired-mode config
-(try-require "erl-config")			;; Erlang mode config
-(try-require "git-config")			;; Git mode config
-(try-require "haskell-config")			;; Haskell mode config
-(try-require "irc-config")			;; IRC client config
-(try-require "misc-config")			;; miscellaneous one-off config settings
-(try-require "p4-config")			;; Perforce config
-(try-require "ruby-config")			;; Ruby mode config
-(try-require "screen-config")			;; window config
-(try-require "shell-config")			;; shell config
-(try-require "skeleton-config")			;; skeleton config
-(try-require "xml-config")			;; XML mode config
+(dolist (lib '("buffer-config"		;; buffer-related config
+	       "cc-config"		;; C/C++ mode config
+	       "compile-config"		;; compile-related config
+	       "dired-config"		;; dired-mode config
+	       "editing-config"		;; editing-related config
+	       "erl-config"		;; erlang-mode config
+	       "general-config"		;; general configuration settings
+	       "git-config"		;; git-mode config
+	       "haskell-config"		;; haskell-mode config
+	       "help-config"		;; help-related config
+	       "irc-config"		;; IRC client config
+	       "key-config"		;; general key bindings
+	       "minibuffer-config"	;; minibuffer-related config
+	       "misc-funcs"		;; miscellaneous elisp functions
+	       "p4-config"		;; p4 config
+	       "ruby-config"		;; ruby-mode config
+	       "screen-config"		;; screen-related config
+	       "shell-config"		;; shell-mode config
+	       "skeleton-config"	;; skeleton config
+	       "xml-config"		;; xml-mode config
+	       ))
+  (try-require lib))
 
-(server-start)					;; start the emacs server running
+;; Start the emacs server running
+(server-start)
 
 ;; Display a warning if any packages failed to load
 (when try-require-missing-packages-list

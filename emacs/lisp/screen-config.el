@@ -5,6 +5,20 @@
 (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 
+;; Show matching parens
+(show-paren-mode t)
+
+;; Show trailing whitespace
+(setq-default show-trailing-whitespace t)
+
+;; Other screen-related settings
+(setq inhibit-splash-screen t
+      ring-bell-function 'ignore
+      line-number-mode t
+      column-number-mode t
+      scroll-preserve-screen-position t
+      scroll-step 1)
+
 ;; Additional customizations for windowed systems
 (defun font-family-exists-p (font)
   (if (null (list-fonts (font-spec :family font))) 

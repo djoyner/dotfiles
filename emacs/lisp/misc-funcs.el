@@ -1,4 +1,33 @@
-;;; ~/emacs/lisp/efuncs.el
+;;; ~/emacs/lisp/misc-funcs.el
+
+;; Move (shift) a line of text up or down like you would do in Windows editors by pressing Alt-Up (or Alt-Down)
+(defun move-line (n)
+  "Move the current line up or down by N lines."
+  (interactive "p")
+  (let ((col (current-column))
+        start
+        end)
+    (beginning-of-line)
+    (setq start (point))
+    (end-of-line)
+    (forward-char)
+    (setq end (point))
+    (let ((line-text (delete-and-extract-region start end)))
+      (forward-line n)
+      (insert line-text)
+      ;; restore point to original column in moved line
+      (forward-line -1)
+      (forward-char col))))
+
+(defun move-line-up (n)
+  "Move the current line up by N lines."
+  (interactive "p")
+  (move-line (if (null n) -1 (- n))))
+
+(defun move-line-down (n)
+  "Move the current line down by N lines."
+  (interactive "p")
+  (move-line (if (null n) 1 n)))
 
 ;; Different platforms use different line endings
 (defun unix-file ()
@@ -59,16 +88,10 @@ buffer, so you don't dork the original."
   (save-excursion (replace-string "<" "&lt;"))
   (save-excursion (replace-string ">" "&gt;")))
 
-;; Clear shell contents
-(defun shell-clear-region ()
-  (interactive)
-  (delete-region (point-min) (point-max))
-  (comint-send-input))
-
 ;; Quick and dirty code folding
 (defun toggle-selective-display (column)
   (interactive "P")
   (set-selective-display
    (if selective-display nil (or column 1))))
 
-;;; end ~/emacs/lisp/efuncs.el
+;;; end ~/emacs/lisp/misc-funcs.el

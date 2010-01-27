@@ -2,7 +2,7 @@
 
 (require 'dired)
 
-; Remap 'o' in dired mode to open a file
+;; Remap 'o' in dired mode to open a file
 (when-mac-osx
  (defun dired-open-mac ()
    (interactive)

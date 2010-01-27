@@ -1,9 +1,7 @@
-;;; ~/emacs/lisp/ekeys.el
+;;; ~/emacs/lisp/key-config.el
 
 ;; Remap global keys
 (define-key global-map "\C-h" 'delete-backward-char)
-(define-key global-map "\C-xb" 'iswitchb-buffer)
-(define-key global-map "\C-x\C-b" 'ibuffer)
 (define-key global-map "\C-x " 'just-one-space)
 (define-key global-map "\M- " 'set-mark-command)
 (define-key global-map "\M-g" 'goto-line)
@@ -12,6 +10,8 @@
 (global-set-key [home] 'beginning-of-line)
 (global-set-key [end] 'end-of-line)
 (global-set-key [del] 'delete-char)
+(global-set-key [M-up] 'move-line-up)
+(global-set-key [M-down] 'move-line-down)
 
 (global-set-key [S-f1] 'man)
 (global-set-key [f3] 'kmacro-start-macro-or-insert-counter)
@@ -37,8 +37,8 @@
   (interactive)
   (ignore-errors (eq 0 (call-process "lsusb" nil nil nil "-d" "046d:c52b"))))
 
-(when window-system 
-  ; Change the behavior of mouse yanks, so that they insert the selection at point 
+(when window-system
+  ; Change the behavior of mouse yanks, so that they insert the selection at point
   ; (where the text cursor is), instead of at the position clicked
   (setq mouse-yank-at-point t)
 
@@ -56,7 +56,7 @@
   )
 
 ;; Put personal favorites in the CTRL-O keymap
-(defvar ctrl-o-map (make-keymap) 
+(defvar ctrl-o-map (make-keymap)
   "Keymap for subcommands of C-o.")
 
 (fset 'ctrl-o-prefix ctrl-o-map)
@@ -69,8 +69,8 @@
 (define-key ctrl-o-map "m" 'compile)
 (define-key ctrl-o-map "p" 'pastie-region)
 (define-key ctrl-o-map "r" 'query-replace-regexp)
-(define-key ctrl-o-map "t" 'toggle-selective-display)
+(define-key ctrl-o-map "t" 'delete-trailing-whitespace)
 (define-key ctrl-o-map "w" 'delete-rectangle)
 (define-key ctrl-o-map "\C-o" 'open-line)
 
-;;; end ~/emacs/lisp/ekeys.el
+;;; end ~/emacs/lisp/key-config.el

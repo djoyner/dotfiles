@@ -77,6 +77,7 @@ of an error, just add the package to a list of missing packages."
 	       "help-config"		;; help-related config
 	       "irc-config"		;; IRC client config
 	       "key-config"		;; general key bindings
+	       "lisp-config"		;; lisp-related config
 	       "minibuffer-config"	;; minibuffer-related config
 	       "misc-funcs"		;; miscellaneous elisp functions
 	       "p4-config"		;; p4 config
@@ -88,8 +89,10 @@ of an error, just add the package to a list of missing packages."
 	       ))
   (try-require lib))
 
-;; Start the emacs server running
-(server-start)
+;; Start the emacs server running as long as I'm not root
+(unless (string-equal "root" (getenv "USER"))
+  (require 'server)
+  (server-start))
 
 ;; Display a warning if any packages failed to load
 (when try-require-missing-packages-list

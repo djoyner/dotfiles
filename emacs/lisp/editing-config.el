@@ -7,8 +7,6 @@
 (transient-mark-mode t)
 (delete-selection-mode t)
 
-;; TODO - fixme
-
 ;; Change cutting behavior:
 ;; "Many times you'll do a kill-line command with the only intention of
 ;; getting the contents of the line into the killring. Here's an idea stolen
@@ -31,17 +29,17 @@ current line instead."
            (line-beginning-position 2)))))
 
 ;; Auto-indent pasted code
-(defadvice yank (after indent-region activate)
-  (if (member major-mode
-              '(emacs-lisp-mode scheme-mode lisp-mode c-mode c++-mode
-                objc-mode latex-mode plain-tex-mode python-mode))
-      (indent-region (region-beginning) (region-end) nil)))
+;; (defadvice yank (after indent-region activate)
+;;   (if (member major-mode
+;;               '(emacs-lisp-mode scheme-mode lisp-mode c-mode c++-mode
+;;                 objc-mode latex-mode plain-tex-mode python-mode))
+;;       (indent-region (region-beginning) (region-end) nil)))
 
-(defadvice yank-pop (after indent-region activate)
-  (if (member major-mode
-              '(emacs-lisp-mode scheme-mode lisp-mode c-mode c++-mode
-                objc-mode latex-mode plain-tex-mode python-mode))
-      (indent-region (region-beginning) (region-end) nil)))
+;; (defadvice yank-pop (after indent-region activate)
+;;   (if (member major-mode
+;;               '(emacs-lisp-mode scheme-mode lisp-mode c-mode c++-mode
+;;                 objc-mode latex-mode plain-tex-mode python-mode))
+;;       (indent-region (region-beginning) (region-end) nil)))
 
 ;; Interactively insert items from the kill ring
 (when (try-require 'browse-kill-ring)
@@ -70,5 +68,7 @@ current line instead."
       find-file-use-truenames nil
       find-file-compare-truenames t
       make-backup-files nil)
+
+(setq-default indent-tabs-mode nil)
 
 ;;; end ~/emacs/lisp/editing-config.el

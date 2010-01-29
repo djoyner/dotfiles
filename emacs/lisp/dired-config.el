@@ -2,6 +2,12 @@
 
 (require 'dired)
 
+;; Recursive deletes allowed, after asking for each directory at top level
+(setq dired-recursive-deletes 'top)
+
+;; Copy recursively without asking
+(setq dired-recursive-copies 'always)
+
 ;; Remap 'o' in dired mode to open a file
 (when-mac-osx
  (defun dired-open-mac ()

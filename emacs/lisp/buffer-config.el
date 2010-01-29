@@ -3,8 +3,7 @@
 ;; Set up ibuffer
 (autoload 'ibuffer "ibuffer" "List buffers." t)
 
-(setq
-      ibuffer-saved-filter-groups '(("default"
+(setq ibuffer-saved-filter-groups '(("default"
 				     ("c" (mode . c-mode))
 				     ("c++" (mode . c++-mode))
 				     ("dired" (mode . dired-mode))
@@ -12,12 +11,15 @@
 				     ("haskell" (or (mode . haskell-mode)
 						    (mode . haskell-cabal-mode)))
 				     ("python" (mode . python-mode))
-				     ("vc" (or (name . "^\\*vc\\*$")
+				     ("xml" (mode . nxml-mode))
+				     ("*vc*" (or (name . "^\\*vc\\*$")
+					       (name . "^\\*vc-")
 					       (name . "^\\*Annotate")
 					       (name . "^\\*git-")
-					       (name . "^\\*vc-")))
+					       (name . "^\\*P4")
+					       (name . "^\\*Opened Files")))
 				     ("*emacs*" (name . "\\*.*\\*"))))
-      ibuffer-formats '((mark modified read-only " " (name 40 40) " " (size 6 -1 :right) " " (mode 16 16 :center) " " (process 8 -1) " " filename)
+      ibuffer-formats '((mark modified read-only " " (name 40 40) " " (size 6 -1 :right) " " (mode 16 16 :left) " " filename)
 			(mark " " (name 16 -1) " " filename))
       ibuffer-elide-long-columns t
       ibuffer-eliding-string "&"

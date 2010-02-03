@@ -43,7 +43,8 @@
      (font-lock-warning-face ((t (:foreground "#e5786d" :bold t))))
      (paren-face-match-light ((t (:background "#857b6f"))))
      (show-paren-match-face ((t (:foreground "#f6f3e8" :background "#857b6f" :bold t))))
-     (show-paren-mismatch-face ((t (:foreground "#e5786d" :background "#857b6f" :bold t)))))))
+     (show-paren-mismatch-face ((t (:foreground "#e5786d" :background "#857b6f" :bold t))))
+     (twitter-header-face ((t (:background "#8a4513")))))))
 
 (color-theme-wombat)
 

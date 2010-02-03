@@ -85,6 +85,7 @@ of an error, just add the package to a list of missing packages."
 	       "screen-config"		;; screen-related config
 	       "shell-config"		;; shell-mode config
 	       "skeleton-config"	;; skeleton config
+	       "twitter-config"		;; twitter config
 	       "xml-config"		;; xml-mode config
 	       ))
   (try-require lib))

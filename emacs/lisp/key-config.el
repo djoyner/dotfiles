@@ -64,13 +64,13 @@
 (define-key ctrl-o-map "a" 'auto-fill-mode)
 (define-key ctrl-o-map "c" 'shell-clear-region)
 (define-key ctrl-o-map "f" 'c-mark-function)
-(define-key ctrl-o-map "g" 'goto-line)
+(define-key ctrl-o-map "g" 'gist-region)
 (define-key ctrl-o-map "h" 'hscroll-mode)
 (define-key ctrl-o-map "m" 'compile)
 (define-key ctrl-o-map "p" 'pastie-region)
 (define-key ctrl-o-map "r" 'query-replace-regexp)
-(define-key ctrl-o-map "t" 'delete-trailing-whitespace)
+(define-key ctrl-o-map "t" 'twitter-get-friends-timeline)
 (define-key ctrl-o-map "w" 'delete-rectangle)
-(define-key ctrl-o-map "\C-o" 'open-line)
+(define-key ctrl-o-map "\C-?" 'delete-trailing-whitespace)
 
 ;;; end ~/emacs/lisp/key-config.el

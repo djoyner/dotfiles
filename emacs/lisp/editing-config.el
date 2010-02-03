@@ -61,7 +61,24 @@ current line instead."
 (setq tramp-default-method "ssh")
 
 ;; Set up pastie
-(autoload 'pastie-region "pastie" "Post the current region as a new paste at pastie.org. Copies the URL into the kill ring." t)
+(autoload 'pastie-region "pastie" "\
+Post the current region as a new paste at pastie.org.
+Copies the URL into the kill ring." t nil)
+
+(autoload 'pastie-buffer "pastie" "\
+Post the current buffer as a new paste at pastie.org.
+Copies the URL into the kill ring." t nil)
+
+;; Set up gist
+(autoload 'gist-region "gist" "\
+Post the current region as a new paste at gist.github.com.
+Copies the URL into the kill ring.
+\(fn BEGIN END &optional PRIVATE)" t nil)
+
+(autoload 'gist-buffer "gist" "\
+Post the current buffer as a new paste at gist.github.com.
+Copies the URL into the kill ring.
+\(fn &optional PRIVATE)" t nil)
 
 ;; Other editing-related settings
 (setq next-line-add-newlines nil

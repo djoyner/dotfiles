@@ -72,7 +72,7 @@
 
 ;; Setup Consolas as the default font with platform-specific fallback to something reasonable
 (defun font-family-exists-p (font)
-  (if (null (list-fonts (font-spec :family font)))
+  (if (and (fboundp 'font-spec) (null (list-fonts (font-spec :family font))))
       nil
     t))
 

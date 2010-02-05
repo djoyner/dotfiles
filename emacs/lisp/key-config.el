@@ -71,6 +71,7 @@
 (define-key ctrl-o-map "r" 'query-replace-regexp)
 (define-key ctrl-o-map "t" 'twitter-get-friends-timeline)
 (define-key ctrl-o-map "w" 'delete-rectangle)
+(define-key ctrl-o-map "\C-o" 'open-line)
 (define-key ctrl-o-map "\C-?" 'delete-trailing-whitespace)
 
 ;;; end ~/emacs/lisp/key-config.el

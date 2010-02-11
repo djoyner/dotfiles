@@ -1,5 +1,9 @@
 ;;; ~/emacs/lisp/buffer-config.el
 
+;; Make buffer names unique using file path info
+(when (try-require 'uniquify)
+  (setq uniquify-buffer-name-style 'post-forward))
+
 ;; Set up ibuffer
 (autoload 'ibuffer "ibuffer" "List buffers." t)
 

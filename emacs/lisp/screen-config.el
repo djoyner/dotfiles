@@ -91,7 +91,7 @@
      (setq default-frame-alist (append '((font . "-apple-Consolas-normal-normal-normal-*-13-*-*-*-m-0-iso10646-1")) default-frame-alist))
    (setq default-frame-alist (append '((font . "fixed")) default-frame-alist))))
 
-;; Spruce up the title bar and mode line
+;; Spruce up the title bar
 (setq frame-title-format '("%b (" system-name ")"))
 
 ;; Other screen-related settings

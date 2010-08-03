@@ -2,7 +2,7 @@
 
 ;; Environment setup and platform-convenience macros
 (defvar running-ms-windows
-  (eq system-type `windows))
+  (or (eq system-type `windows-nt) (eq system-type 'cygwin)))
 
 (defvar running-gnu-linux
   (eq system-type 'gnu/linux))
@@ -68,6 +68,7 @@ of an error, just add the package to a list of missing packages."
 (dolist (lib '("buffer-config"		;; buffer-related config
 	       "cc-config"		;; C/C++ mode config
 	       "compile-config"		;; compile-related config
+	       "cygwin-config"		;; Cygwin-related config
 	       "dired-config"		;; dired-mode config
 	       "editing-config"		;; editing-related config
 	       "erl-config"		;; erlang-mode config

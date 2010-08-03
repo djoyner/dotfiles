@@ -9,7 +9,7 @@
 (defshell "/bin/bash" "bash")
 
 ;; Args passed to inferior shell, if the shell is bash
-(setq explicit-bash-args '("--noediting" "--login"))
+(setq explicit-bash-args '("--noediting" "--login" "-i"))
 
 ;; Translate ansi color sequences into text properties
 (autoload 'ansi-color-for-comint-mode-on "ansi-color" nil t)

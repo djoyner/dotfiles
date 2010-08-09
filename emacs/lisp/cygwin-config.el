@@ -27,6 +27,9 @@
 
  ;; Add support for Cygwin mount table
  (when (try-require `cygwin-mount)
-   (cygwin-mount-activate)))
+   (cygwin-mount-activate))
+
+ ;; Disable file-name-shadow-mode
+ (file-name-shadow-mode nil))
 
 ;;; end ~/emacs/lisp/cygwin-config.el

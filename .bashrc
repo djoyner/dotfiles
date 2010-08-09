@@ -19,6 +19,7 @@ case "$OSTYPE" in
 	export PATH=$PATH:$HOME/bin:.
         export ALTERNATE_EDITOR=c:/emacs-23.2/bin/runemacs.exe
         export CYGWIN="nodosfilewarning tty"
+        shopt -s nocaseglob
 	;;
 esac
 

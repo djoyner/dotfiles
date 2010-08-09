@@ -1,1 +1,36 @@
-set bell-style none
+# These are for proper 8-bit characters (едц, etc.)
+set meta-flag on
+set input-meta on
+set output-meta on
+set convert-meta off
+
+# Just flash screen, don't beep
+set bell-style visible
+
+# Be case-insensitive (nice on Windows machines)
+set completion-ignore-case on
+
+# These are also nice for tab-completion
+set completion-query-items 16
+set mark-symlinked-directories on
+set print-completions-horizontally on
+set show-all-if-unmodified on
+
+# Home Key
+"\e[7~":beginning-of-line
+
+# End Key
+"\e[8~":end-of-line
+
+# Ctrl-cursor right/left
+# (change to end-of-line/beginning-of-line if you prefer)
+"\eOc":forward-word
+"\eOd":backward-word
+
+# Alt-cursor right/left
+"\e\e[C":forward-word
+"\e\e[D":backward-word
+
+# Page up/down for beginning/end of history
+"\e[5~":beginning-of-history
+"\e[6~":end-of-history

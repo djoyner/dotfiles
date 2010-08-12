@@ -4,8 +4,8 @@ set input-meta on
 set output-meta on
 set convert-meta off
 
-# Just flash screen, don't beep
-set bell-style visible
+# Never beep or flash the screen
+set bell-style none
 
 # Be case-insensitive (nice on Windows machines)
 set completion-ignore-case on

@@ -81,7 +81,7 @@ of an error, just add the package to a list of missing packages."
 	       "lisp-config"		;; lisp-related config
 	       "minibuffer-config"	;; minibuffer-related config
 	       "misc-funcs"		;; miscellaneous elisp functions
-	       "p4-config"		;; p4 config
+	       ;;"p4-config"		;; p4 config
 	       "ruby-config"		;; ruby-mode config
 	       "screen-config"		;; screen-related config
 	       "shell-config"		;; shell-mode config

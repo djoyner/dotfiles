@@ -83,6 +83,7 @@ of an error, just add the package to a list of missing packages."
 	       "minibuffer-config"	;; minibuffer-related config
 	       "misc-funcs"		;; miscellaneous elisp functions
 	       ;;"p4-config"		;; p4 config
+	       "powershell-config"	;; powershell-mode config
 	       "ruby-config"		;; ruby-mode config
 	       "screen-config"		;; screen-related config
 	       "shell-config"		;; shell-mode config

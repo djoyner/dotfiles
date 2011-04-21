@@ -152,7 +152,7 @@ Ported to Emacs by Greg Pfeil, http://ethanschoonover.com/solarized."
   (interactive)
   (color-theme-solarized 'light))
 
-(color-theme-solarized-dark)
+(color-theme-wombat)
 
 ;; Highlight the current line
 (when (try-require 'highlight-current-line)

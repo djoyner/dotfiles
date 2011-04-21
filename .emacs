@@ -68,7 +68,6 @@ of an error, just add the package to a list of missing packages."
 (dolist (lib '("buffer-config"		;; buffer-related config
 	       "cc-config"		;; C/C++ mode config
 	       "compile-config"		;; compile-related config
-	       "cygwin-config"		;; Cygwin-related config
 	       "dired-config"		;; dired-mode config
 	       "editing-config"		;; editing-related config
 	       "erl-config"		;; erlang-mode config
@@ -82,6 +81,7 @@ of an error, just add the package to a list of missing packages."
 	       "lisp-config"		;; lisp-related config
 	       "minibuffer-config"	;; minibuffer-related config
 	       "misc-funcs"		;; miscellaneous elisp functions
+	       "mswin-config"		;; Windows-related config
 	       ;;"p4-config"		;; p4 config
 	       "powershell-config"	;; powershell-mode config
 	       "ruby-config"		;; ruby-mode config

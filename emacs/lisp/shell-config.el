@@ -39,4 +39,10 @@
 (define-key shell-mode-map [up] 'shell-maybe-up)
 (define-key shell-mode-map [down] 'shell-maybe-down)
 
+;; Prevent shell commands from being echoed
+(when-ms-windows
+ (defun my-comint-init ()
+   (setq comint-process-echoes t))
+ (add-hook 'comint-mode-hook 'my-comint-init))
+
 ;;; end ~/emacs/lisp/shell-config.el

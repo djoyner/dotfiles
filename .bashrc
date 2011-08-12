@@ -1,7 +1,7 @@
 ### ~/.bashrc
 
 ## OS-specific environment setup
-export EDITOR=emacs P4EDITOR=emacs SVN_EDITOR=emacs VISUAL=emacs
+export EDITOR=emacs SVN_EDITOR=emacs VISUAL=emacs
 
 case "$OSTYPE" in
     linux*)
@@ -23,6 +23,12 @@ case "$OSTYPE" in
 	;;
 esac
 
+## Cabal path setup
+if [ -d ~/.cabal ];
+then
+    PATH=$PATH:~/.cabal/bin
+fi
+
 ## Git local path setup
 if [ -d /usr/local/git ];
 then
@@ -43,8 +49,6 @@ else
     unset PROMPT_COMMAND
 fi
 
-[ -r ~/bin/j.sh ] && source ~/bin/j.sh
-
 ## bash setup
 set -b
 shopt -s checkwinsize
@@ -58,7 +62,7 @@ export PAGER=less
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
 ## Misc functions
-function find_walk_up()
+function findwalkup()
 {
     curr=''
     next=$PWD

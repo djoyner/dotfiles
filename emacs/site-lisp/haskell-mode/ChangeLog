@@ -1,3 +1,160 @@
+Fri Jul  2 14:18:54 CEST 2010  svein.ove@aas.no
+  tagged 2.8.0
+  
+  * Minimal indentation support for arrow syntax
+  
+  * Avoid opening a new inf-haskell window if one is already visible.
+    Windows on other virtual desktops or iconified frames don't count.
+  
+  * Force comint-process-echoes to nil
+  
+  * Autolaunch haskell-mode for files starting with #!/usr/bin/runghc
+    and similar
+  
+  * Added minimal major mode for parsing GHC core files, courtesy of Johan Tibell.
+    There is a corresponding Haskell menu entry.
+  
+  * Allow configuration of where-clause indentation; M-x customize-group
+    haskell-indentation.
+
+Fri Jul  2 14:18:38 CEST 2010  svein.ove@aas.no
+  * Remember to include ghc-core.el
+
+Fri Jul  2 14:13:37 CEST 2010  svein.ove@aas.no
+  * Finalized 2.8.0
+
+Tue Jun  1 06:19:12 CEST 2010  Iku Iwasa <iku.iwasa@gmail.com>
+  * Introduce `haskell-indentation-where-{pre,post}-offset' for offsets around `where' keyword.
+
+Fri Jul  2 14:01:11 CEST 2010  svein.ove@aas.no
+  * Allow underscores in identifiers
+
+Fri Jul  2 13:55:21 CEST 2010  svein.ove@aas.no
+  * New major mode: GHC-core
+
+Tue Mar  9 07:33:28 CET 2010  Daniel Sch[_\c3_][_\bc_]ssler <daniels@community.haskell.org>
+  * Add interpreter-mode-alist entries (this autolaunches haskell-mode for files beginning with #!/usr/bin/runghc etc.)
+
+Fri Jul  2 12:58:04 CEST 2010  svein.ove@aas.no
+  * Set comint-process-echoes to nil. Which is the default.
+
+Fri Jul  2 12:36:25 CEST 2010  svein.ove@aas.no
+  * Print a proper error if inferior-haskell-load-file is called on a buffer without an associated file
+
+Fri Jul  2 12:34:28 CEST 2010  svein.ove@aas.no
+  * Avoid opening a new inf-haskell window is one is already visible
+
+Fri Jul  2 12:16:37 CEST 2010  svein.ove@aas.no
+  * Minimal support for arrow syntax
+
+Tue Dec  8 11:34:42 CET 2009  Dave Love <fx@gnu.org>
+  * Add options to mode hook.
+  They're capitalized-words-mode and turn-on-haskell-decl-scan.
+
+Sat Dec 12 22:26:34 CET 2009  svein.ove@aas.no
+  * Use a special current-column function for haskell. Fixes #12.
+
+Wed Dec  2 17:17:17 CET 2009  svein.ove@aas.no
+  * Turn off parse-sexp-ignore-comments (?)
+
+Wed Dec  2 17:15:38 CET 2009  svein.ove@aas.no
+  * Avoid treating -->, etc., as comments
+
+Mon Nov 30 16:03:38 CET 2009  svein.ove@aas.no
+  tagged 2.7.0
+
+Mon Nov 30 16:02:25 CET 2009  svein.ove@aas.no
+  * Update NEWS
+
+Mon Nov 30 15:41:33 CET 2009  svein.ove@aas.no
+  * Link to useful sites in README, update support information
+
+Mon Nov 30 13:44:22 CET 2009  svein.ove@aas.no
+  * Handle ..-} style sequences in nested comments
+
+Sat Nov 28 18:24:49 CET 2009  svein.ove@aas.no
+  * Turn off adaptive fill, until it's fixed
+
+Fri Nov 27 18:33:10 CET 2009  svein.ove@aas.no
+  * Fix a typo in the indentation regex
+
+Thu Nov 26 16:21:41 CET 2009  svein.ove@aas.no
+  * Allow quote marks as Nth (N>1) characters of tokens
+
+Wed Nov 18 22:39:18 CET 2009  Dave Love <fx@gnu.org>
+  * Mention haskell-latex.el in README.
+
+Fri Nov 20 21:18:38 CET 2009  Dave Love <fx@gnu.org>
+  * Add :group to haskell-check-command.
+
+Fri Nov  6 01:35:12 CET 2009  Dave Love <fx@gnu.org>
+  * Add `haskell-check' and flymake support.
+
+Tue Nov 24 22:48:05 CET 2009  Valery V. Vorotyntsev <valery.vv@gmail.com>
+  * make `inferior-haskell-find-project-root' respect export lists
+  
+  A "hierarchical module" (one or more dots in module name) with an
+  export list cannot be loaded (`C-c C-l') unless there is .cabal file
+  available.
+  
+  That is because regexp current in `inferior-haskell-find-project-root'
+  does not match module headers with export lists. Like this one:
+  
+  module Codec.Binary.MSCP (
+      -- * Data structures
+      FileHeader(..),
+      CDR(..),
+  
+      -- * Parsing
+      readFile
+    ) where
+  
+  This patch makes the regexp less strict.
+
+Wed Nov 25 18:08:36 CET 2009  svein.ove@aas.no
+  * Okay, so emacs regexes /are/ perl regexes.
+  Fixes the regex instead of reversing the change.
+  
+  
+  rolling back:
+  
+  Fri Nov 20 13:34:55 CET 2009  svein.ove@aas.no
+    * Emacs regexes are not perl regexes!
+  
+      M ./haskell-indentation.el -5 +3
+
+Fri Nov 20 13:34:55 CET 2009  svein.ove@aas.no
+  * Emacs regexes are not perl regexes!
+
+Wed Nov 11 11:57:01 CET 2009  Dave Love <fx@gnu.org>
+  * Add missing `:group's to defcustoms.
+
+Tue Nov 10 15:32:08 CET 2009  Dave Love <fx@gnu.org>
+  * Resolve conflict with mdo patch.
+
+Thu Nov  5 22:20:57 CET 2009  Dave Love <fx@gnu.org>
+  * Allow non-ASCII names.
+  The code already used char-classes unconditionally, though I didn't
+  think they're supported in XEmacs.
+
+Thu Nov  5 22:15:07 CET 2009  Dave Love <fx@gnu.org>
+  * Various fixes for Emacs 21.
+
+Wed Nov 11 12:18:19 CET 2009  Dave Love <fx@gnu.org>
+  * Fix treatment of missing syntax-ppss.
+
+Thu Nov  5 22:26:07 CET 2009  Dave Love <fx@gnu.org>
+  * Comment/doc/message fixes.
+
+Fri Nov  6 09:56:44 CET 2009  vandijk.roel@gmail.com
+  * Parse the unicode syntax for (::)
+
+Fri Nov  6 16:55:55 CET 2009  vandijk.roel@gmail.com
+  * Fixed bug in haskell-decl-scan.el when using unicode syntax
+
+Mon Nov  9 22:47:49 CET 2009  svein.ove@aas.no
+  * Indent mdo as do
+
 Sat Nov  7 12:09:01 CET 2009  svein.ove@aas.no
   tagged 2.6.4
 

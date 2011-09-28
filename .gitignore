@@ -10,6 +10,6 @@
 !.screenrc
 !.xmonad
 !.xsession
-!bin/*.sh
-!bin/epylint
+!.vim
+!.vimrc
 !emacs

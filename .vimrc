@@ -45,6 +45,7 @@ set nosmartindent               " 'smartindent' breaks right-shifting of # lines
 set notimeout                   " Do not time out.
 set nottimeout                  " ...
 set ttyfast                     " Assume fast terminal connection.
+set virtualedit=block           " Allow virtual editing when in Visual Block mode.
 set visualbell                  " Use visual bell.
 set wildignore+=*.pyc,.hg,.git  " Ignored when completion matching.
 set wildmenu                    " Use menu for completions.
@@ -78,17 +79,13 @@ set smarttab                    " Tab respects 'shiftwidth', 'tabstop', 'softtab
 set softtabstop=8               " Edit as if tabs are 8 characters wide.
 set tabstop=8                   " Set the visible width of tabs.
 set textwidth=0                 " Don't auto-wrap lines except for specific filetypes.
+set whichwrap+=<,>,[,]          " Allow left/right arrows to move across lines.
 set nowrap                      " Don't wrap the display of long lines.
 
-" Font
-set guifont=Inconsolata:h12
-
-" Colors
-set background=dark
-set nocursorcolumn              " Don't highlight the current screen column.
-set cursorline                  " Highlight the current screen line.
-colorscheme wombat
-syntax on
+" Folds
+set foldcolumn=3                " Number of columns to show at left for folds.
+set foldnestmax=3               " Only allow 3 levels of folding.
+set foldlevelstart=99           " Start with all folds open.
 
 " Status line
 set laststatus=2                " Always show a status line.
@@ -111,13 +108,48 @@ set backupskip=/tmp/*,/private/tmp/*
 set directory=~/.vim/tmp/swap/
 set undodir=~/.vim/tmp/undo/
 
-set virtualedit=block   " Allow virtual editing when in Visual Block mode.
+" Font
+if has("win32")
+    set guifont=Consolas:h11
+endif
 
-set foldcolumn=3        " Number of columns to show at left for folds.
-set foldnestmax=3       " Only allow 3 levels of folding.
-set foldlevelstart=99   " Start with all folds open.
+if has("gui_macvim")
+    set antialias linespace=0 guifont=Inconsolata:h12
+endif
 
-set whichwrap+=<,>,[,]  " Allow left/right arrows to move across lines.
+" Colors
+set background=dark
+set nocursorcolumn              " Don't highlight the current screen column.
+set cursorline                  " Highlight the current screen line.
+colorscheme wombat
+
+" Switch on syntax highlighting when the terminal has colors, or when running
+" in the GUI. Set the do_syntax_sel_menu flag to tell $VIMRUNTIME/menu.vim
+" to expand the syntax menu.
+"
+" Note: This happens before the 'Autocommands' section below to give the syntax
+" command a chance to trigger loading the menus (vs. letting the filetype
+" command do it). If do_syntax_sel_menu isn't set beforehand, the syntax menu
+" won't get populated.
+"
+if &t_Co > 2 || has("gui_running")
+    let do_syntax_sel_menu=1
+    syntax on
+endif
+
+" Font
+if has("win32")
+    set guifont=Consolas:h10
+else
+    set guifont=Inconsolata:h12
+endif
+
+" Colors
+set background=dark
+set nocursorcolumn              " Don't highlight the current screen column.
+set cursorline                  " Highlight the current screen line.
+colorscheme wombat
+syntax on
 
 " Resize splits when the window is resized
 au VimResized * exe "normal! \<c-w>="
@@ -130,3 +162,4 @@ if has('mouse')
     set mouse=a                 " Enable mouse support if it's available.
 endif
 
+autocmd FileType * let b:browsefilter = ''

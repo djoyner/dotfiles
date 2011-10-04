@@ -5,16 +5,16 @@
 """
 filetype off
 call pathogen#runtime_append_all_bundles()
-filetype plugin indent on
-set nocompatible                " Use Vim settings instead of vi settings.
 
 """
 """ Settings
 """
 
 " Basics
+set nocompatible                " Use Vim settings instead of vi settings.
 set autochdir                   " Change the cwd when opening a file, switching buffers, etc.
 set autoindent                  " Copy indent from current line for new line.
+set autoread                    " Automatically re-read files changed (but not deleted) on disk.
 set backspace=indent,eol,start  " Backspace over everything in indent mode.
 set browsedir=buffer            " Browse from the directory of the related buffer.
 set cpoptions+=J                " A sentence has to be followed by two spaces.
@@ -52,6 +52,7 @@ set wildmenu                    " Use menu for completions.
 set wildmode=list:longest       " List all matches and complete till longest common string.
 
 " Searching
+set gdefault                    " All matches in a line are substituted by default.
 set hlsearch                    " Highlight latest search pattern.
 set ignorecase                  " Ignore case for pattern matches (\C overrides).
 set incsearch                   " Do incremental searching.
@@ -67,9 +68,9 @@ set norelativenumber            " Don't use relative line numbers.
 set display=lastline            " Display as much of a window's last line as possible.
 set expandtab                   " Insert spaces for <Tab> press; use spaces to indent.
 set formatoptions=q             " Allow formatting of comments with 'gq'.
-set formatoptions+=r            " Automatically insert the current comment leader on new line.
 set formatoptions+=n            " Recognize numbered lists.
 set formatoptions+=1            " Don't break a line after a one-letter word.
+set formatoptions-=or           " Don't repeat the current comment leader on new line.
 set linebreak                   " Wrap at 'breakat' char vs display edge if 'wrap' is on.
 set shiftround                  " Round indent to a multiple of 'shiftwidth'.
 set shiftwidth=4                " Number of spaces to use for indent and unindent.
@@ -108,22 +109,22 @@ set backupskip=/tmp/*,/private/tmp/*
 set directory=~/.vim/tmp/swap/
 set undodir=~/.vim/tmp/undo/
 
-" Font
-if has("win32")
-    set guifont=Consolas:h11
-endif
-
-if has("gui_macvim")
-    set antialias linespace=0 guifont=Inconsolata:h12
-endif
-
 " Colors
 set background=dark
 set nocursorcolumn              " Don't highlight the current screen column.
-set cursorline                  " Highlight the current screen line.
+set nocursorline                " Highlight the current screen line.
 colorscheme wombat
 
-" Switch on syntax highlighting when the terminal has colors, or when running
+" Miscellaneous
+if has("win32")
+    set grepprg=internal        " Windows findstr.exe just isn't good enough.
+endif
+
+if has('mouse')
+    set mouse=a                 " Enable mouse support if it's available.
+endif
+
+"" Switch on syntax highlighting when the terminal has colors, or when running
 " in the GUI. Set the do_syntax_sel_menu flag to tell $VIMRUNTIME/menu.vim
 " to expand the syntax menu.
 "
@@ -137,29 +138,103 @@ if &t_Co > 2 || has("gui_running")
     syntax on
 endif
 
-" Font
-if has("win32")
-    set guifont=Consolas:h10
-else
-    set guifont=Inconsolata:h12
+""
+""" Autocommands
+"""
+if has("autocmd") && !exists("autocommands_loaded")
+ 
+    " Set a flag to indicate that autocommands have already been loaded,
+    " so we only do this once. I use this flag instead of just blindly
+    " running `autocmd!` (which removes all autocommands from the
+    " current group) because `autocmd!` breaks the syntax highlighting /
+    " syntax menu expansion logic.
+    "
+    let autocommands_loaded = 1
+
+    " Enable filetype detection, so language-dependent plugins, indentation
+    " files, syntax highlighting, etc., are loaded for specific filetypes.
+    "
+    " Note: See $HOME/.vim/ftplugin and $HOME/.vim/after/ftplugin for
+    " most local filetype autocommands and customizations.
+    "
+    filetype plugin indent on
+
+    " When editing a file, always jump to the last known cursor
+    " position. Don't do it when the position is invalid or when inside
+    " an event handler (happens when dropping a file on gvim).
+    "
+    autocmd BufReadPost *
+        \   if line("'\"") > 0 && line("'\"") <= line("$") |
+        \       exe "normal g`\"" |
+        \   endif
+
+    " Resize Vim windows to equal heights and widths when Vim itself is resized.
+    autocmd VimResized * wincmd =
+
+    " Turn off browse dialog filters.
+    autocmd FileType * let b:browsefilter = ''
+
 endif
 
-" Colors
-set background=dark
-set nocursorcolumn              " Don't highlight the current screen column.
-set cursorline                  " Highlight the current screen line.
-colorscheme wombat
-syntax on
+"""
+""" Key mappings
+"""
 
-" Resize splits when the window is resized
-au VimResized * exe "normal! \<c-w>="
+" Set 'selection', 'selectmode', 'mousemodel' and 'keymodel' to make
+" both keyboard- and mouse-based highlighting behave more like Windows
+" and OS X. (These are the same settings you get with `:behave mswin`.)
+"
+" Note: 'selectmode', 'keymodel', and 'selection' are also set within
+" map_movement_keys.vim, since they're critical to the behavior of those
+" mappings (although they should be set to the same values there as here.)
+"
+" Note: Under MacVim, `:let macvim_hig_shift_movement = 1` will cause MacVim
+" to set selectmode and keymodel. See `:help macvim-shift-movement` for
+" details.
+" 
+"set selectmode=mouse,key
+"set keymodel=startsel,stopsel
+"set selection=exclusive
+"set mousemodel=popup
 
-if has("win32")
-    set grepprg=internal        " Windows findstr.exe just isn't good enough.
-endif
+" Leaders
+let mapleader = "\\"
+let maplocalleader = ","
 
-if has('mouse')
-    set mouse=a                 " Enable mouse support if it's available.
-endif
+" Move by display lines.
+noremap j gj
+noremap k gk
 
-autocmd FileType * let b:browsefilter = ''
+" Nuke the help key, instead toggle fullscreen mode.
+noremap  <F1> :set invfullscreen<CR>
+
+" Easy buffer navigation.
+noremap <C-h> <C-w>h
+noremap <C-j> <C-w>j
+noremap <C-k> <C-w>k
+noremap <C-l> <C-w>l
+
+" Y behaves as you'd expect.
+nnoremap Y y$
+
+" Turn off search highlighting.
+map <leader><space> :noh<cr>
+
+" Keep search matches in the middle of the window.
+nnoremap * *zzzv
+nnoremap # #zzzv
+nnoremap n nzzzv
+nnoremap N Nzzzv
+
+" Same when jumping around.
+nnoremap g; g;zz
+nnoremap g, g,zz
+
+" A little Emacs heresy.
+inoremap <c-a> <esc>I
+inoremap <c-e> <esc>A
+
+"""
+""" Plugin-specific configuration
+"""
+let autoclose_on=0              " Turn off autoclose by default.

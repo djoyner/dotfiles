@@ -190,10 +190,6 @@ if has("autocmd") && !exists("autocommands_loaded")
     au BufNewFile,BufRead *.html inoremap <buffer> <s-cr> <cr><esc>kA<cr>
     au BufNewFile,BufRead *.html nnoremap <buffer> <s-cr> vit<esc>a<cr><esc>vito<esc>i<cr><esc>
 
-    " SCons
-    au BufNewFile,BufRead SConstruct setlocal filetype=python
-    au BufNewFile,BufRead SConscript setlocal filetype=python
-
 endif
 
 """

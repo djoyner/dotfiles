@@ -241,6 +241,10 @@ noremap P P`[
 " Y behaves as you'd expect.
 nnoremap Y y$
 
+" Delete characters into the blackhole buffer.
+nnoremap x "_x
+nnoremap X "_X
+
 " Backsapce in Visual mode deletes selection.
 vnoremap <BS> d
 

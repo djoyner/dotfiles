@@ -90,11 +90,11 @@ set foldlevelstart=99           " Start with all folds open.
 
 " Status line
 set laststatus=2                " Always show a status line.
-"set statusline=%F%m%r%h%w
-"set statusline+=\ %#warningmsg#
-"set statusline+=%{SyntasticStatuslineFlag()}
-"set statusline+=%*
-"set statusline+=%=(%{&ff}/%Y)
+set statusline=%F%m%r%h%w
+set statusline+=\ %#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+set statusline+=%=(%{&ff}/%Y)
 
 " Windowing
 set splitbelow                  " Split new horizontal windows under current window.
@@ -163,16 +163,36 @@ if has("autocmd") && !exists("autocommands_loaded")
     " position. Don't do it when the position is invalid or when inside
     " an event handler (happens when dropping a file on gvim).
     "
-    autocmd BufReadPost *
+    au BufReadPost *
         \   if line("'\"") > 0 && line("'\"") <= line("$") |
         \       exe "normal g`\"" |
         \   endif
 
     " Resize Vim windows to equal heights and widths when Vim itself is resized.
-    autocmd VimResized * wincmd =
+    au VimResized * wincmd =
 
     " Turn off browse dialog filters.
-    autocmd FileType * let b:browsefilter = ''
+    au FileType * let b:browsefilter = ''
+
+    " Filetype specific configuration
+    "
+
+    " HTML
+    au BufNewFile,BufRead *.html setlocal foldmethod=manual
+
+    " Use Shift-Return to turn this:
+    "     <tag>|</tag>
+    "
+    " into this:
+    "     <tag>
+    "         |
+    "     </tag>
+    au BufNewFile,BufRead *.html inoremap <buffer> <s-cr> <cr><esc>kA<cr>
+    au BufNewFile,BufRead *.html nnoremap <buffer> <s-cr> vit<esc>a<cr><esc>vito<esc>i<cr><esc>
+
+    " SCons
+    au BufNewFile,BufRead SConstruct setlocal filetype=python
+    au BufNewFile,BufRead SConscript setlocal filetype=python
 
 endif
 
@@ -214,21 +234,30 @@ noremap <C-j> <C-w>j
 noremap <C-k> <C-w>k
 noremap <C-l> <C-w>l
 
+" Don't move the cursor after pasting.
+noremap p p`[
+noremap P P`[
+
 " Y behaves as you'd expect.
 nnoremap Y y$
+
+" Backsapce in Visual mode deletes selection.
+vnoremap <BS> d
 
 " Turn off search highlighting.
 map <leader><space> :noh<cr>
 
-" Keep search matches in the middle of the window.
-nnoremap * *zzzv
-nnoremap # #zzzv
-nnoremap n nzzzv
-nnoremap N Nzzzv
-
-" Same when jumping around.
-nnoremap g; g;zz
-nnoremap g, g,zz
+" Center the display line after searches. (This makes it *much* easier to see
+" the matched line.)
+"
+" More info: http://www.vim.org/tips/tip.php?tip_id=528
+"
+nnoremap n nzz
+nnoremap N Nzz
+nnoremap * *zz
+nnoremap # #zz
+nnoremap g* g*zz
+nnoremap g# g#zz
 
 " A little Emacs heresy.
 inoremap <c-a> <esc>I
@@ -237,4 +266,9 @@ inoremap <c-e> <esc>A
 """
 """ Plugin-specific configuration
 """
+
+" Autoclose
 let autoclose_on=0              " Turn off autoclose by default.
+
+" Syntastic
+let g:syntastic_enable_signs=1

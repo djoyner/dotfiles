@@ -174,7 +174,8 @@ if has("autocmd") && !exists("autocommands_loaded")
     " Turn off browse dialog filters.
     au FileType * let b:browsefilter = ''
 
-    " Filetype specific configuration
+    "
+    " Filetype specific autocommands
     "
 
     " HTML
@@ -264,11 +265,15 @@ inoremap <c-a> <esc>I
 inoremap <c-e> <esc>A
 
 """
-""" Plugin-specific configuration
+""" Filetype, indent, syntax and plugin-specific configuration
 """
 
 " Autoclose
-let autoclose_on=0              " Turn off autoclose by default.
+let g:autoclose_on=0            " Turn off autoclose by default.
+
+" Haskell
+let g:haskell_indent_if=2
+let g:haskell_indent_case=2
 
 " Syntastic
 let g:syntastic_enable_signs=1

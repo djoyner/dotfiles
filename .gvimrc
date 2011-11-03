@@ -15,6 +15,11 @@ set tabpagemax=100              " Allow many more files to be opened in tabs.
 if has("win32")
     " Windows sucks but at least we have Consolas
     set guifont=Consolas:h10
+
+    " Maximize the Win32 GUI window
+    if has("autocmd")
+        au GUIEnter * simalt ~x
+    endif
 endif
 
 if has("gui_macvim")

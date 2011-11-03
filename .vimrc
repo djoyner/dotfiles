@@ -35,7 +35,6 @@ set matchtime=3                 " In milliseconds.
 set nomodeline                  " Ignore modelines.
 set ruler                       " Always show the cursor position.
 set scrolloff=3                 " Context lines at top and bottom of display.
-set shell=/bin/bash
 set shortmess+=I                " Don't show the Vim welcome screen.
 set showbreak=↪                 " String to put at start of lines that have been wrapped.
 set showcmd                     " Display incomplete commands.

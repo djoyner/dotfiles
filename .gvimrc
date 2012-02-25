@@ -18,8 +18,8 @@ if has("win32")
 endif
 
 if has("gui_macvim")
-    " On the Mac we have to settle for Inconsolata
-    set guifont=Inconsolata:h12 antialias linespace=0
+    " Yay for Ubuntu Mono
+    set guifont=Ubuntu\ Mono:h12 antialias linespace=0
 
     " Make the Mac Vim window as tall as possible.
     set lines=999 columns=140
@@ -27,3 +27,5 @@ if has("gui_macvim")
     " Maximize both horizontally and vertically when entering fullscreen mode.
     set fuoptions=maxvert,maxhorz
 endif
+
+highlight MatchParen term=reverse ctermbg=3 gui=bold guifg=Yellow

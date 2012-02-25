@@ -31,7 +31,7 @@ set listchars+=extends:>        " Last column when line extends off right.
 set listchars+=precedes:<       " First column when line extends off left.
 set listchars+=eol:¬            " End of line.
 set matchpairs=(:),[:],{:},<:>  " Character pairs for use with %, 'showmatch'
-set matchtime=3                 " In milliseconds.
+set matchtime=3                 " In tenths of seconds.
 set nomodeline                  " Ignore modelines.
 set ruler                       " Always show the cursor position.
 set scrolloff=3                 " Context lines at top and bottom of display.
@@ -112,7 +112,8 @@ set undodir=~/.vim/tmp/undo/
 " Colors
 set background=dark
 set nocursorcolumn              " Don't highlight the current screen column.
-set nocursorline                " Highlight the current screen line.
+set nocursorline                " Don't highlight the current screen line.
+
 colorscheme wombat
 
 " Miscellaneous
@@ -231,16 +232,8 @@ noremap <C-j> <C-w>j
 noremap <C-k> <C-w>k
 noremap <C-l> <C-w>l
 
-" Don't move the cursor after pasting.
-noremap p p`[
-noremap P P`[
-
 " Y behaves as you'd expect.
 nnoremap Y y$
-
-" Delete characters into the blackhole buffer.
-nnoremap x "_x
-nnoremap X "_X
 
 " Backsapce in Visual mode deletes selection.
 vnoremap <BS> d

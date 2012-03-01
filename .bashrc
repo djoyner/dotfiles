@@ -1,23 +1,21 @@
 ### ~/.bashrc
 
 ## OS-specific environment setup
-export EDITOR=emacs SVN_EDITOR=emacs VISUAL=emacs
-
 case "$OSTYPE" in
     linux*)
 	export PATH=$PATH:/usr/local/bin:$HOME/bin:.
-        export ALTERNATE_EDITOR=emacs
+        export EDITOR=vim VISUAL=vim
 	;;
 
     darwin*)
 	export PATH=$PATH:/opt/local/bin:/opt/local/sbin:$HOME/bin:.
-        export ALTERNATE_EDITOR=emacs
+        export EDITOR="mvim -f" VISUAL="mvim -f"
 	export PY_USE_XMLPLUS=1
 	;;
 
     cygwin*)
 	export PATH=$PATH:$HOME/bin:.
-        export ALTERNATE_EDITOR=c:/emacs-23.2/bin/runemacs.exe
+        export EDITOR=vim VISUAL=vim
         export CYGWIN="nodosfilewarning tty"
         shopt -s nocaseglob
 	;;
@@ -26,13 +24,13 @@ esac
 ## Cabal path setup
 if [ -d ~/.cabal ];
 then
-    PATH=$PATH:~/.cabal/bin
+    export PATH=$PATH:~/.cabal/bin
 fi
 
 ## Git local path setup
 if [ -d /usr/local/git ];
 then
-    PATH=$PATH:/usr/local/git/bin
+    export PATH=$PATH:/usr/local/git/bin
     export MANPATH=$MANPATH:/usr/local/git/man
 fi
 

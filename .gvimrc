@@ -32,5 +32,3 @@ if has("gui_macvim")
     " Maximize both horizontally and vertically when entering fullscreen mode.
     set fuoptions=maxvert,maxhorz
 endif
-
-highlight MatchParen term=reverse ctermbg=3 gui=bold guifg=Yellow

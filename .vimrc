@@ -3,8 +3,8 @@
 """
 """ Preamble
 """
-filetype off
-call pathogen#runtime_append_all_bundles()
+call pathogen#runtime_prepend_subdirectories(expand('~/.vim/bundles'))
+call pathogen#helptags()
 
 """
 """ Settings
@@ -17,10 +17,12 @@ set autoindent                  " Copy indent from current line for new line.
 set autoread                    " Automatically re-read files changed (but not deleted) on disk.
 set backspace=indent,eol,start  " Backspace over everything in indent mode.
 set browsedir=buffer            " Browse from the directory of the related buffer.
+set cindent                     " Recommended setting for C-style indentation.
+set copyindent                  " Copy the previous indentation on autoindenting.
 set cpoptions+=J                " A sentence has to be followed by two spaces.
 set encoding=utf-8              " Set character encoding.
 set fillchars=diff:\            " Character to use for deleted lines in diff output.
-set hidden                      " Keep changed buffers without requiring saves.
+set hidden                      " Allow hiding buffers with unsaved changes.
 set history=1000                " Remember this many command lines.
 set nojoinspaces                " Don't get fancy with the spaces when joining lines.
 set lazyredraw                  " Don't redraw the screen unnecessarily.
@@ -84,16 +86,13 @@ set nowrap                      " Don't wrap the display of long lines.
 
 " Folds
 set foldcolumn=3                " Number of columns to show at left for folds.
+set foldenable                  " Enable folding.
 set foldnestmax=3               " Only allow 3 levels of folding.
 set foldlevelstart=99           " Start with all folds open.
 
 " Status line
 set laststatus=2                " Always show a status line.
-set statusline=%F%m%r%h%w
-set statusline+=\ %#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-set statusline+=%=(%{&ff}/%Y)
+set statusline=%F%m%r%h%w[%L][%{&ff}]%y[%p%%][%04l,%04v]
 
 " Windowing
 set splitbelow                  " Split new horizontal windows under current window.
@@ -113,7 +112,7 @@ set background=dark
 set nocursorcolumn              " Don't highlight the current screen column.
 set nocursorline                " Don't highlight the current screen line.
 
-colorscheme wombat
+colorscheme wombat256mod
 
 " Miscellaneous
 if has("win32")
@@ -267,5 +266,6 @@ let g:autoclose_on=0            " Turn off autoclose by default.
 let g:haskell_indent_if=2
 let g:haskell_indent_case=2
 
-" Syntastic
-let g:syntastic_enable_signs=1
+" Ctrl-P
+map <Leader>f :CtrlP<CR>
+let g:ctrlp_custom_ignore="\.git$\|\.hg$\|\.svn$"

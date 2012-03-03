@@ -3,39 +3,32 @@
 ## OS-specific environment setup
 case "$OSTYPE" in
     linux*)
-	export PATH=$PATH:/usr/local/bin:$HOME/bin:.
+        export PATH=/usr/local/bin:$HOME/bin:$PATH
         export EDITOR=vim VISUAL=vim
-	;;
+        ;;
 
     darwin*)
-	export PATH=$PATH:/opt/local/bin:/opt/local/sbin:$HOME/bin:.
+        export PATH=/usr/local/bin:/usr/local/sbin:/opt/local/bin:/opt/local/sbin:/usr/local/git/bin:$HOME/bin:$PATH
         export EDITOR="mvim -f" VISUAL="mvim -f"
-	export PY_USE_XMLPLUS=1
-	;;
+        export PY_USE_XMLPLUS=1
+        ;;
 
     cygwin*)
-	export PATH=$PATH:$HOME/bin:.
+        export PATH=$HOME/bin:$PATH
         export EDITOR=vim VISUAL=vim
         export CYGWIN="nodosfilewarning tty"
         shopt -s nocaseglob
-	;;
+        ;;
 esac
+
+## Ruby setup
+export RUBYOPT=rubygems
 
 ## Cabal path setup
 if [ -d ~/.cabal ];
 then
     export PATH=$PATH:~/.cabal/bin
 fi
-
-## Git local path setup
-if [ -d /usr/local/git ];
-then
-    export PATH=$PATH:/usr/local/git/bin
-    export MANPATH=$MANPATH:/usr/local/git/man
-fi
-
-## Ruby setup
-export RUBYOPT=rubygems
 
 ## Command prompt setup
 export PS1="[\u@\h \W]\\$ "
@@ -66,13 +59,13 @@ function findwalkup()
     next=$PWD
     while [ "$curr" != "$next" ];
     do
-	curr=$next
-	if [ -e $curr/$1 ];
-	then
-	    cd $curr
-	else
-	    next=`dirname $curr`
-	fi
+        curr=$next
+        if [ -e $curr/$1 ];
+        then
+            cd $curr
+        else
+            next=`dirname $curr`
+        fi
     done
 }
 
@@ -80,11 +73,11 @@ function rscreen()
 {
     if [ $# -ge 1 ];
     then
-	rhost=$1
-	shift 1
-	ssh $rhost -t TERM=screen /usr/bin/screen -DR $@
+        rhost=$1
+        shift 1
+        ssh $rhost -t TERM=screen /usr/bin/screen -DR $@
     else
-	echo "usage: rscreen host [args...]"
+        echo "usage: rscreen host [args...]"
     fi
 }
 
@@ -92,20 +85,23 @@ function rscreen()
 case "$OSTYPE" in
     linux*|cygwin*)
         alias l='/bin/ls -alF --color'
-	alias l.='/bin/ls -dF .* --color=tty'
-	alias ll='/bin/ls -lF --color=tty'
-	alias ls='/bin/ls -F --color'
-	;;
+        alias l.='/bin/ls -dF .* --color=tty'
+        alias ll='/bin/ls -lF --color=tty'
+        alias ls='/bin/ls -F --color'
+        ;;
 
     darwin*)
         alias l='/bin/ls -alFG'
-	alias l.='/bin/ls -dFG .*'
-	alias ll='/bin/ls -lFG'
-	alias ls='/bin/ls -FG'
-	;;
+        alias l.='/bin/ls -dFG .*'
+        alias ll='/bin/ls -lFG'
+        alias ls='/bin/ls -FG'
+        ;;
 esac
 
 alias screen='TERM=screen /usr/bin/screen'
 alias z='clear'
+
+## Finally, append . to the PATH
+export PATH=$PATH:.
 
 ### end ~/.bashrc

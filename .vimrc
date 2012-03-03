@@ -141,7 +141,7 @@ endif
 """ Autocommands
 """
 if has("autocmd") && !exists("autocommands_loaded")
- 
+
     " Set a flag to indicate that autocommands have already been loaded,
     " so we only do this once. I use this flag instead of just blindly
     " running `autocmd!` (which removes all autocommands from the
@@ -173,13 +173,6 @@ if has("autocmd") && !exists("autocommands_loaded")
     " Turn off browse dialog filters.
     au FileType * let b:browsefilter = ''
 
-    "
-    " Filetype specific autocommands
-    "
-
-    " HTML
-    au BufNewFile,BufRead *.html setlocal foldmethod=manual
-
     " Use Shift-Return to turn this:
     "     <tag>|</tag>
     "
@@ -207,7 +200,7 @@ endif
 " Note: Under MacVim, `:let macvim_hig_shift_movement = 1` will cause MacVim
 " to set selectmode and keymodel. See `:help macvim-shift-movement` for
 " details.
-" 
+"
 "set selectmode=mouse,key
 "set keymodel=startsel,stopsel
 "set selection=exclusive
@@ -222,7 +215,7 @@ noremap j gj
 noremap k gk
 
 " Nuke the help key, instead toggle fullscreen mode.
-noremap  <F1> :set invfullscreen<CR>
+noremap <F1> :set invfullscreen<CR>
 
 " Easy buffer navigation.
 noremap <C-h> <C-w>h
@@ -237,7 +230,14 @@ nnoremap Y y$
 vnoremap <BS> d
 
 " Turn off search highlighting.
-map <leader><space> :noh<cr>
+nmap <leader><space> :noh<cr>
+
+" Untabify and tabify
+nmap <leader><tab> :retab!<cr>
+nmap <leader><s-tab> :set noexpandtab<cr>:retab!<cr>:set expandtab<cr>
+
+" Strip trailing whitespace
+nmap <leader><bs> :call Preserve("%s/\\s\\+$//e")<cr>
 
 " Center the display line after searches. (This makes it *much* easier to see
 " the matched line.)
@@ -255,6 +255,9 @@ nnoremap g# g#zz
 inoremap <c-a> <esc>I
 inoremap <c-e> <esc>A
 
+" Toggle invisible characters.
+map <leader>i :set list!<cr>
+
 """
 """ Filetype, indent, syntax and plugin-specific configuration
 """
@@ -262,10 +265,40 @@ inoremap <c-e> <esc>A
 " Autoclose
 let g:autoclose_on=0            " Turn off autoclose by default.
 
+" Ctrl-P
+map <leader>f :CtrlP<CR>
+let g:ctrlp_custom_ignore="\.git$\|\.hg$\|\.svn$"
+
+" NERDTree
+map <Leader>d :NERDTreeToggle<CR> :set number<CR>
+
 " Haskell
 let g:haskell_indent_if=2
 let g:haskell_indent_case=2
 
-" Ctrl-P
-map <Leader>f :CtrlP<CR>
-let g:ctrlp_custom_ignore="\.git$\|\.hg$\|\.svn$"
+"""
+""" Custom commands
+"""
+
+" Set tabstop, softtabstop and shiftwidth to the same value
+command! -nargs=* Stab call Stab()
+function! Stab()
+  let l:tabstop = 1 * input('set tabstop = softtabstop = shiftwidth = ')
+  if l:tabstop > 0
+    let &l:sts = l:tabstop
+    let &l:ts = l:tabstop
+    let &l:sw = l:tabstop
+  endif
+endfunction
+
+function! Preserve(command)
+  " Preparation: save last search, and cursor position.
+  let _s=@/
+  let l = line(".")
+  let c = col(".")
+  " Do the business:
+  execute a:command
+  " Clean up: restore previous search history, and cursor position
+  let @/=_s
+  call cursor(l, c)
+endfunction

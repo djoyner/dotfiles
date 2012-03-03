@@ -1,1 +1,1 @@
-au! BufRead,BufNewFile *.cabal set filetype=cabal
+au BufRead,BufNewFile *.cabal setfiletype cabal

@@ -24,7 +24,7 @@ endif
 
 if has("gui_macvim")
     " Yay for Ubuntu Mono
-    set guifont=Ubuntu\ Mono:h12 antialias linespace=0
+    set guifont=Ubuntu\ Mono:h14 antialias linespace=0
 
     " Make the Mac Vim window as tall as possible.
     set lines=999 columns=140

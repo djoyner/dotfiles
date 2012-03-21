@@ -217,11 +217,17 @@ noremap k gk
 " Nuke the help key, instead toggle fullscreen mode.
 noremap <F1> :set invfullscreen<CR>
 
-" Easy buffer navigation.
+" Easy window navigation.
 noremap <C-h> <C-w>h
 noremap <C-j> <C-w>j
 noremap <C-k> <C-w>k
 noremap <C-l> <C-w>l
+
+" Easier cut/copy/paste to/from the system clipboard.
+noremap <leader>x "*x
+noremap <leader>y "*y
+noremap <leader>p :set paste<cr>"*p<cr>:set nopaste<cr>
+noremap <leader>P :set paste<cr>"*P<cr>:set nopaste<cr>
 
 " Y behaves as you'd expect.
 nnoremap Y y$

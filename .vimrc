@@ -3,7 +3,7 @@
 """
 """ Preamble
 """
-call pathogen#runtime_prepend_subdirectories(expand('~/.vim/bundles'))
+call pathogen#infect('bundles')
 call pathogen#helptags()
 
 """

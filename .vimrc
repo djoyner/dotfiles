@@ -60,6 +60,10 @@ set incsearch                   " Do incremental searching.
 set smartcase                   " Override 'ignorecase' if pattern contains uppercase.
 set nowrapscan                  " Don't allow searches to wrap around EOF.
 
+if has("win32")
+    set grepprg=grep\ -n        " Windows findstr.exe just isn't good enough.
+endif
+
 " Line numbering
 set number                      " Display line numbers.
 set numberwidth=4               " Minimum number of columns to show for line numbers.
@@ -71,7 +75,6 @@ set expandtab                   " Insert spaces for <Tab> press; use spaces to i
 set formatoptions=q             " Allow formatting of comments with 'gq'.
 set formatoptions+=n            " Recognize numbered lists.
 set formatoptions+=1            " Don't break a line after a one-letter word.
-set formatoptions-=or           " Don't repeat the current comment leader on new line.
 set linebreak                   " Wrap at 'breakat' char vs display edge if 'wrap' is on.
 set shiftround                  " Round indent to a multiple of 'shiftwidth'.
 set shiftwidth=4                " Number of spaces to use for indent and unindent.
@@ -83,6 +86,10 @@ set tabstop=8                   " Set the visible width of tabs.
 set textwidth=0                 " Don't auto-wrap lines except for specific filetypes.
 set whichwrap+=<,>,[,]          " Allow left/right arrows to move across lines.
 set nowrap                      " Don't wrap the display of long lines.
+
+if executable("par")
+    set formatprg=par\ -w78     " When available, use 'par' as the formatting program for 'gq'.
+endif
 
 " Folds
 set foldcolumn=3                " Number of columns to show at left for folds.
@@ -115,11 +122,7 @@ set nocursorline                " Don't highlight the current screen line.
 colorscheme wombat256mod
 
 " Miscellaneous
-if has("win32")
-    set grepprg=internal        " Windows findstr.exe just isn't good enough.
-endif
-
-if has('mouse')
+if has("mouse")
     set mouse=a                 " Enable mouse support if it's available.
 endif
 
@@ -183,6 +186,12 @@ if has("autocmd") && !exists("autocommands_loaded")
     au BufNewFile,BufRead *.html inoremap <buffer> <s-cr> <cr><esc>kA<cr>
     au BufNewFile,BufRead *.html nnoremap <buffer> <s-cr> vit<esc>a<cr><esc>vito<esc>i<cr><esc>
 
+    " Close Ack/Quickfix windows.
+    au FileType qf map <leader>q :cclose<CR>
+
+    " Close help windows with <leader>q.
+    au FileType HELP map <leader>q :q<CR>
+
 endif
 
 """
@@ -232,13 +241,27 @@ noremap <leader>P :set paste<cr>"*P<cr>:set nopaste<cr>
 " Y behaves as you'd expect.
 nnoremap Y y$
 
-" Backsapce in Visual mode deletes selection.
+" Backsapce in visual mode deletes selection.
 vnoremap <BS> d
+
+" Default searches to 'very magic', more like the world outside Vim.
+nnoremap / /\v
+vnoremap / /\v
+nnoremap ? ?\v
+vnoremap ? ?\v
+
+" Tab/shift-tab to indent/outdent in visual mode.
+vnoremap <Tab> >gv
+vnoremap <S-Tab> <gv
+
+" Keep selection when indenting/outdenting.
+vnoremap > >gv
+vnoremap < <gv
 
 " Turn off search highlighting.
 nmap <leader><space> :noh<cr>
 
-" Untabify and tabify
+" Untabify and tabify.
 nmap <leader><tab> :retab!<cr>
 nmap <leader><s-tab> :set noexpandtab<cr>:retab!<cr>:set expandtab<cr>
 
@@ -257,6 +280,13 @@ nnoremap # #zz
 nnoremap g* g*zz
 nnoremap g# g#zz
 
+" In command mode, type %% to insert the path of the currently edited file, as a shortcut for %:h<tab>.
+cmap %% <C-R>=expand("%:h") . "/" <CR>
+
+" Execute selection as Vimscript.
+vnoremap <leader>e y:@"<CR>
+nnoremap <leader>e yy:@"<CR>
+
 " A little Emacs heresy.
 inoremap <c-a> <esc>I
 inoremap <c-e> <esc>A
@@ -264,16 +294,28 @@ inoremap <c-e> <esc>A
 " Toggle invisible characters.
 map <leader>i :set list!<cr>
 
+" Center line on previous/next fix.
+map - :cprev<CR> zz
+map + :cnext<CR> zz
+
+" Center line in previous/next file.
+map g- :cpfile<CR> zz
+map g+ :cnfile<CR> zz
+
 """
 """ Filetype, indent, syntax and plugin-specific configuration
 """
 
-" Autoclose
-let g:autoclose_on=0            " Turn off autoclose by default.
-
 " Ctrl-P
 map <leader>f :CtrlP<CR>
-let g:ctrlp_custom_ignore="\.git$\|\.hg$\|\.svn$"
+let g:ctrlp_by_filename=1
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\.git$\|\.hg$\|\.svn$',
+  \ 'file': '\.exe$\|\.obj$\|\.dll$\|\.so$\|\.o$\|\.hi$\|\.a$',
+  \ }
+
+" Gundo
+nnoremap <leader>u :GundoToggle<CR>
 
 " NERDTree
 map <Leader>d :NERDTreeToggle<CR> :set number<CR>

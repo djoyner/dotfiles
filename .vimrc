@@ -28,7 +28,7 @@ set nojoinspaces                " Don't get fancy with the spaces when joining l
 set lazyredraw                  " Don't redraw the screen unnecessarily.
 set nolist                      " Turn 'list' off by default.
 set listchars=tab:▸-            " Start and body of tabs.
-set listchars+=trail:.          " Trailing spaces.
+set listchars+=trail:·          " Trailing spaces.
 set listchars+=extends:>        " Last column when line extends off right.
 set listchars+=precedes:<       " First column when line extends off left.
 set listchars+=eol:¬            " End of line.
@@ -99,7 +99,7 @@ set foldlevelstart=99           " Start with all folds open.
 
 " Status line
 set laststatus=2                " Always show a status line.
-set statusline=%F%m%r%h%w[%L][%{&ff}]%y[%p%%][%04l,%04v]
+set statusline=%F\ %m%r%y%w%h%=B:%n\ L:%l/%L[%p%%]\ C:%v
 
 " Windowing
 set splitbelow                  " Split new horizontal windows under current window.

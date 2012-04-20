@@ -324,6 +324,9 @@ map <Leader>d :NERDTreeToggle<CR> :set number<CR>
 let g:haskell_indent_if=2
 let g:haskell_indent_case=2
 
+" Autoclose (off by default)
+let g:autoclose_on=0
+
 """
 """ Custom commands
 """

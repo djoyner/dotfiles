@@ -12,7 +12,6 @@ call pathogen#helptags()
 
 " Basics
 set nocompatible                " Use Vim settings instead of vi settings.
-set autochdir                   " Change the cwd when opening a file, switching buffers, etc.
 set autoindent                  " Copy indent from current line for new line.
 set autoread                    " Automatically re-read files changed (but not deleted) on disk.
 set backspace=indent,eol,start  " Backspace over everything in indent mode.

@@ -107,11 +107,25 @@ set winminheight=0              " Allow windows to shrink to status line.
 set winminwidth=0               " Allow windows to shrink to vertical separator.
 
 " Backups, swap, etc.
+
+set backupdir=~/.vim/tmp/backup
+set directory=~/.vim/tmp/swap
+set undodir=~/.vim/tmp/undo
+
+if !isdirectory(expand(&backupdir))
+    call mkdir(expand(&backupdir), "p")
+endif
+
+if !isdirectory(expand(&directory))
+    call mkdir(expand(&directory), "p")
+endif
+
+if !isdirectory(expand(&undodir))
+    call mkdir(expand(&undodir), "p")
+endif
+
 set backup
-set backupdir=~/.vim/tmp/backup/
 set backupskip=/tmp/*,/private/tmp/*
-set directory=~/.vim/tmp/swap/
-set undodir=~/.vim/tmp/undo/
 
 " Colors
 set background=dark

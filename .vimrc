@@ -1,4 +1,4 @@
-: ~/.vimrc
+" ~/.vimrc
 
 """
 """ Preamble
@@ -205,9 +205,15 @@ nmap <leader><bs> :call Preserve("%s/\\s\\+$//e")<cr>
 " NERDTree
 map <Leader>d :NERDTreeToggle<cr>
 
+" Edit another file in the same directory as the current file
+" uses expression to extract path from current file's path.
+map <Leader>e :e <c-r>=expand("%:p:h") . '/'<cr>
+map <Leader>s :split <c-r>=expand("%:p:h") . '/'<cr>
+map <Leader>v :vnew <c-r>=expand("%:p:h") . '/'<cr>
+
 " Execute selection as Vimscript.
-vnoremap <leader>e y:@"<cr>
-nnoremap <leader>e yy:@"<cr>
+vnoremap <leader>E y:@"<cr>
+nnoremap <leader>E yy:@"<cr>
 
 " Ctrl-P
 map <leader>f :CtrlP<cr>
@@ -221,6 +227,7 @@ nmap <leader>r :call RenameFile()<cr>
 " Easier cut/copy/paste to/from the system clipboard.
 noremap <leader>x "*x
 noremap <leader>y "*y
+nnoremap <leader>Y :%y "*<cr>
 noremap <leader>p :set paste<cr>"*p<cr>:set nopaste<cr>
 noremap <leader>P :set paste<cr>"*P<cr>:set nopaste<cr>
 

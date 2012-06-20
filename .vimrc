@@ -1,9 +1,9 @@
-" ~/.vimrc
+: ~/.vimrc
 
 """
 """ Preamble
 """
-call pathogen#infect('bundles')
+call pathogen#runtime_append_all_bundles()
 call pathogen#helptags()
 
 """
@@ -53,7 +53,6 @@ set wildmode=list:longest       " List all matches and complete till longest com
 
 " Searching
 set gdefault                    " All matches in a line are substituted by default.
-set hlsearch                    " Highlight latest search pattern.
 set ignorecase                  " Ignore case for pattern matches (\C overrides).
 set incsearch                   " Do incremental searching.
 set smartcase                   " Override 'ignorecase' if pattern contains uppercase.
@@ -107,7 +106,6 @@ set winminheight=0              " Allow windows to shrink to status line.
 set winminwidth=0               " Allow windows to shrink to vertical separator.
 
 " Backups, swap, etc.
-
 set backupdir=~/.vim/tmp/backup
 set directory=~/.vim/tmp/swap
 set undodir=~/.vim/tmp/undo
@@ -139,18 +137,11 @@ if has("mouse")
     set mouse=a                 " Enable mouse support if it's available.
 endif
 
-"" Switch on syntax highlighting when the terminal has colors, or when running
-" in the GUI. Set the do_syntax_sel_menu flag to tell $VIMRUNTIME/menu.vim
-" to expand the syntax menu.
-"
-" Note: This happens before the 'Autocommands' section below to give the syntax
-" command a chance to trigger loading the menus (vs. letting the filetype
-" command do it). If do_syntax_sel_menu isn't set beforehand, the syntax menu
-" won't get populated.
-"
+" Switch on syntax highlighting when the terminal has colors or when running
+" in the GUI.  Also switch on highlighting the latest search pattern.
 if &t_Co > 2 || has("gui_running")
-    let do_syntax_sel_menu=1
     syntax on
+    set hlsearch
 endif
 
 ""
@@ -168,16 +159,11 @@ if has("autocmd") && !exists("autocommands_loaded")
 
     " Enable filetype detection, so language-dependent plugins, indentation
     " files, syntax highlighting, etc., are loaded for specific filetypes.
-    "
-    " Note: See $HOME/.vim/ftplugin and $HOME/.vim/after/ftplugin for
-    " most local filetype autocommands and customizations.
-    "
     filetype plugin indent on
 
     " When editing a file, always jump to the last known cursor
     " position. Don't do it when the position is invalid or when inside
     " an event handler (happens when dropping a file on gvim).
-    "
     au BufReadPost *
         \   if line("'\"") > 0 && line("'\"") <= line("$") |
         \       exe "normal g`\"" |
@@ -189,16 +175,6 @@ if has("autocmd") && !exists("autocommands_loaded")
     " Turn off browse dialog filters.
     au FileType * let b:browsefilter = ''
 
-    " Use Shift-Return to turn this:
-    "     <tag>|</tag>
-    "
-    " into this:
-    "     <tag>
-    "         |
-    "     </tag>
-    au BufNewFile,BufRead *.html inoremap <buffer> <s-cr> <cr><esc>kA<cr>
-    au BufNewFile,BufRead *.html nnoremap <buffer> <s-cr> vit<esc>a<cr><esc>vito<esc>i<cr><esc>
-
     " Close Ack/Quickfix windows.
     au FileType qf map <leader>q :cclose<CR>
 
@@ -208,29 +184,49 @@ if has("autocmd") && !exists("autocommands_loaded")
 endif
 
 """
-""" Key mappings
+""" Leaders
 """
-
-" Set 'selection', 'selectmode', 'mousemodel' and 'keymodel' to make
-" both keyboard- and mouse-based highlighting behave more like Windows
-" and OS X. (These are the same settings you get with `:behave mswin`.)
-"
-" Note: 'selectmode', 'keymodel', and 'selection' are also set within
-" map_movement_keys.vim, since they're critical to the behavior of those
-" mappings (although they should be set to the same values there as here.)
-"
-" Note: Under MacVim, `:let macvim_hig_shift_movement = 1` will cause MacVim
-" to set selectmode and keymodel. See `:help macvim-shift-movement` for
-" details.
-"
-"set selectmode=mouse,key
-"set keymodel=startsel,stopsel
-"set selection=exclusive
-"set mousemodel=popup
-
-" Leaders
 let mapleader = "\\"
 let maplocalleader = ","
+
+" Just one space.
+nmap <leader><space> :call JustOneSpace()<cr>
+
+" Clear highlighting of last search pattern.
+nmap <leader>\ :noh<cr>
+
+" Untabify/tabify.
+nmap <leader><tab> :retab!<cr>
+nmap <leader><s-tab> :set noexpandtab<cr>:retab!<cr>:set expandtab<cr>
+
+" Delete trailing whitespace.
+nmap <leader><bs> :call Preserve("%s/\\s\\+$//e")<cr>
+
+" NERDTree
+map <Leader>d :NERDTreeToggle<cr>
+
+" Execute selection as Vimscript.
+vnoremap <leader>e y:@"<cr>
+nnoremap <leader>e yy:@"<cr>
+
+" Ctrl-P
+map <leader>f :CtrlP<cr>
+
+" Toggle invisible characters.
+map <leader>i :set list!<cr>
+
+" Rename current file.
+nmap <leader>r :call RenameFile()<cr>
+
+" Easier cut/copy/paste to/from the system clipboard.
+noremap <leader>x "*x
+noremap <leader>y "*y
+noremap <leader>p :set paste<cr>"*p<cr>:set nopaste<cr>
+noremap <leader>P :set paste<cr>"*P<cr>:set nopaste<cr>
+
+"""
+""" Other key mappings
+"""
 
 " Move by display lines.
 noremap j gj
@@ -244,12 +240,6 @@ noremap <C-h> <C-w>h
 noremap <C-j> <C-w>j
 noremap <C-k> <C-w>k
 noremap <C-l> <C-w>l
-
-" Easier cut/copy/paste to/from the system clipboard.
-noremap <leader>x "*x
-noremap <leader>y "*y
-noremap <leader>p :set paste<cr>"*p<cr>:set nopaste<cr>
-noremap <leader>P :set paste<cr>"*P<cr>:set nopaste<cr>
 
 " Y behaves as you'd expect.
 nnoremap Y y$
@@ -271,16 +261,6 @@ vnoremap <S-Tab> <gv
 vnoremap > >gv
 vnoremap < <gv
 
-" Turn off search highlighting.
-nmap <leader><space> :noh<cr>
-
-" Untabify and tabify.
-nmap <leader><tab> :retab!<cr>
-nmap <leader><s-tab> :set noexpandtab<cr>:retab!<cr>:set expandtab<cr>
-
-" Strip trailing whitespace
-nmap <leader><bs> :call Preserve("%s/\\s\\+$//e")<cr>
-
 " Center the display line after searches. (This makes it *much* easier to see
 " the matched line.)
 "
@@ -293,19 +273,15 @@ nnoremap # #zz
 nnoremap g* g*zz
 nnoremap g# g#zz
 
+" Keep the cursor in place while joining lines.
+nnoremap J mzJ`z
+
 " In command mode, type %% to insert the path of the currently edited file, as a shortcut for %:h<tab>.
 cmap %% <C-R>=expand("%:h") . "/" <CR>
-
-" Execute selection as Vimscript.
-vnoremap <leader>e y:@"<CR>
-nnoremap <leader>e yy:@"<CR>
 
 " A little Emacs heresy.
 inoremap <c-a> <esc>I
 inoremap <c-e> <esc>A
-
-" Toggle invisible characters.
-map <leader>i :set list!<cr>
 
 " Center line on previous/next fix.
 map - :cprev<CR> zz
@@ -315,36 +291,63 @@ map + :cnext<CR> zz
 map g- :cpfile<CR> zz
 map g+ :cnfile<CR> zz
 
+" Disable Ex mode
+map Q <Nop>
+
+" Disable man page lookups
+map K <Nop>
+
 """
 """ Filetype, indent, syntax and plugin-specific configuration
 """
 
+" Autoclose (off by default)
+let g:autoclose_on=0
+
+" BufExplorer
+let g:bufExplorerDefaultMappings=1
+
 " Ctrl-P
-map <leader>f :CtrlP<CR>
 let g:ctrlp_by_filename=1
 let g:ctrlp_custom_ignore = {
   \ 'dir':  '\.git$\|\.hg$\|\.svn$',
   \ 'file': '\.exe$\|\.obj$\|\.dll$\|\.so$\|\.o$\|\.hi$\|\.a$',
   \ }
 
-" Gundo
-nnoremap <leader>u :GundoToggle<CR>
-
-" NERDTree
-map <Leader>d :NERDTreeToggle<CR> :set number<CR>
-
 " Haskell
 let g:haskell_indent_if=2
 let g:haskell_indent_case=2
-
-" Autoclose (off by default)
-let g:autoclose_on=0
 
 """
 """ Custom commands
 """
 
-" Set tabstop, softtabstop and shiftwidth to the same value
+" Replace consecutive spaces with just one space.
+function JustOneSpace()
+  " Get the current contents of the current line
+  let current_line = getline(".")
+
+  " Get the current cursor position
+  let cursor_position = getpos(".")
+
+  " Generate a match using the column number of the current cursor position
+  let matchre = '\s*\%' . cursor_position[2] . 'c\s*'
+  let pos = match(current_line, matchre) + 2
+
+  " Modify the line by replacing with one space
+  let modified_line = substitute(current_line, matchre, " ", "")
+
+  " Modify the cursor position to handle the change in string length
+  let cursor_position[2] = pos
+
+  " Set the line in the window
+  call setline(".", modified_line)
+
+  " Reset the cursor position
+  call setpos(".", cursor_position)
+endfunction
+
+" Set tabstop, softtabstop and shiftwidth to the same value.
 command! -nargs=* Stab call Stab()
 function! Stab()
   let l:tabstop = 1 * input('set tabstop = softtabstop = shiftwidth = ')
@@ -355,6 +358,7 @@ function! Stab()
   endif
 endfunction
 
+" Preserve search history and cursor position across a command execution.
 function! Preserve(command)
   " Preparation: save last search, and cursor position.
   let _s=@/
@@ -365,4 +369,15 @@ function! Preserve(command)
   " Clean up: restore previous search history, and cursor position
   let @/=_s
   call cursor(l, c)
+endfunction
+
+" Rename current file.
+function! RenameFile()
+  let old_name = expand('%')
+  let new_name = input('New file name: ', expand('%'), 'file')
+  if new_name != '' && new_name != old_name
+    exec ':saveas ' . new_name
+    exec ':silent !rm ' . old_name
+    redraw!
+  endif
 endfunction

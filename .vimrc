@@ -215,6 +215,9 @@ map <Leader>v :vnew <c-r>=expand("%:p:h") . '/'<cr>
 vnoremap <leader>E y:@"<cr>
 nnoremap <leader>E yy:@"<cr>
 
+" Buffet
+map <leader>B :Bufferlist<cr>
+
 " Ctrl-P
 map <leader>f :CtrlP<cr>
 

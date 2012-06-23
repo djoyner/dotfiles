@@ -1,6 +1,8 @@
 " ~/.gvimrc
 
+"
 " GUI-specific Settings
+"
 set cursorline                  " Highlight the current screen line.
 set fillchars+=vert:│           " Use a line-drawing char for pretty vertical splits.
 set guicursor+=a:blinkon0       " Turn off cursor blink in all modes.
@@ -11,11 +13,11 @@ set guitabtooltip=%F            " Tab tooltips show the full pathname.
 set showtabline=2               " Always show the tab line.
 set tabpagemax=100              " Allow many more files to be opened in tabs.
 
-" Platform-specific choice of font and window sizing
-if has("win32")
-    " Windows sucks but at least we have Consolas
-    set guifont=Consolas:h10
+" Yay for Consolas
+set guifont=Consolas:h12 antialias linespace=1
 
+" Platform-specific settings
+if has("win32")
     " Maximize the Win32 GUI window
     if has("autocmd")
         au GUIEnter * simalt ~x
@@ -23,9 +25,6 @@ if has("win32")
 endif
 
 if has("gui_macvim")
-    " Yay for Ubuntu Mono
-    set guifont=Ubuntu\ Mono:h14 antialias linespace=0
-
     " Make the Mac Vim window as tall as possible.
     set lines=999 columns=140
 

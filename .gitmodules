@@ -12,7 +12,7 @@
 	url = https://github.com/tpope/vim-fugitive.git
 [submodule ".vim/bundle/vcscommand"]
 	path = .vim/bundle/vcscommand
-	url = git://repo.or.cz/vcscommand.git
+	url = https://github.com/vim-scripts/vcscommand.vim.git
 [submodule ".vim/bundle/nerdcommenter"]
 	path = .vim/bundle/nerdcommenter
 	url = https://github.com/scrooloose/nerdcommenter

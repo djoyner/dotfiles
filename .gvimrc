@@ -13,11 +13,10 @@ set guitabtooltip=%F            " Tab tooltips show the full pathname.
 set showtabline=2               " Always show the tab line.
 set tabpagemax=100              " Allow many more files to be opened in tabs.
 
-" Yay for Consolas
-set guifont=Consolas:h12 antialias linespace=1
-
 " Platform-specific settings
 if has("win32")
+    set guifont=Consolas:h10 antialias linespace=1
+    
     " Maximize the Win32 GUI window
     if has("autocmd")
         au GUIEnter * simalt ~x
@@ -25,6 +24,8 @@ if has("win32")
 endif
 
 if has("gui_macvim")
+    set guifont=Consolas:h14 antialias linespace=1
+
     " Make the Mac Vim window as tall as possible.
     set lines=999 columns=140
 

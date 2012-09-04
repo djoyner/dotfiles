@@ -238,6 +238,12 @@ noremap <leader>P :set paste<cr>"*P<cr>:set nopaste<cr>
 """ Other key mappings
 """
 
+" Disable arrow keys in command mode.
+nnoremap <up> <nop>
+nnoremap <down> <nop>
+nnoremap <left> <nop>
+nnoremap <right> <nop>
+
 " Move by display lines.
 noremap j gj
 noremap k gk
@@ -317,6 +323,9 @@ let g:autoclose_on=0
 " BufExplorer
 let g:bufExplorerDefaultMappings=1
 
+" NERDtree
+let g:NERDTreeChDirMode=2
+
 " Ctrl-P
 let g:ctrlp_by_filename=1
 let g:ctrlp_custom_ignore = {
@@ -325,6 +334,15 @@ let g:ctrlp_custom_ignore = {
   \ }
 
 " Haskell
+if has("win32")
+    let g:haddock_browser = "C:\\Program Files\\Google Chrome\\google-chrome"
+endif
+
+if has("mac")
+    let g:haddock_browser = "open"
+    let g:haddock_browser_callformat = "%s %s"
+endif
+
 let g:haskell_indent_if=2
 let g:haskell_indent_case=2
 

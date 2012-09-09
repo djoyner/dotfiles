@@ -16,21 +16,6 @@ set mark-symlinked-directories on
 set print-completions-horizontally on
 set show-all-if-unmodified on
 
-# Home Key
-"\e[7~":beginning-of-line
-
-# End Key
-"\e[8~":end-of-line
-
-# Ctrl-cursor right/left
-# (change to end-of-line/beginning-of-line if you prefer)
-"\eOc":forward-word
-"\eOd":backward-word
-
-# Alt-cursor right/left
-"\e\e[C":forward-word
-"\e\e[D":backward-word
-
-# Page up/down for beginning/end of history
-"\e[5~":beginning-of-history
-"\e[6~":end-of-history
+# Set vi-mode
+set editing-mode vi
+set keymap vi

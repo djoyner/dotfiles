@@ -48,10 +48,13 @@ fi
 
 # Colorized prompt
 if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
-    PS1='\[\033[35m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+    PS1='\[\033[36m\]\u@\h\[\033[00m\]:\[\033[33m\]\w\[\033[00m\]\$ '
 else
     PS1="[\u@\h \W]\\$ "
 fi
+
+# Set window title
+PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME%%.*}:${PWD/#$HOME/~}\007"'
 
 # Load directory colors
 if [ -x /usr/bin/dircolors ]; then
@@ -91,7 +94,6 @@ case "$OSTYPE" in
         ;;
 esac
 
-alias screen='TERM=screen /usr/bin/screen'
 alias z='clear'
 
 ## Misc functions

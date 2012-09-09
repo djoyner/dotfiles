@@ -20,8 +20,9 @@ case "$OSTYPE" in
         ;;
 esac
 
-## Add miscellaneous tool directories to PATH
-[ -d ~/.cabal ]  && PATH=$PATH:~/.cabal/bin
+## Prepend miscellaneous directories to PATH
+[ -d ~/bin ]    && PATH=~/bin:$PATH
+[ -d ~/.cabal ] && PATH=~/.cabal/bin:$PATH
 
 ## Finally, append . to the PATH
 export PATH=$PATH:.

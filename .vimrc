@@ -130,7 +130,7 @@ set background=dark
 set nocursorcolumn              " Don't highlight the current screen column.
 set nocursorline                " Don't highlight the current screen line.
 
-colorscheme wombat256mod
+colorscheme solarized
 
 " Miscellaneous
 if has("mouse")
@@ -154,7 +154,6 @@ if has("autocmd") && !exists("autocommands_loaded")
     " running `autocmd!` (which removes all autocommands from the
     " current group) because `autocmd!` breaks the syntax highlighting /
     " syntax menu expansion logic.
-    "
     let autocommands_loaded = 1
 
     " Enable filetype detection, so language-dependent plugins, indentation
@@ -289,15 +288,8 @@ nnoremap # #zz
 nnoremap g* g*zz
 nnoremap g# g#zz
 
-" Keep the cursor in place while joining lines.
-nnoremap J mzJ`z
-
 " In command mode, type %% to insert the path of the currently edited file, as a shortcut for %:h<tab>.
 cmap %% <C-R>=expand("%:h") . "/" <CR>
-
-" A little Emacs heresy.
-inoremap <c-a> <esc>I
-inoremap <c-e> <esc>A
 
 " Center line on previous/next fix.
 map - :cprev<CR> zz

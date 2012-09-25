@@ -21,8 +21,9 @@ case "$OSTYPE" in
 esac
 
 ## Prepend miscellaneous directories to PATH
-[ -d ~/bin ]    && PATH=~/bin:$PATH
-[ -d ~/.cabal ] && PATH=~/.cabal/bin:$PATH
+[ -d ~/bin ]                 && PATH=~/bin:$PATH
+[ -d ~/.cabal ]              && PATH=~/.cabal/bin:$PATH
+[ -d ~/Library/Haskell/bin ] && PATH=~/Library/Haskell/bin:$PATH
 
 ## Finally, append . to the PATH
 export PATH=$PATH:.

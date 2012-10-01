@@ -276,17 +276,15 @@ vnoremap <S-Tab> <gv
 vnoremap > >gv
 vnoremap < <gv
 
-" Center the display line after searches. (This makes it *much* easier to see
-" the matched line.)
-"
-" More info: http://www.vim.org/tips/tip.php?tip_id=528
-"
+" Center the display line after searches and jumps.
 nnoremap n nzz
 nnoremap N Nzz
 nnoremap * *zz
 nnoremap # #zz
 nnoremap g* g*zz
 nnoremap g# g#zz
+nnoremap { {zz
+nnoremap } }zz
 
 " In command mode, type %% to insert the path of the currently edited file, as a shortcut for %:h<tab>.
 cmap %% <C-R>=expand("%:h") . "/" <CR>

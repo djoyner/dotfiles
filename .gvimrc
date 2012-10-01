@@ -24,7 +24,7 @@ if has("win32")
 endif
 
 if has("gui_macvim")
-    set guifont=Consolas:h14 antialias linespace=1
+    set guifont=Ubuntu\ Mono:h12 antialias linespace=0
 
     " Make the Mac Vim window as tall as possible.
     set lines=999 columns=140

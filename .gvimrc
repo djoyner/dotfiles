@@ -15,16 +15,14 @@ set tabpagemax=100              " Allow many more files to be opened in tabs.
 
 " Platform-specific settings
 if has("win32")
-    set guifont=Consolas:h10 antialias linespace=1
+    set guifont=Ubuntu\ Mono:h10 antialias linespace=0
     
-    " Maximize the Win32 GUI window
-    if has("autocmd")
-        au GUIEnter * simalt ~x
-    endif
+    " Make the Win32 GUI window as tall as possible.
+    set lines=999 columns=140
 endif
 
 if has("gui_macvim")
-    set guifont=Ubuntu\ Mono:h12 antialias linespace=0
+    set guifont=Source\ Code\ Pro:h9 antialias linespace=0
 
     " Make the Mac Vim window as tall as possible.
     set lines=999 columns=140

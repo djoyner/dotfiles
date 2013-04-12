@@ -130,7 +130,7 @@ set background=dark
 set nocursorcolumn              " Don't highlight the current screen column.
 set nocursorline                " Don't highlight the current screen line.
 
-colorscheme solarized
+colorscheme smyck
 
 " Miscellaneous
 if has("mouse")

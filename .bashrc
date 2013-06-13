@@ -71,11 +71,13 @@ export GREP_OPTIONS='--color=auto'
 export PAGER=less
 export MANPAGER=$PAGER
 
-# Turn off stop (^S) control character
-stty stop undef
+[ -x /bin/stty ] && {
+    # Turn off stop (^S) control character
+    stty stop undef
 
-# Don't echo control characters
-stty -echoctl
+    # Don't echo control characters
+    stty -echoctl
+}
 
 ## Aliases
 case "$OSTYPE" in

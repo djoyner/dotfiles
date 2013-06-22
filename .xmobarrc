@@ -9,19 +9,19 @@ Config
     , Run MultiCpu
       [ "-t", "cpu: <total>", "-S", "on",
         "-L", "50", "-H", "75", "-p", "2", "-a", "l",
-        "-n", "goldenrod", "-h", "darkred" ] 10
+        "-n", "goldenrod", "-h", "red" ] 10
     , Run Memory
       [ "-t", "mem: <usedratio>%",
         "-H", "80", "-p", "2", "-a", "l",
-        "-h", "darkred" ] 10
+        "-h", "red" ] 10
     , Run CoreTemp
       [ "-t", "core: <core0>°C",
         "-L", "45", "-H", "60", "-p", "2", "-a", "l",
-        "-n", "goldenrod", "-h", "darkred"] 50
+        "-n", "goldenrod", "-h", "red"] 50
     , Run Network "eth0"
       [ "-t", "<dev>:<tx> <txbar><rx> <rxbar>", "-m", "6",
         "-L", "1000", "-H", "2500", "-a", "l",
-        "-n", "goldenrod", "-h", "darkred"] 10
+        "-n", "goldenrod", "-h", "red"] 10
     , Run Com "get-ppp0.sh" [] "ppp0" 10
     , Run Date "%a %b %_d %l:%M:%S" "date" 10
     , Run Com "get-volume.sh" [] "volume" 10

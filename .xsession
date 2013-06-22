@@ -21,3 +21,4 @@ xscreensaver -no-splash &
 
 # Run xmonad
 exec xmonad
+#exec gnome-session --session=xmonad-gnome-nopanel "$@"

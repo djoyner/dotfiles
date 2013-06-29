@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Name=Happy Hacking 2 Keyboard Mappings
+Exec=/home/djoyner/bin/xmodmap-hhk2.sh
+Icon=system-run
+X-GNOME-Autostart-enabled=true

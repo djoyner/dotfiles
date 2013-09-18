@@ -22,10 +22,10 @@ if has("win32")
 endif
 
 if has("gui_macvim")
-    set guifont=Source\ Code\ Pro:h9 antialias linespace=0
+    set guifont=Source\ Code\ Pro:h10 antialias linespace=0
 
     " Make the Mac Vim window as tall as possible.
-    set lines=999 columns=140
+    set lines=999 columns=120
 
     " Maximize both horizontally and vertically when entering fullscreen mode.
     set fuoptions=maxvert,maxhorz

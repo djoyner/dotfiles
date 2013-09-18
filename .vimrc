@@ -137,6 +137,11 @@ if has("mouse")
     set mouse=a                 " Enable mouse support if it's available.
 endif
 
+" Load Go plugins directly from $GOROOT
+if isdirectory(expand($GOROOT))
+    set runtimepath+=$GOROOT/misc/vim
+endif
+
 " Switch on syntax highlighting when the terminal has colors or when running
 " in the GUI.  Also switch on highlighting the latest search pattern.
 if &t_Co > 2 || has("gui_running")
@@ -144,7 +149,7 @@ if &t_Co > 2 || has("gui_running")
     set hlsearch
 endif
 
-""
+"""
 """ Autocommands
 """
 if has("autocmd") && !exists("autocommands_loaded")

@@ -29,6 +29,7 @@ esac
 export PATH=$PATH:.
 
 ## Common environment setup
+[ -d /usr/local/go ] && export GOROOT=/usr/local/go
 export RUBYOPT=rubygems
 
 ## If running bash, source ~/.bashrc

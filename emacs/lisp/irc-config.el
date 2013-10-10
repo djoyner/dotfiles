@@ -1,5 +1,3 @@
-;;; ~/emacs/lisp/irc-config.el
-
 (require 'rcirc)
 
 (setq rcirc-default-server "kubrick.freenode.net"
@@ -28,4 +26,4 @@ to ensure matches of smiley regular expressions."
   (smiley-buffer)
   (delete-char -1))
 
-;;; end ~/emacs/lisp/irc-config.el
+(provide 'irc-config)

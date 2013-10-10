@@ -89,6 +89,7 @@ case "$OSTYPE" in
         ;;
 
     darwin*)
+        alias emacs='/Applications/Emacs.app/Contents/MacOS/Emacs -nw'
         alias l='/bin/ls -alFG'
         alias l.='/bin/ls -dFG .*'
         alias ll='/bin/ls -lFG'

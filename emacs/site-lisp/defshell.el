@@ -1,4 +1,4 @@
-;;; defshell.el --- Define inferior shells -*-unibyte: t; coding: iso-8859-1;-*-
+;;; defshell.el --- Define inferior shells -*-coding: raw-text; coding: iso-8859-1;-*-
 
 ;; Copyright ? 2000,2001,2003 Kevin Rodgers
 

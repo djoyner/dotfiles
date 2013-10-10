@@ -1,5 +1,3 @@
-;;; ~/emacs/lisp/buffer-config.el
-
 ;; Make buffer names unique using file path info
 (when (try-require 'uniquify)
   (setq uniquify-buffer-name-style 'post-forward))
@@ -35,8 +33,7 @@
 (iswitchb-mode 1)
 (setq iswitchb-default-method 'maybe-frame)
 
-;; Remap common buffer bindings to ibuffer and iswitchb
-(define-key global-map "\C-xb" 'iswitchb-buffer)
-(define-key global-map "\C-x\C-b" 'ibuffer)
+;; Alias list-buffers to ibuffer
+(defalias 'list-buffers 'ibuffer)
 
-;;; end ~/emacs/lisp/buffer-config.el
+(provide 'buffer-config)

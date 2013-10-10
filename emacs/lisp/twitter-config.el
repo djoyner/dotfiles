@@ -1,5 +1,3 @@
-;;; ~/emacs/lisp/twitter-config.el
-
 (autoload 'twitter-get-friends-timeline "twitter" "\
 Fetch and display the friends timeline.
 The results are formatted and displayed in a buffer called
@@ -15,4 +13,4 @@ A new buffer is popped up in a special edit mode. Press
 \\[twitter-status-post] when you are finished editing to send the
 message." nil nil)
 
-;;; end ~/emacs/lisp/twitter-config.el
+(provide 'twitter-config)

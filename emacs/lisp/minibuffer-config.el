@@ -1,5 +1,3 @@
-;;; ~/emacs/lisp/minibuffer-config.el
-
 ;; Dim the ignored part of the file name
 (file-name-shadow-mode 1)
 
@@ -12,4 +10,4 @@
       read-file-name-completion-ignore-case t
       resize-mini-windows t)
 
-;;; end ~/emacs/lisp/minibuffer-config.el
+(provide 'minibuffer-config)

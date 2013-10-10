@@ -1,5 +1,3 @@
-;;; ~/emacs/lisp/skeleton-config.el
-
 (require 'skeleton)
 
 (define-skeleton dot-cpp-file-header-skeleton
@@ -51,4 +49,4 @@
         (("\\.\\([h]\\|hh\\|hpp\\|tcc\\)\\'" . "C++ Header File") nil (dot-h-file-header-skeleton))
 	))
 
-;;; end ~/emacs/lisp/skeleton-config.el
+(provide 'skeleton-config)

@@ -1,5 +1,3 @@
-;;; ~/emacs/lisp/editing-config.el
-
 ;; Make text-mode the default major mode
 (setq default-major-mode 'text-mode)
 
@@ -60,15 +58,6 @@ current line instead."
 ;; Set up tramp
 (setq tramp-default-method "ssh")
 
-;; Set up pastie
-(autoload 'pastie-region "pastie" "\
-Post the current region as a new paste at pastie.org.
-Copies the URL into the kill ring." t nil)
-
-(autoload 'pastie-buffer "pastie" "\
-Post the current buffer as a new paste at pastie.org.
-Copies the URL into the kill ring." t nil)
-
 ;; Set up gist
 (autoload 'gist-region "gist" "\
 Post the current region as a new paste at gist.github.com.
@@ -88,4 +77,4 @@ Copies the URL into the kill ring.
 
 (setq-default indent-tabs-mode nil)
 
-;;; end ~/emacs/lisp/editing-config.el
+(provide 'editing-config)

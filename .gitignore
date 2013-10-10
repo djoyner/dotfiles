@@ -1,0 +1,19 @@
+# exclude all
+*
+# except important dot files and subdirectories
+!.autorun.cmd
+!.bash_profile
+!.bashrc
+!.emacs
+!.gitignore
+!.gvimrc
+!.inputrc
+!.profile
+!.pylintrc
+!.screenrc
+!.xmobarrc
+!.xmonad
+!.xsession
+!.vim
+!.vimrc
+!emacs

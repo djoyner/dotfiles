@@ -1,5 +1,3 @@
-;;; ~/emacs/lisp/key-config.el
-
 ;; Remap global keys
 (define-key global-map "\C-h" 'delete-backward-char)
 (define-key global-map "\C-x " 'just-one-space)
@@ -74,4 +72,4 @@
 (define-key ctrl-o-map "\C-?" 'delete-trailing-whitespace)
 (define-key ctrl-o-map [down] 'throw-region)
 
-;;; end ~/emacs/lisp/key-config.el
+(provide 'key-config)

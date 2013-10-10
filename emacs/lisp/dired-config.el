@@ -1,5 +1,3 @@
-;;; ~/emacs/lisp/dired-config.el
-
 (require 'dired)
 
 ;; Recursive deletes allowed, after asking for each directory at top level
@@ -17,4 +15,4 @@
 	 (call-process "/usr/bin/open" nil 0 nil file-name))))
  (define-key dired-mode-map "o" 'dired-open-mac))
 
-;;; end ~/emacs/lisp/dired-config.el
+(provide 'dired-config)

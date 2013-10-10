@@ -1,5 +1,3 @@
-;;; ~/emacs/lisp/cc-config.el
-
 (add-to-list 'auto-mode-alist '("\\.c$" . c-mode))
 (add-to-list 'auto-mode-alist '("\\.h$" . c++-mode))
 (add-to-list 'auto-mode-alist '("\\.tcc$" . c++-mode))
@@ -31,4 +29,4 @@
 					   (define-key c-mode-base-map "\C-m" 'c-context-line-break)
 					   (c-toggle-auto-hungry-state t))))
 
-;;; end ~/emacs/lisp/cc-config.el
+(provide 'cc-config)

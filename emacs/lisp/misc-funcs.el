@@ -1,5 +1,3 @@
-;;; ~/emacs/lisp/misc-funcs.el
-
 ;; Move (shift) a line of text up or down like you would do in Windows editors by pressing Alt-Up (or Alt-Down)
 (defun move-line (n)
   "Move the current line up or down by N lines."
@@ -168,4 +166,4 @@ buffer, so you don't dork the original."
         (set-buffer-modified-p nil)
         t))))
 
-;;; end ~/emacs/lisp/misc-funcs.el
+(provide 'misc-funcs)

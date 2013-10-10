@@ -1,4 +1,4 @@
-;;; ~/.emacs
+;; ~/.emacs
 
 ;; Environment setup and platform-convenience macros
 (defvar running-ms-windows
@@ -32,13 +32,6 @@
 (add-to-list 'load-path my-lisp-directory)
 (add-to-list 'load-path my-site-lisp-directory 'append)
 
-(dolist (dir '("erlang"			;; file:/usr/lib64/erlang/lib/tools-2.5.2/emacs
-	       "haskell-mode"		;; http://projects.haskell.org/haskellmode-emacs
-	       "nxml-mode"		;; http://www.thaiopensource.com/nxml-mode
-	       "ruby-mode"		;; http://svn.ruby-lang.org/repos/ruby/trunk/misc/ruby-mode
-	       ))
-  (add-to-list 'load-path (concat my-site-lisp-directory "/" dir) 'append))
-
 ;; Attempt to load a feature/library, failing silently
 (defvar try-require-missing-packages-list nil
   "List of packages that `try-require' can't find.")
@@ -59,18 +52,15 @@ of an error, just add the package to a list of missing packages."
        (add-to-list 'try-require-missing-packages-list feature 'append))
      nil)))
 
-;; Automatically [re]compile elisp files as they are loaded
-(when (try-require 'byte-code-cache)
-    (require 'bytecomp)
-    (add-to-list 'load-path bcc-cache-directory))
-
 ;; The remainder of config is loaded from libraries
-(dolist (lib '("buffer-config"		;; buffer-related config
+(dolist (lib '("package-config"      	;; package config -- must be first
+               "buffer-config"		;; buffer-related config
 	       "cc-config"		;; C/C++ mode config
 	       "compile-config"		;; compile-related config
 	       "dired-config"		;; dired-mode config
+	       "djoyner-funcs"		;; my elisp functions
 	       "editing-config"		;; editing-related config
-	       "erl-config"		;; erlang-mode config
+               "evil-config"		;; vim emulation
 	       "general-config"		;; general configuration settings
 	       "git-config"		;; git-mode config
 	       "haskell-config"		;; haskell-mode config
@@ -82,13 +72,12 @@ of an error, just add the package to a list of missing packages."
 	       "minibuffer-config"	;; minibuffer-related config
 	       "misc-funcs"		;; miscellaneous elisp functions
 	       "mswin-config"		;; Windows-related config
-	       ;;"p4-config"		;; p4 config
 	       "powershell-config"	;; powershell-mode config
-	       "ruby-config"		;; ruby-mode config
 	       "screen-config"		;; screen-related config
 	       "shell-config"		;; shell-mode config
 	       "skeleton-config"	;; skeleton config
 	       "twitter-config"		;; twitter config
+	       "whitespace-config"	;; whitespace display mappings
 	       "xml-config"		;; xml-mode config
 	       ))
   (try-require lib))

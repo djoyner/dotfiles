@@ -1,5 +1,3 @@
-;;; ~/emacs/lisp/shell-config.el
-
 ;; Define inferior shells
 (require 'defshell)
 
@@ -45,4 +43,4 @@
    (setq comint-process-echoes t))
  (add-hook 'comint-mode-hook 'my-comint-init))
 
-;;; end ~/emacs/lisp/shell-config.el
+(provide 'shell-config)

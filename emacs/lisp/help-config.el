@@ -1,5 +1,3 @@
-;;; ~/emacs/lisp/help-config.el
-
 ;; Avoid the description of all minor modes
 (defun describe-major-mode ()
   "Describe only `major-mode'."
@@ -12,4 +10,4 @@
 (setq apropos-do-all t
       Man-notify-method 'newframe)
 
-;;; end ~/emacs/lisp/help-config.el
+(provide 'haskell-config)

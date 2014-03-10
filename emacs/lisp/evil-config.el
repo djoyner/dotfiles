@@ -1,5 +1,6 @@
 (require 'evil)
 (require 'evil-leader)
+(require 'misc-funcs)
 (require 'surround)
 
 ;; Escape quits globally
@@ -21,6 +22,11 @@
 
 ; Y behaves as you'd expect
 (define-key evil-normal-state-map "Y" 'djoyner/copy-to-end-of-line)
+
+; Move RET and SPC kley bindings from the motion state map to the normal state map
+; so that when modes define them, RET and SPC bindings are available directly
+(move-key evil-motion-state-map evil-normal-state-map (kbd "RET"))
+(move-key evil-motion-state-map evil-normal-state-map " ")
 
 ;; Visual state mappings
 
@@ -57,18 +63,13 @@
   "\\" 'evil-ex-nohighlight
   "b" 'iswitchb-buffer
   "B" 'list-buffers
-  "c" 'delete-window
-  "e" 'djoyner/evil-edit
   "i" 'whitespace-mode
-  "n" 'evil-window-new
-  "o" 'delete-other-windows
+  "n" 'make-frame-command
   "P" 'djoyner/evil-paste-clipboard-before
   "p" 'djoyner/evil-paste-clipboard-after
   "r" 'evil-read
   "R" 'rename-file-and-buffer
-  "s" 'djoyner/evil-edit-split
-  "v" 'djoyner/evil-edit-vsplit
-  "w" 'evil-write
+  "t" 'djoyner/evil-set-tab-width
   "x" 'execute-extended-command
   "y" "\"*y")
 
@@ -125,18 +126,8 @@
   (evil-normal-state)
   (evil-visual-restore))
 
-(defun djoyner/evil-edit (file)
-  (interactive "F:edit ")
-  (find-file file))
-
-(defun djoyner/evil-edit-split (file)
-  (interactive "F:split ")
-  (let ((new-win (split-window (selected-window))))
-    (find-file file)))
-
-(defun djoyner/evil-edit-vsplit (file)
-  (interactive "F:vsplit ")
-  (let ((new-win (split-window (selected-window) nil t)))
-    (find-file file)))
+(defun djoyner/evil-set-tab-width (value)
+  (interactive "ntab-width: ")
+  (set-variable 'tab-width value))
 
 (provide 'evil-config)

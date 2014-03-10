@@ -1,6 +1,6 @@
 @echo off
 
-set TOP=c:\working\pangaea
+set TOP=d:\working\pangaea
 set TPAM=c:\working\tpam
 
 doskey home=cd /d %HOME%

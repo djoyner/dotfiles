@@ -166,4 +166,10 @@ buffer, so you don't dork the original."
         (set-buffer-modified-p nil)
         t))))
 
+;; Via http://www.emacswiki.org/emacs/Evil
+(defun move-key (keymap-from keymap-to key)
+     "Moves key binding from one keymap to another, deleting from the old location. "
+     (define-key keymap-to key (lookup-key keymap-from key))
+     (define-key keymap-from key nil))
+
 (provide 'misc-funcs)

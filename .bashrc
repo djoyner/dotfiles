@@ -46,6 +46,10 @@ fi
 
 ## Other look and feel
 
+# Editor
+export EDITOR=vim
+export VISUAL=vim
+
 # Colorized prompt
 if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
     PS1='\[\033[36m\]\u@\h\[\033[00m\]:\[\033[33m\]\w\[\033[00m\]\$ '

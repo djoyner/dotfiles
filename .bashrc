@@ -58,7 +58,10 @@ else
 fi
 
 # Set window title
-PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME%%.*}:${PWD/#$HOME/~}\007"'
+if [ $TERM != "emacs" ] && [ $TERM != "dumb" ];
+then
+    PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME%%.*}:${PWD/#$HOME/~}\007"'
+fi
 
 # Load directory colors
 if [ -x /usr/bin/dircolors ]; then

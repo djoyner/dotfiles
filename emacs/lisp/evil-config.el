@@ -63,13 +63,18 @@
   "\\" 'evil-ex-nohighlight
   "b" 'iswitchb-buffer
   "B" 'list-buffers
+  "e" 'djoyner/evil-edit
+  "E" 'eval-last-sexp
   "i" 'whitespace-mode
+  "k" 'evil-delete-buffer
   "n" 'make-frame-command
   "P" 'djoyner/evil-paste-clipboard-before
   "p" 'djoyner/evil-paste-clipboard-after
   "r" 'evil-read
   "R" 'rename-file-and-buffer
+  "s" 'djoyner/evil-edit-split
   "t" 'djoyner/evil-set-tab-width
+  "v" 'djoyner/evil-edit-vsplit
   "x" 'execute-extended-command
   "y" "\"*y")
 
@@ -125,6 +130,20 @@
   (evil-shift-right (region-beginning) (region-end))
   (evil-normal-state)
   (evil-visual-restore))
+
+(defun djoyner/evil-edit (file)
+  (interactive "F:edit ")
+  (find-file file))
+
+(defun djoyner/evil-edit-split (file)
+  (interactive "F:split ")
+  (let ((new-win (split-window (selected-window))))
+    (find-file file)))
+
+(defun djoyner/evil-edit-vsplit (file)
+  (interactive "F:vsplit ")
+  (let ((new-win (split-window (selected-window) nil t)))
+    (find-file file)))
 
 (defun djoyner/evil-set-tab-width (value)
   (interactive "ntab-width: ")

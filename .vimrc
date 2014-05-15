@@ -52,7 +52,6 @@ set wildmenu                    " Use menu for completions.
 set wildmode=list:longest       " List all matches and complete till longest common string.
 
 " Searching
-set gdefault                    " All matches in a line are substituted by default.
 set ignorecase                  " Ignore case for pattern matches (\C overrides).
 set incsearch                   " Do incremental searching.
 set smartcase                   " Override 'ignorecase' if pattern contains uppercase.

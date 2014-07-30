@@ -61,37 +61,17 @@
   "TAB" 'untabify
   "S-TAB" 'tabify
   "\\" 'evil-ex-nohighlight
-  "b" 'iswitchb-buffer
-  "B" 'list-buffers
-  "e" 'djoyner/evil-edit
-  "E" 'eval-last-sexp
+  "e" 'eval-last-sexp
   "i" 'whitespace-mode
-  "k" 'evil-delete-buffer
   "n" 'make-frame-command
   "P" 'djoyner/evil-paste-clipboard-before
   "p" 'djoyner/evil-paste-clipboard-after
-  "r" 'evil-read
   "R" 'rename-file-and-buffer
-  "s" 'djoyner/evil-edit-split
   "t" 'djoyner/evil-set-tab-width
-  "v" 'djoyner/evil-edit-vsplit
   "x" 'execute-extended-command
   "y" "\"*y")
 
 ;; Other mode mappings
-
-; Override j/k mappings for ibuffer mode
-(eval-after-load 'ibuffer
-    '(progn
-       ;; use the standard ibuffer bindings as a base
-       (message "Setting up ibuffer mappings")
-       (set-keymap-parent
-        (evil-get-auxiliary-keymap ibuffer-mode-map 'normal t)
-        (assq-delete-all 'menu-bar (copy-keymap ibuffer-mode-map)))
-       (evil-define-key 'normal ibuffer-mode-map "j" 'ibuffer-forward-line)
-       (evil-define-key 'normal ibuffer-mode-map "k" 'ibuffer-backward-line)
-       (evil-define-key 'normal ibuffer-mode-map "J" 'ibuffer-jump-to-buffer) ; "j"
-     ))
 
 ;; Cursors
 (setq evil-default-cursor '("white" box)
@@ -99,11 +79,7 @@
       evil-emacs-state-cursor '("red" box))
 
 ;; Other config
-(evil-set-initial-state 'ibuffer-mode 'normal)
-
-(setq evil-emacs-state-modes (delete 'ibuffer-mode evil-emacs-state-modes)
-      evil-motion-state-modes (cons 'ibuffer-mode evil-motion-state-modes)
-      evil-want-fine-undo t)
+(setq evil-want-fine-undo t)
 
 ;; NB: evil-leader-mode must be enabled before evil-mode
 (global-evil-leader-mode t)
@@ -130,20 +106,6 @@
   (evil-shift-right (region-beginning) (region-end))
   (evil-normal-state)
   (evil-visual-restore))
-
-(defun djoyner/evil-edit (file)
-  (interactive "F:edit ")
-  (find-file file))
-
-(defun djoyner/evil-edit-split (file)
-  (interactive "F:split ")
-  (let ((new-win (split-window (selected-window))))
-    (find-file file)))
-
-(defun djoyner/evil-edit-vsplit (file)
-  (interactive "F:vsplit ")
-  (let ((new-win (split-window (selected-window) nil t)))
-    (find-file file)))
 
 (defun djoyner/evil-set-tab-width (value)
   (interactive "ntab-width: ")

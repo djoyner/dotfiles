@@ -14,12 +14,6 @@
 
 ;; Normal state mappings
 
-; Easy window navigation
-(define-key evil-normal-state-map (kbd "C-k") 'evil-window-up)
-(define-key evil-normal-state-map (kbd "C-j") 'evil-window-down)
-(define-key evil-normal-state-map (kbd "C-h") 'evil-window-left)
-(define-key evil-normal-state-map (kbd "C-l") 'evil-window-right)
-
 ; Y behaves as you'd expect
 (define-key evil-normal-state-map "Y" 'djoyner/copy-to-end-of-line)
 
@@ -63,9 +57,9 @@
   "\\" 'evil-ex-nohighlight
   "e" 'eval-last-sexp
   "i" 'whitespace-mode
-  "n" 'make-frame-command
   "P" 'djoyner/evil-paste-clipboard-before
   "p" 'djoyner/evil-paste-clipboard-after
+  "q" 'fill-paragraph
   "R" 'rename-file-and-buffer
   "t" 'djoyner/evil-set-tab-width
   "x" 'execute-extended-command
@@ -73,13 +67,31 @@
 
 ;; Other mode mappings
 
+; Override j/k mappings for ibuffer mode
+(eval-after-load 'ibuffer
+    '(progn
+       ;; use the standard ibuffer bindings as a base
+       (message "Setting up ibuffer mappings")
+       (set-keymap-parent
+        (evil-get-auxiliary-keymap ibuffer-mode-map 'normal t)
+        (assq-delete-all 'menu-bar (copy-keymap ibuffer-mode-map)))
+       (evil-define-key 'normal ibuffer-mode-map "j" 'ibuffer-forward-line)
+       (evil-define-key 'normal ibuffer-mode-map "k" 'ibuffer-backward-line)
+       (evil-define-key 'normal ibuffer-mode-map "J" 'ibuffer-jump-to-buffer) ; "j"
+     ))
+
 ;; Cursors
 (setq evil-default-cursor '("white" box)
       evil-insert-state-cursor '("white" bar)
       evil-emacs-state-cursor '("red" box))
 
 ;; Other config
-(setq evil-want-fine-undo t)
+(evil-set-initial-state 'haskell-interactive-mode 'emacs)
+(evil-set-initial-state 'ibuffer-mode 'normal)
+
+(setq evil-emacs-state-modes (delete 'ibuffer-mode evil-emacs-state-modes)
+      evil-motion-state-modes (cons 'ibuffer-mode evil-motion-state-modes)
+      evil-want-fine-undo t)
 
 ;; NB: evil-leader-mode must be enabled before evil-mode
 (global-evil-leader-mode t)

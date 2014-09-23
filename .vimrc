@@ -205,9 +205,6 @@ nmap <leader><s-tab> :set noexpandtab<cr>:retab!<cr>:set expandtab<cr>
 " Delete trailing whitespace.
 nmap <leader><bs> :call Preserve("%s/\\s\\+$//e")<cr>
 
-" NERDTree
-map <Leader>d :NERDTreeToggle<cr>
-
 " Edit another file in the same directory as the current file
 " uses expression to extract path from current file's path.
 map <Leader>e :e <c-r>=expand("%:p:h") . '/'<cr>
@@ -217,12 +214,6 @@ map <Leader>v :vnew <c-r>=expand("%:p:h") . '/'<cr>
 " Execute selection as Vimscript.
 vnoremap <leader>E y:@"<cr>
 nnoremap <leader>E yy:@"<cr>
-
-" Buffet
-map <leader>B :Bufferlist<cr>
-
-" Ctrl-P
-map <leader>f :CtrlP<cr>
 
 " Toggle invisible characters.
 map <leader>i :set list!<cr>
@@ -313,19 +304,6 @@ map K <Nop>
 
 " Autoclose (off by default)
 let g:autoclose_on=0
-
-" BufExplorer
-let g:bufExplorerDefaultMappings=1
-
-" NERDtree
-let g:NERDTreeChDirMode=2
-
-" Ctrl-P
-let g:ctrlp_by_filename=1
-let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\.git$\|\.hg$\|\.svn$',
-  \ 'file': '\.exe$\|\.obj$\|\.dll$\|\.so$\|\.o$\|\.hi$\|\.a$',
-  \ }
 
 " Haskell
 if has("win32")

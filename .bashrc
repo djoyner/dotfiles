@@ -106,33 +106,4 @@ esac
 
 alias z='clear'
 
-## Misc functions
-function findwalkup()
-{
-    curr=''
-    next=$PWD
-    while [ "$curr" != "$next" ];
-    do
-        curr=$next
-        if [ -e $curr/$1 ];
-        then
-            cd $curr
-        else
-            next=`dirname $curr`
-        fi
-    done
-}
-
-function rscreen()
-{
-    if [ $# -ge 1 ];
-    then
-        rhost=$1
-        shift 1
-        ssh $rhost -t TERM=screen /usr/bin/screen -DR $@
-    else
-        echo "usage: rscreen host [args...]"
-    fi
-}
-
 ### end ~/.bashrc

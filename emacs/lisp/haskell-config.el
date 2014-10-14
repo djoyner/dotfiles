@@ -40,7 +40,6 @@
       haskell-process-type 'cabal-repl
       haskell-process-suggest-remove-import-lines t
       haskell-process-auto-import-loaded-modules t
-      haskell-process-log t
       haskell-tags-on-save t)
 
 (provide 'haskell-config)

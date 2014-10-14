@@ -15,7 +15,3 @@ set completion-query-items 16
 set mark-symlinked-directories on
 set print-completions-horizontally on
 set show-all-if-unmodified on
-
-# Set vi-mode
-set editing-mode vi
-set keymap vi

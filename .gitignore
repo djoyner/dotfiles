@@ -11,6 +11,7 @@
 !.profile
 !.pylintrc
 !.screenrc
+!.tmux.conf
 !.xmobarrc
 !.xmonad
 !.xsession

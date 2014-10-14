@@ -1,0 +1,29 @@
+#!/bin/sh
+
+linux_get_loadavg ()
+{
+    LOADAVG=`cut -f1-3 -d' ' < /proc/loadavg`
+    echo $LOADAVG
+}
+
+darwin_get_loadavg ()
+{
+    LOADAVG=`sysctl -n vm.loadavg | cut -f2-4 -d' '`
+    echo $LOADAVG
+}
+
+get_loadavg ()
+{
+case $(uname -s) in
+    "Linux")
+        linux_get_loadavg
+        ;;
+    "Darwin")
+        darwin_get_loadavg
+        ;;
+esac
+}
+
+LOADAVG=`get_loadavg`
+[ -z "$LOADAVG" ] && exit
+echo ${LOADAVG}

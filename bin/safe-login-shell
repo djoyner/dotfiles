@@ -1,0 +1,9 @@
+#!/bin/sh
+
+shell=$(basename "$SHELL")
+
+if [ -n "$(command -v reattach-to-user-namespace)" ]; then
+   reattach-to-user-namespace -l "$shell"
+else
+   exec "$shell"
+fi

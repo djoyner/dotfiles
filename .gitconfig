@@ -1,0 +1,105 @@
+[user]
+	name = David Joyner
+	email = david@joynerhome.net
+
+[core]
+	# Turn off git's line-ending conversions...
+	# whatever line endings are present in a file are used w/o translation
+	autocrlf = false
+        # Global .gitignore
+	excludesfile = /Users/djoyner/.gitignore_global
+
+[diff]
+	# Tell diff to use mnemonic path prefixes instead of 'a' and 'b'...
+	# (i)ndex, (w)ork tree, (c)ommit, (o)bject
+	mnemonicprefix = true
+	# Allow diff to do basic copy and rename detection
+	renames = copies
+	# Use BeyondCompare3 for 'git difftool'
+	#tool = bc3
+
+[difftool]
+	# Don't waste my time between invocations of difftool
+	prompt = false
+
+[branch]
+	# When branching off a remote branch, automatically set up tracking
+	autosetupmerge = true
+
+[merge]
+	# Use BeyondCompare3 for 'git mergetool'
+	#tool = bc3
+
+[rerere]
+	# Enable recording of resolved conflicts so identical hunks can be auto-resolved
+	enabled = true
+
+[push]
+	# Tell 'git push' to push only the current branch to its upstream branch...
+	# and only if the upstream branch is named the same as the current one
+	default = matching
+
+[alias]
+	# Force 'git diff' to highlight inline word changes
+	diff = diff --word-diff
+	# Force 'git grep' to ignore binary files
+	grep = grep -I
+	# Basic abbreviations
+	br = branch -ra
+	ci = commit
+	co = checkout
+	cl = clone
+	st = status -sb
+	r = reset
+	rh = reset --hard
+	sl = stash list
+	sa = stash apply
+	ss = stash save
+        # Nuke branch
+        nuke = "!f() { git branch -D "$1"; git push origin ":$1"; }; f"
+	# Mercurial replacements
+	parents = show --pretty=format:%P -s
+	in = "!git fetch && git log ..FETCH_HEAD"
+	out = "!git fetch && git log FETCH_HEAD.."
+	# Reset HEAD shortcuts
+	r1 = reset HEAD^
+	r2 = reset HEAD^^
+	rh1 = reset --hard HEAD^
+	rh2 = reset --hard HEAD^^
+	# Better logs
+	ls = log --oneline --decorate
+	ll = log --oneline --decorate --numstat
+	# Short log of last commit
+	llc = "!git ll -1"
+	# Short log of single commit, given revision
+	llr = "!f() { git ll "$1"^.."$1"; }; f"
+	# Diff against the index (cached)
+	dc = "!git diff --cached"
+	# Diff of the last commit
+	dlc = "!git diff --cached HEAD^"
+	# Diff of single commit, given revision
+	dr = "!f() { git diff "$1"^.."$1"; }; f"
+	# What branches contain a given revision
+	brr = "!git br --contains"
+	# Find files inside the repo
+	f = "!git ls-files | GREP_OPTIONS= grep -i"
+	# File log
+	fl = log -u
+
+[difftool "bc3"]
+	# Path to BC3
+	#path = c:/program files (x86)/beyond compare 3/bcomp.exe
+
+[mergetool "bc3"]
+	# Path to BC3
+	#path = c:/program files (x86)/beyond compare 3/bcomp.exe
+	# BC3 knows what's up
+	#trustExitCode = true
+
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 
+
+[mergetool "sourcetree"]
+	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true

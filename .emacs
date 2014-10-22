@@ -83,9 +83,10 @@ of an error, just add the package to a list of missing packages."
   (try-require lib))
 
 ;; Start the emacs server running as long as I'm not root
-(unless (string-equal "root" (getenv "USER"))
-  (require 'server)
-  (server-start))
+(require 'server)
+(or (string-equal "root" (getenv "USER"))
+    (server-running-p)
+    (server-start))
 
 ;; Display a warning if any packages failed to load
 (when try-require-missing-packages-list

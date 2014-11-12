@@ -67,8 +67,10 @@ of an error, just add the package to a list of missing packages."
 	       "help-config"		;; help-related config
 	       "hg-config"		;; mercurial-mode config
 	       "irc-config"		;; IRC client config
+	       "js-config"		;; js2-mode config
 	       "key-config"		;; general key bindings
 	       "lisp-config"		;; lisp-related config
+	       "markdown-config"	;; markdown-mode config
 	       "minibuffer-config"	;; minibuffer-related config
 	       "misc-funcs"		;; miscellaneous elisp functions
 	       "mswin-config"		;; Windows-related config

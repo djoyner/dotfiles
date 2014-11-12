@@ -3,6 +3,7 @@
 
 (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/") t)
 (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
+(add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/") t)
 
 (setq package-enable-at-startup nil)
 (package-initialize)
@@ -10,8 +11,11 @@
 (defvar my-packages
   '(browse-kill-ring
     color-theme
+    color-theme-solarized
     evil
     evil-leader
+    evil-search-highlight-persist
+    evil-visualstar
     ghc
     ghci-completion
     gist
@@ -21,6 +25,9 @@
     graphviz-dot-mode
     haskell-mode
     htmlize
+    js2-mode
+    magit
+    markdown-mode
     org
     powershell
     powershell-mode

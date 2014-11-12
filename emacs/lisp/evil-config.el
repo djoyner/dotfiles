@@ -1,5 +1,7 @@
 (require 'evil)
 (require 'evil-leader)
+(require 'evil-search-highlight-persist)
+(require 'evil-visualstar)
 (require 'misc-funcs)
 (require 'surround)
 
@@ -35,12 +37,6 @@
 
 ;; Motion state mappings
 
-; Nuke the arrow keys
-(define-key evil-motion-state-map [up] "")
-(define-key evil-motion-state-map [down] "")
-(define-key evil-motion-state-map [left] "")
-(define-key evil-motion-state-map [right] "")
-
 ; Move by display lines
 (define-key evil-motion-state-map "j" 'evil-next-visual-line)
 (define-key evil-motion-state-map "k" 'evil-previous-visual-line)
@@ -54,8 +50,12 @@
   "DEL" 'delete-trailing-whitespace
   "TAB" 'untabify
   "S-TAB" 'tabify
-  "\\" 'evil-ex-nohighlight
+  "\\" 'evil-search-highlight-persist-remove-all
   "e" 'eval-last-sexp
+  "g s" 'magit-status
+  "g c" 'magit-commit
+  "g c" 'magit-log
+  "g b" 'magit-blame-mode
   "i" 'whitespace-mode
   "P" 'djoyner/evil-paste-clipboard-before
   "p" 'djoyner/evil-paste-clipboard-after
@@ -63,22 +63,22 @@
   "R" 'rename-file-and-buffer
   "t" 'djoyner/evil-set-tab-width
   "x" 'execute-extended-command
-  "y" "\"*y")
+  "y" "\"\"y")
 
 ;; Other mode mappings
 
-; Override j/k mappings for ibuffer mode
-(eval-after-load 'ibuffer
-    '(progn
-       ;; use the standard ibuffer bindings as a base
-       (message "Setting up ibuffer mappings")
-       (set-keymap-parent
-        (evil-get-auxiliary-keymap ibuffer-mode-map 'normal t)
-        (assq-delete-all 'menu-bar (copy-keymap ibuffer-mode-map)))
-       (evil-define-key 'normal ibuffer-mode-map "j" 'ibuffer-forward-line)
-       (evil-define-key 'normal ibuffer-mode-map "k" 'ibuffer-backward-line)
-       (evil-define-key 'normal ibuffer-mode-map "J" 'ibuffer-jump-to-buffer) ; "j"
-     ))
+; Override hjkl mappings in other modes
+(evil-add-hjkl-bindings ibuffer-mode-map 'emacs
+  "J" 'ibuffer-jump-to-buffer)
+(evil-add-hjkl-bindings magit-branch-manager-mode-map 'emacs
+  "K" 'magit-discard-item
+  "L" 'magit-key-mode-popup-logging)
+(evil-add-hjkl-bindings magit-status-mode-map 'emacs
+  "K" 'magit-discard-item
+  "l" 'magit-key-mode-popup-logging
+  "h" 'magit-toggle-diff-refine-hunk)
+(evil-add-hjkl-bindings magit-log-mode-map 'emacs)
+(evil-add-hjkl-bindings magit-commit-mode-map 'emacs)
 
 ;; Cursors
 (setq evil-default-cursor '("white" box)
@@ -86,26 +86,26 @@
       evil-emacs-state-cursor '("red" box))
 
 ;; Other config
+(evil-set-initial-state 'grep-mode 'emacs)
 (evil-set-initial-state 'haskell-interactive-mode 'emacs)
-(evil-set-initial-state 'ibuffer-mode 'normal)
+(evil-set-initial-state 'ibuffer-mode 'emacs)
 
-(setq evil-emacs-state-modes (delete 'ibuffer-mode evil-emacs-state-modes)
-      evil-motion-state-modes (cons 'ibuffer-mode evil-motion-state-modes)
-      evil-want-fine-undo t)
+(setq evil-want-fine-undo t)
 
 ;; NB: evil-leader-mode must be enabled before evil-mode
 (global-evil-leader-mode t)
+(global-evil-search-highlight-persist t)
 (global-surround-mode t)
 (evil-mode t)
 
 ;; Functions
 (defun djoyner/evil-paste-clipboard-before ()
   (interactive)
-  (evil-paste-before 1 ?*))
+  (evil-paste-before 1 ?\"))
 
 (defun djoyner/evil-paste-clipboard-after ()
   (interactive)
-  (evil-paste-after 1 ?*))
+  (evil-paste-after 1 ?\"))
 
 (defun djoyner/evil-shift-left-visual ()
   (interactive)

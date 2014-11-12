@@ -5,50 +5,13 @@
 
 ;; Turn on the color works
 (require 'color-theme)
-(setq color-theme-is-global t)
+(require 'color-theme-solarized)
+(load-theme 'solarized-dark t)
 (global-font-lock-mode t)
 
-(defun color-theme-wombat ()
-  (interactive)
-  (color-theme-install
-   '(color-theme-wombat
-     ((foreground-color . "#f6f3e8")
-      (background-color . "#242424")
-      (cursor-color . "#656565")
-      (border-color . "#000000")
-      (background-mode . dark))
-     (default ((t (nil))))
-     (underline ((t (:underline t))))
-     (italic ((t (:italic t))))
-     (bold ((t (:bold))))
-     (bold-italic ((t (:bold t :italic t))))
-     (region ((t (:foreground "#000000" :background "#cae682"))))
-     (modeline ((t (:foreground "#f6f3e8" :background "#444444"))))
-     (modeline-buffer-id ((t (:foreground "#f6f3e8" :background "#444444"))))
-     (modeline-mousable ((t (:foreground "#f6f3e8" :background "#444444"))))
-     (modeline-mousable-minor-mode ((t (:foreground "#f6f3e8" :background "#444444"))))
-     (highlight-current-line-face ((t (:background "#2d2d2d"))))
-     (minibuffer-prompt ((t (:foreground "orange"))))
-     (font-lock-builtin-face ((t (:foreground "#8ac6f2"))))
-     (font-lock-comment-face ((t (:foreground "#99968b"))))
-     (font-lock-constant-face ((t (:foreground "#e5786d"))))
-     (font-lock-function-name-face ((t (:foreground "#cae682"))))
-     (font-lock-keyword-face ((t (:foreground "#8ac6f2"))))
-     (font-lock-preprocessor-face ((t (:foreground "#e5786d"))))
-     (font-lock-string-face ((t (:foreground "#95e454"))))
-     (font-lock-type-face ((t (:foreground "#cae682"))))
-     (font-lock-variable-name-face ((t (:foreground "#cae682"))))
-     (font-lock-warning-face ((t (:foreground "#e5786d" :bold t))))
-     (paren-face-match-light ((t (:background "#857b6f"))))
-     (show-paren-match-face ((t (:foreground "#f6f3e8" :background "#857b6f" :bold t))))
-     (show-paren-mismatch-face ((t (:foreground "#e5786d" :background "#857b6f" :bold t))))
-     (twitter-header-face ((t (:background "#8a4513")))))))
-
-(color-theme-wombat)
-
 ;; Highlight the current line
-(when (try-require 'highlight-current-line)
-  (highlight-current-line-on t))
+;(when (try-require 'highlight-current-line)
+;  (highlight-current-line-on t))
 
 ;; Turn on line numbering
 (when (try-require 'linum)
@@ -90,7 +53,7 @@
 
 (when-mac-osx
  (if (font-family-exists-p "Consolas")
-     (setq default-frame-alist (append '((font . "-adobe-source code pro-medium-r-normal-*-11-*-*-*-m-*-iso10646-1")) default-frame-alist))
+     (setq default-frame-alist (append '((font . "-microsoft-Consolas-normal-normal-normal-*-10-*-*-*-m-0-iso10646-1")) default-frame-alist))
    (setq default-frame-alist (append '((font . "fixed")) default-frame-alist))))
 
 ;; Spruce up the title bar

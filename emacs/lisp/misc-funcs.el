@@ -1,3 +1,32 @@
+(if (fboundp 'with-eval-after-load)
+    (defmacro after (feature &rest body)
+      "After FEATURE is loaded, evaluate BODY."
+      (declare (indent defun))
+      `(with-eval-after-load ,feature ,@body))
+  (defmacro after (feature &rest body)
+    "After FEATURE is loaded, evaluate BODY."
+    (declare (indent defun))
+    `(eval-after-load ,feature
+       '(progn ,@body))))
+
+(defvar running-ms-windows
+  (or (eq system-type `windows-nt) (eq system-type 'cygwin)))
+
+(defvar running-gnu-linux
+  (eq system-type 'gnu/linux))
+
+(defvar running-mac-osx
+  (or (eq system-type 'darwin) (eq system-type 'ns)))
+
+(defmacro when-ms-windows (&rest body)
+  (list 'if running-ms-windows (cons 'progn body)))
+
+(defmacro when-gnu-linux (&rest body)
+  (list 'if running-gnu-linux (cons 'progn body)))
+
+(defmacro when-mac-osx (&rest body)
+  (list 'if running-mac-osx (cons 'progn body)))
+
 ;; Move (shift) a line of text up or down like you would do in Windows editors by pressing Alt-Up (or Alt-Down)
 (defun move-line (n)
   "Move the current line up or down by N lines."
@@ -168,8 +197,8 @@ buffer, so you don't dork the original."
 
 ;; Via http://www.emacswiki.org/emacs/Evil
 (defun move-key (keymap-from keymap-to key)
-     "Moves key binding from one keymap to another, deleting from the old location. "
-     (define-key keymap-to key (lookup-key keymap-from key))
-     (define-key keymap-from key nil))
+  "Moves key binding from one keymap to another, deleting from the old location. "
+  (define-key keymap-to key (lookup-key keymap-from key))
+  (define-key keymap-from key nil))
 
 (provide 'misc-funcs)

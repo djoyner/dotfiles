@@ -1,8 +1,7 @@
-(add-to-list 'auto-mode-alist '("\\.c$" . c-mode))
 (add-to-list 'auto-mode-alist '("\\.h$" . c++-mode))
 (add-to-list 'auto-mode-alist '("\\.tcc$" . c++-mode))
 
-(c-add-style "my-cc-style"
+(c-add-style "my-c-style"
 	     '("bsd"
 	       (tab-width . 8)
 	       (indent-tabs-mode . nil)
@@ -24,9 +23,11 @@
 	       (c-cleanup-list . (scope-operator
 				  defun-close-semi))))
 
-(add-hook 'c-mode-common-hook (lambda () (progn
-					   (c-set-style "my-cc-style")
-					   (define-key c-mode-base-map "\C-m" 'c-context-line-break)
-					   (c-toggle-auto-hungry-state t))))
+(defun my-c-mode-hook ()
+  (c-set-style "my-c-style")
+  (define-key c-mode-base-map "\C-m" 'c-context-line-break)
+  (c-toggle-auto-hungry-state t))
 
-(provide 'cc-config)
+(add-hook 'c-mode-common-hook 'my-c-mode-hook)
+
+(provide 'c-config)

@@ -1,3 +1,4 @@
+(require 'autoinsert)
 (require 'skeleton)
 
 (define-skeleton dot-cpp-file-header-skeleton
@@ -39,14 +40,10 @@
 )
 
 ;; Setup skeleton autoinsert for new files
-(require 'autoinsert)
-
 (auto-insert-mode)
 (setq auto-insert-query nil)
-
 (setq auto-insert-alist
       '((("\\.\\(cc\\|cpp\\)\\'" . "C++ Source File") nil (dot-cpp-file-header-skeleton))
-        (("\\.\\([h]\\|hh\\|hpp\\|tcc\\)\\'" . "C++ Header File") nil (dot-h-file-header-skeleton))
-	))
+        (("\\.\\([h]\\|hh\\|hpp\\|tcc\\)\\'" . "C++ Header File") nil (dot-h-file-header-skeleton))))
 
 (provide 'skeleton-config)

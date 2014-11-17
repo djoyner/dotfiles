@@ -10,4 +10,4 @@
 (setq apropos-do-all t
       Man-notify-method 'newframe)
 
-(provide 'haskell-config)
+(provide 'help-config)

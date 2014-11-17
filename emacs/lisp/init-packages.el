@@ -1,20 +1,22 @@
 (require 'cl)
 (require 'package)
 
-(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/") t)
-(add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
-(add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/") t)
+(setq package-archives '(("marmalade" . "http://marmalade-repo.org/packages/")
+                         ("melpa" . "http://melpa.milkbox.net/packages/")
+                         ("org" . "http://orgmode.org/elpa/")))
 
 (setq package-enable-at-startup nil)
 (package-initialize)
 
 (defvar my-packages
-  '(browse-kill-ring
-    color-theme
+  '(color-theme
     color-theme-solarized
+    dockerfile-mode
+    elisp-slime-nav
     evil
     evil-leader
-    evil-search-highlight-persist
+    evil-matchit
+    evil-surround
     evil-visualstar
     ghc
     ghci-completion
@@ -31,7 +33,6 @@
     org
     powershell
     powershell-mode
-    surround
     yaml-mode)
   "A list of packages to ensure are installed at launch.")
 
@@ -41,13 +42,13 @@
         finally (return t)))
 
 (unless (my-packages-installed-p)
-  ;; check for new packages (package versions)
+  ;; Check for new packages (package versions)
   (message "%s" "Emacs is now refreshing its package database...")
   (package-refresh-contents)
   (message "%s" " done.")
-  ;; install the missing packages
+  ;; Install the missing packages
   (dolist (p my-packages)
     (when (not (package-installed-p p))
       (package-install p))))
 
-(provide 'package-config)
+(provide 'init-packages)

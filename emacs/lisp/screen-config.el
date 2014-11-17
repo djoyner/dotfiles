@@ -1,11 +1,13 @@
+(require 'color-theme)
+(require 'color-theme-solarized)
+(require 'linum)
+
 ;; Remove menubar, toolbar and scrollbar
 (if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
 (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 
 ;; Turn on the color works
-(require 'color-theme)
-(require 'color-theme-solarized)
 (load-theme 'solarized-dark t)
 (global-font-lock-mode t)
 
@@ -14,8 +16,7 @@
 ;  (highlight-current-line-on t))
 
 ;; Turn on line numbering
-(when (try-require 'linum)
-  (global-linum-mode t))
+ (global-linum-mode t)
 
 ;; Show matching parens
 (show-paren-mode t)

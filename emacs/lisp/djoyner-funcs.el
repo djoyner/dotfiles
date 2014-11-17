@@ -1,3 +1,5 @@
+(require 'misc-funcs)
+
 (defun djoyner/smart-home ()
   "Move point to first non-whitespace character or beginning-of-line.
 Move point to the first non-whitespace character on this line.

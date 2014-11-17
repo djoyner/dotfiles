@@ -5,8 +5,8 @@
 ;; The remainder of config is loaded from packages
 (dolist (pkg '(init-packages
                init-server
-               djoyner-funcs
                misc-funcs
+               djoyner-funcs
                buffer-config
                c-config
                dired-config

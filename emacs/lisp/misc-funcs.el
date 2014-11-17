@@ -24,6 +24,7 @@
 (defmacro when-gnu-linux (&rest body)
   (list 'if running-gnu-linux (cons 'progn body)))
 
+(message "here1")
 (defmacro when-mac-osx (&rest body)
   (list 'if running-mac-osx (cons 'progn body)))
 

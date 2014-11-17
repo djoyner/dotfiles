@@ -1,6 +1,6 @@
 (require 'color-theme)
-(require 'color-theme-solarized)
 (require 'linum)
+(require 'zenburn-theme)
 
 ;; Remove menubar, toolbar and scrollbar
 (if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
@@ -8,7 +8,7 @@
 (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 
 ;; Turn on the color works
-(load-theme 'solarized-dark t)
+(load-theme 'zenburn t)
 (global-font-lock-mode t)
 
 ;; Highlight the current line
@@ -42,6 +42,11 @@
       nil
     t))
 
+(defun retina-display-p ()
+  (condition-case nil
+      (= (call-process "~/bin/is-retina-display") 0)
+    (error nil)))
+
 (when-ms-windows
  (if (font-family-exists-p "Consolas")
      (setq default-frame-alist (append '((font . "-microsoft-Consolas-normal-normal-normal-*-13-*-*-*-m-0-iso10646-1")) default-frame-alist))
@@ -54,8 +59,10 @@
 
 (when-mac-osx
  (if (font-family-exists-p "Consolas")
-     (setq default-frame-alist (append '((font . "-microsoft-Consolas-normal-normal-normal-*-10-*-*-*-m-0-iso10646-1")) default-frame-alist))
-   (setq default-frame-alist (append '((font . "fixed")) default-frame-alist))))
+     (if (retina-display-p)
+         (setq default-frame-alist (append '((font . "-microsoft-Consolas-normal-normal-normal-*-12-*-*-*-m-0-iso10646-1")) default-frame-alist))
+       (setq default-frame-alist (append '((font . "-microsoft-Consolas-normal-normal-normal-*-10-*-*-*-m-0-iso10646-1")) default-frame-alist))
+     (setq default-frame-alist (append '((font . "fixed")) default-frame-alist)))))
 
 ;; Spruce up the title bar
 (setq frame-title-format '("%b (" system-name ")"))

@@ -10,7 +10,6 @@
 
 (defvar my-packages
   '(color-theme
-    color-theme-solarized
     dockerfile-mode
     elisp-slime-nav
     evil
@@ -33,7 +32,8 @@
     org
     powershell
     powershell-mode
-    yaml-mode)
+    yaml-mode
+    zenburn-theme)
   "A list of packages to ensure are installed at launch.")
 
 (defun my-packages-installed-p ()

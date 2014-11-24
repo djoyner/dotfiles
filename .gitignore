@@ -5,6 +5,7 @@
 !.bash_profile
 !.bashrc
 !.emacs
+!.ghci
 !.gitconfig
 !.gitignore
 !.gvimrc

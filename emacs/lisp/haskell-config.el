@@ -36,6 +36,13 @@
 (after 'haskell-interactive-mode
   (evil-set-initial-state 'haskell-interactive-mode 'emacs))
 
+;; Add cabal's bin directory to the exec-path
+(if (file-exists-p "~/.cabal/bin")
+    (add-to-list 'exec-path "~/.cabal/bin"))
+
+(if (file-exists-p "~/Library/Haskell/bin")
+    (add-to-list 'exec-path "~/Library/Haskell/bin"))
+
 ;; Other haskell-mode setup
 (setq haskell-hoogle-command "hoogle"
       haskell-process-type 'cabal-repl

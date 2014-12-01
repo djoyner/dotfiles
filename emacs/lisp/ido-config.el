@@ -1,6 +1,10 @@
 (setq ido-create-new-buffer 'always
       ido-enable-flex-matching t
+      ido-enable-last-directory-history nil
       ido-everywhere t
+      ido-max-work-directory-list 0
+      ido-max-work-file-list 0
+      ido-record-commands nil
       ido-show-dot-for-dired t)
 
 (defun my-ido-setup ()

@@ -1,3 +1,5 @@
+(require 'flycheck)
+(require 'flycheck-haskell)
 (require 'haskell-mode)
 
 ;; Don't use add-hook here in case haskell-mode is globally installed and has already set some default hooks.
@@ -6,15 +8,17 @@
                           turn-on-haskell-doc-mode
                           turn-on-haskell-decl-scan))
 
-;; Autoload ghc-mod with flymake-mode syntax checking
-(autoload 'ghc-init "ghc" nil t)
-(autoload 'ghc-debug "ghc" nil t)
-
 (defun my-haskell-mode-hook ()
-  (ghc-init)
-  (flymake-mode))
+  (auto-complete-mode 1)
+  (flycheck-mode 1)
+  (ghc-init))
 
 (add-hook 'haskell-mode-hook 'my-haskell-mode-hook)
+
+;; Use the flycheck-hdevtools checker
+(after 'flycheck
+  (add-hook 'flycheck-mode-hook 'flycheck-haskell-setup)
+  (require 'flycheck-hdevtools))
 
 ;; Make Haskell modes play nice with evil
 (after 'haskell-mode

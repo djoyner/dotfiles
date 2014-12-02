@@ -17,6 +17,9 @@
     evil-matchit
     evil-surround
     evil-visualstar
+    flycheck
+    flycheck-haskell
+    flycheck-hdevtools
     ghc
     ghci-completion
     gist

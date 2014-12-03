@@ -19,7 +19,6 @@
     evil-visualstar
     flycheck
     flycheck-haskell
-    flycheck-hdevtools
     ghc
     ghci-completion
     gist
@@ -29,12 +28,13 @@
     graphviz-dot-mode
     haskell-mode
     htmlize
-    js2-mode
+    js3-mode
     magit
     markdown-mode
     org
     powershell
     powershell-mode
+    rainbow-delimiters
     yaml-mode
     zenburn-theme)
   "A list of packages to ensure are installed at launch.")

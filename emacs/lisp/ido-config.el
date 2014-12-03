@@ -1,7 +1,8 @@
-(setq ido-create-new-buffer 'always
-      ido-enable-flex-matching t
+(require 'djoyner-funcs)
+
+;; Setup ido-mode
+(setq ido-enable-flex-matching t
       ido-enable-last-directory-history nil
-      ido-everywhere t
       ido-max-work-directory-list 0
       ido-max-work-file-list 0
       ido-record-commands nil
@@ -9,15 +10,14 @@
 
 (defun my-ido-setup ()
   (define-key ido-file-dir-completion-map "~" 'djoyner/ido-jump-to-home)
-  (define-key ido-file-dir-completion-map (kbd "TAB") 'ido-complete)
-  (define-key ido-file-dir-completion-map (kbd "RET") 'exit-minibuffer)
-  (define-key ido-completion-map "/" 'exit-minibuffer)
-  (define-key ido-completion-map (kbd "TAB") 'ido-complete)
-  (define-key ido-completion-map (kbd "C-j") 'ido-next-match)
-  (define-key ido-completion-map (kbd "C-i") 'ido-select-text)
-  (define-key ido-completion-map (kbd "C-k") 'ido-prev-match))
+  (define-key ido-file-dir-completion-map "/" 'djoyner/ido-smart-jump-to-root)
+  (define-key ido-common-completion-map (kbd "C-j") 'ido-next-match)
+  (define-key ido-common-completion-map (kbd "C-k") 'ido-prev-match))
 
 (add-hook 'ido-setup-hook 'my-ido-setup)
+
+(after 'ibuffer
+  (define-key ibuffer-mode-map (kbd "C-x C-f") 'ido-find-file))
 
 (ido-mode 1)
 

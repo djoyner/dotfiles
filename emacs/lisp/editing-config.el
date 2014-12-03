@@ -1,5 +1,5 @@
-;; Make text-mode the default major mode
-(setq default-major-mode 'text-mode)
+;; Make org-mode the default major mode
+(setq default-major-mode 'org-mode)
 
 ;; I want to be able to see the mark region and type over the selection
 (transient-mark-mode t)

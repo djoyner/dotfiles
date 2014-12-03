@@ -1,18 +1,9 @@
+(require 'misc-funcs)
+
 ;; Remap global keys
-(define-key global-map "\C-h" 'delete-backward-char)
-
-(global-set-key [home] 'beginning-of-line)
-(global-set-key [end] 'end-of-line)
-(global-set-key [del] 'delete-char)
-(global-set-key [M-up] 'move-line-up)
-(global-set-key [M-down] 'move-line-down)
-
-(global-set-key [S-f1] 'man)
-(global-set-key [f8] 'next-error)
-(global-set-key [S-f8] 'previous-error)
-(global-set-key [f9] 'compile)
-(global-set-key [S-f9] 'recompile)
-(global-set-key [f10] 'bash)
+(global-set-key (kbd "C-x g") 'magit-status)
+(global-set-key (kbd "C-x C-g") 'magit-status)
+(global-set-key (kbd "M-[") 'align-code)
 
 ;; Setup additional bindings for windowed systems
 (defun logitech-mx-mouse-present-p ()
@@ -32,5 +23,14 @@
     (global-set-key [mouse-13] 'delete-other-windows)  	;; "zoom"
     (global-set-key [mouse-10] 'ibuffer)) 		;; "window list"
   )
+
+;; Make Mac modifier keys work sensibly:
+;;  Command/⌘ = Meta
+;;  Option/Alt = Super
+;;  Fn = Nothing
+(when-mac-osx
+  (setq mac-command-modifier 'meta
+        mac-option-modifier 'super
+        ns-function-modifier nil))
 
 (provide 'key-config)

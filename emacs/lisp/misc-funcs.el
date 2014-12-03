@@ -1,3 +1,5 @@
+(require 'align)
+
 (if (fboundp 'with-eval-after-load)
     (defmacro after (feature &rest body)
       "After FEATURE is loaded, evaluate BODY."
@@ -26,6 +28,11 @@
 
 (defmacro when-mac-osx (&rest body)
   (list 'if running-mac-osx (cons 'progn body)))
+
+(defun font-family-exists-p (font)
+  (if (and (fboundp 'font-spec) (null (list-fonts (font-spec :family font))))
+      nil
+    t))
 
 ;; Move (shift) a line of text up or down like you would do in Windows editors by pressing Alt-Up (or Alt-Down)
 (defun move-line (n)
@@ -200,5 +207,13 @@ buffer, so you don't dork the original."
   "Moves key binding from one keymap to another, deleting from the old location. "
   (define-key keymap-to key (lookup-key keymap-from key))
   (define-key keymap-from key nil))
+
+(defun align-code (beg end &optional arg)
+  (interactive "rP")
+  (if (null arg)
+      (align beg end)
+    (let ((end-mark (copy-marker end)))
+      (indent-region beg end-mark nil)
+      (align beg end-mark))))
 
 (provide 'misc-funcs)

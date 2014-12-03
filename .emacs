@@ -28,7 +28,6 @@
                screen-config
                shell-config
                skeleton-config
-               whitespace-config
                xml-config))
   (with-demoted-errors "Initialization error: %s"
     (require pkg)))

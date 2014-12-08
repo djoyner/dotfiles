@@ -1,49 +1,17 @@
-(require 'defshell)
+(require 'eshell)
 
-(setq defshell-reuse-buffer nil
-      defshell-rename-buffer-uniquely t
-      shell-file-name "bash"
-      shell-command-switch "-lc")
+;; shell setup
+(defun my-shell-mode-hook ()
+  (define-key shell-mode-map (kbd "M-k") 'comint-previous-input)
+  (define-key shell-mode-map (kbd "M-j") 'comint-next-input))
 
-;; Define inferior shells
-(defshell "/bin/bash" "bash")
+(add-hook 'shell-mode-hook 'my-shell-mode-hook)
 
-;; Args passed to inferior shell, if the shell is bash
-(setq explicit-bash-args '("--noediting" "--login" "-i"))
+;; eshell setup
+(defun my-eshell-mode-hook ()
+  (define-key eshell-mode-map (kbd "M-k") 'eshell-previous-input)
+  (define-key eshell-mode-map (kbd "M-j") 'eshell-next-input))
 
-;; Translate ansi color sequences into text properties
-(autoload 'ansi-color-for-comint-mode-on "ansi-color" nil t)
-(add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
-
-;; Smarter up/down bindings for shells:
-;; Scroll through command history if at command line, otherwise scroll through buffer
-(defun shell-maybe-up (arg)
-  (interactive "p")
-  (if (comint-after-pmark-p)
-      (comint-previous-input arg)
-    (previous-line arg)
-    ))
-
-(defun shell-maybe-down (arg)
-  (interactive "p")
-  (if (comint-after-pmark-p)
-      (comint-next-input arg)
-    (next-line arg)
-    ))
-
-;; Clear shell contents
-(defun shell-clear-region ()
-  (interactive)
-  (delete-region (point-min) (point-max))
-  (comint-send-input))
-
-(define-key shell-mode-map [up] 'shell-maybe-up)
-(define-key shell-mode-map [down] 'shell-maybe-down)
-
-;; Prevent shell commands from being echoed
-(when-ms-windows
- (defun my-comint-init ()
-   (setq comint-process-echoes t))
- (add-hook 'comint-mode-hook 'my-comint-init))
+(add-hook 'eshell-mode-hook 'my-eshell-mode-hook)
 
 (provide 'shell-config)

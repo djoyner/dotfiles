@@ -85,7 +85,7 @@
 (evil-set-initial-state 'dired-mode 'emacs)
 (evil-set-initial-state 'git-commit-mode 'insert)
 (evil-set-initial-state 'haskell-interactive-mode 'emacs)
-(evil-set-initial-state 'shell-mode 'emacs)
+(evil-set-initial-state 'shell-mode 'insert)
 
 ;; Override various key bindings in other modes (see also dired-config.el)
 (evil-add-hjkl-bindings ibuffer-mode-map 'emacs

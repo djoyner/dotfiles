@@ -6,6 +6,55 @@
 (require 'haskell-mode)
 (require 'rainbow-delimiters)
 
+(defconst haskell-unicode-conversions
+  '(("[ (]\\(->\\)[) \n]"      . ?→)
+    ("[ (]\\(/=\\)[) ]"        . ?≠)
+    ("[ (]\\(<=\\)[) ]"        . ?≤)
+    ("[ (]\\(>=\\)[) ]"        . ?≥)
+    ;("[ (]\\(=\\)[) ]"        . ?≡)
+    ("[ (]\\(\\.\\)[) ]"       . ?∘)
+    ("[ (]\\(&&\\)[) ]"        . ?∧)
+    ("[ (]\\(||\\)[) ]"        . ?∨)
+    ("[ (]\\(\\*\\)[) ]"       . ?×)
+    ("[ (]\\(\\\\\\)[(_a-z]"   . ?λ)
+    (" \\(<-\\)[ \n]"          . ?←)
+    ;(" \\(-<\\) "             . ?↢)
+    ;(" \\(>-\\) "             . ?↣)
+    (" \\(=>\\)[ \n]"          . ?⇒)
+    ;;(" \\(>=>\\) "           . ?↣)
+    ;;(" \\(<=<\\) "           . ?↢)
+    ;;(" \\(>>=\\) "           . ?↦)
+    ;;(" \\(=<<\\) "           . ?↤)
+    ("[ (]\\(\\<not\\>\\)[ )]" . ?¬)
+    ("[ (]\\(<<<\\)[ )]"       . ?⋘)
+    ("[ (]\\(>>>\\)[ )]"       . ?⋙)
+    (" \\(::\\) "              . ?∷)
+    ("\\(`union`\\)"           . ?⋃)
+    ("\\(`intersect`\\)"       . ?⋂)
+    ("\\(`elem`\\)"            . ?∈)
+    ("\\(`notElem`\\)"         . ?∉)
+    ;;("\\<\\(mempty\\)\\>"    . ??)
+    ;;("\\(`mappend`\\)"       . ?⨂)
+    ;;("\\(`msum`\\)"          . ?⨁)
+    ("\\(\\<undefined\\>\\)"   . ?⊥)
+    ("\\<\\(forall \\)\\>"     . ?∀)))
+
+(defun my-haskell-setup-unicode-conversions ()
+  (interactive)
+  (mapc (lambda (mode)
+          (font-lock-add-keywords
+           mode
+           (append (mapcar (lambda (chars)
+                             `(,(car chars)
+                               ,(if (characterp (cdr chars))
+                                    `(0 (ignore
+                                         (compose-region (match-beginning 1)
+                                                         (match-end 1)
+                                                         ,(cdr chars))))
+                                  `(0 ,(cdr chars)))))
+                           haskell-unicode-conversions))))
+        '(haskell-mode literate-haskell-mode)))
+
 ;; Don't use add-hook here in case haskell-mode is globally installed and has already set some default hooks.
 ;; Better to just set the list of mode hooks that we want.
 (defun my-haskell-mode-hook ()
@@ -52,7 +101,8 @@
   (define-key haskell-mode-map (kbd "C-c C-z") 'haskell-interactive-switch)
   (define-key haskell-mode-map (kbd "C-c c") 'haskell-process-cabal)
   (define-key haskell-mode-map (kbd "C-c i") 'haskell-navigate-imports)
-  (define-key haskell-mode-map (kbd "SPC") 'haskell-mode-contextual-space))
+  (define-key haskell-mode-map (kbd "SPC") 'haskell-mode-contextual-space)
+  (my-haskell-setup-unicode-conversions))
 
 (after 'haskell-cabal
   (define-key haskell-cabal-mode-map (kbd "C-`") 'haskell-interactive-bring)
@@ -63,22 +113,28 @@
   (define-key haskell-cabal-mode-map (kbd "C-c c") 'haskell-process-cabal))
 
 ;; Add cabal's bin directory to the exec-path
-(if (file-exists-p "~/.cabal/bin")
-    (add-to-list 'exec-path (expand-file-name "~/.cabal/bin")))
+(when (file-exists-p "~/.cabal/bin")
+  (add-to-list 'exec-path (expand-file-name "~/.cabal/bin"))
+  (when (file-exists-p "~/.cabal/bin/cabal")
+    (setq haskell-process-path-cabal (expand-file-name "~/.cabal/bin/cabal")))
+  (when (file-exists-p "~/.cabal/bin/hoogle")
+    (setq haskell-hoogle-command (expand-file-name "~/.cabal/bin/hoogle"))))
 
-(if (file-exists-p "~/Library/Haskell/bin")
-    (add-to-list 'exec-path (expand-file-name "~/Library/Haskell/bin")))
+(when (file-exists-p "~/Library/Haskell/bin")
+  (add-to-list 'exec-path (expand-file-name "~/Library/Haskell/bin"))
+  (when (file-exists-p "~/Library/Haskell/bin/cabal")
+    (setq haskell-process-path-cabal (expand-file-name "~/Library/Haskell/bin/cabal")))
+  (when (file-exists-p "~/Library/Haskell/bin/hoogle")
+    (setq haskell-hoogle-command (expand-file-name "~/Library/Haskell/bin/hoogle"))))
 
 ;; Other haskell-mode setup
-(setq haskell-hoogle-command "hoogle"
-      haskell-indent-spaces 4
-      haskell-indentation-ifte-offset 4
-      haskell-indentation-layout-offset 4
-      haskell-indentation-left-offset 4
+(setq haskell-indent-spaces 2
+      haskell-indentation-ifte-offset 2
+      haskell-indentation-layout-offset 2
+      haskell-indentation-left-offset 2
       haskell-process-type 'cabal-repl
       haskell-process-auto-import-loaded-modules t
       haskell-process-show-debug-tips nil
-      haskell-process-suggest-remove-import-lines t
       haskell-tags-on-save t)
 
 (provide 'haskell-config)

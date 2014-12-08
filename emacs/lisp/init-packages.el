@@ -22,6 +22,7 @@
     ghc
     ghci-completion
     gist
+    git-gutter-fringe
     go-autocomplete
     go-eldoc
     go-mode

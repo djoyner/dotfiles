@@ -1,13 +1,12 @@
 (require 'color-theme)
 (require 'djoyner-funcs)
+(require 'git-gutter-fringe)
 (require 'misc-funcs)
 (require 'whitespace)
 (require 'zenburn-theme)
 
-;; Remove menubar, toolbar and scrollbar
-(if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
-(if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
-(if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
+;; Remove the menubar
+(menu-bar-mode -1)
 
 ;; Turn on the color works
 (load-theme 'zenburn t)
@@ -26,8 +25,15 @@
 
 ;; Window-system customizations
 (when window-system
+  ; Turn off toolbar scrollbars
+  (tool-bar-mode -1)
+  (scroll-bar-mode -1)
+
   ; Disable blinking cursor
   (blink-cursor-mode 0)
+
+  ; Setup git diffs in the gutter
+  (global-git-gutter-mode 1)
 
   ; Drive out the mouse when it's too near to the cursor
   (mouse-avoidance-mode 'animate)
@@ -47,9 +53,9 @@
      (setq default-frame-alist (append '((font . "Consolas-9")) default-frame-alist)))
 
   (when-mac-osx
-     (if (djoyner/retina-display-p)
-         (setq default-frame-alist (append '((font . "-*-Consolas-*-*-*-*-11-*-*-*-*-*-iso10646-1")) default-frame-alist))
-       (setq default-frame-alist (append '((font . "-*-Consolas-*-*-*-*-10-*-*-*-*-*-iso10646-1")) default-frame-alist)))))
+    (let ((height (if (djoyner/retina-display-p) 110 100)))
+      (set-face-attribute 'default nil :family "Consolas" :height height :weight 'normal :width 'normal)
+      (set-fontset-font "fontset-default" 'unicode (font-spec :family "Arial Unicode MS" :size (* height .085) :width 'normal :weight 'normal)))))
 
 ;; Other screen-related settings
 (setq inhibit-splash-screen t
@@ -57,8 +63,9 @@
       ring-bell-function 'ignore
       line-number-mode t
       column-number-mode t
+      scroll-conservatively 10000
+      scroll-margin 0
       scroll-preserve-screen-position t
-      scroll-step 1
       temp-buffer-resize-mode t
       echo-keystrokes 0.1
       use-dialog-box nil)

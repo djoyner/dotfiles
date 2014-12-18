@@ -31,3 +31,6 @@
                xml-config))
   (with-demoted-errors "Initialization error: %s"
     (require pkg)))
+
+(when (file-exists-p "~/.emacs.local.el")
+  (load-file "~/.emacs.local.el"))

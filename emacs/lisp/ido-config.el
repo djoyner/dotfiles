@@ -10,9 +10,7 @@
 
 (defun my-ido-setup ()
   (define-key ido-file-dir-completion-map "~" 'djoyner/ido-jump-to-home)
-  (define-key ido-file-dir-completion-map "/" 'djoyner/ido-smart-jump-to-root)
-  (define-key ido-common-completion-map (kbd "C-j") 'ido-next-match)
-  (define-key ido-common-completion-map (kbd "C-k") 'ido-prev-match))
+  (define-key ido-file-dir-completion-map "/" 'djoyner/ido-smart-jump-to-root))
 
 (add-hook 'ido-setup-hook 'my-ido-setup)
 

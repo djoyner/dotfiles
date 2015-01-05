@@ -32,6 +32,7 @@ export VISUAL=$EDITOR
 export PATH=$PATH:.
 
 ## Common environment setup
+[ -e ~/.nix-profile/etc/profile.d/nix.sh ] && . ~/.nix-profile/etc/profile.d/nix.sh
 [ -d /usr/local/go ] && export GOROOT=/usr/local/go
 export RUBYOPT=rubygems
 

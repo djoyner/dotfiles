@@ -20,7 +20,7 @@ HISTFILESIZE=2000
 # Match filenames in case-insensitive fashion
 shopt -s nocaseglob
 
-# Don't search PATH for possible completions when completion is attempted on 
+# Don't search PATH for possible completions when completion is attempted on
 # an empty command line
 shopt -qs no_empty_cmd_completion
 
@@ -43,6 +43,10 @@ if [ "$TERM" = "xterm" ] ; then
         esac
     fi
 fi
+
+## Other environment setup
+[ -d /usr/local/go ] && export GOROOT=/usr/local/go
+[ -d ~/go ] && export GOPATH=~/go
 
 ## Other look and feel
 

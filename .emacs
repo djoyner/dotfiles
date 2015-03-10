@@ -14,6 +14,8 @@
                editing-config
                evil-config
                general-config
+               git-config
+               go-config
                haskell-config
                help-config
                ido-config
@@ -28,7 +30,8 @@
                screen-config
                shell-config
                skeleton-config
-               xml-config))
+               xml-config
+               yaml-config))
   (with-demoted-errors "Initialization error: %s"
     (require pkg)))
 

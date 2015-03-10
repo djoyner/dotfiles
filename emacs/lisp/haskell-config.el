@@ -112,7 +112,12 @@
   (define-key haskell-cabal-mode-map (kbd "C-c C-z") 'haskell-interactive-switch)
   (define-key haskell-cabal-mode-map (kbd "C-c c") 'haskell-process-cabal))
 
-;; Add cabal's bin directory to the exec-path
+;; Add Haskell bin directories to the exec-path
+(when (file-exists-p "~/Applications/ghc-7.8.4.app")
+  (add-to-list 'exec-path (expand-file-name "~/Applications/ghc-7.8.4.app/Contents/bin"))
+  (when (file-exists-p "~/Applications/ghc-7.8.4.app/Contents/bin/cabal")
+    (setq haskell-process-path-cabal (expand-file-name "~/Applications/ghc-7.8.4.app/Contents/bin/cabal"))))
+
 (when (file-exists-p "~/.cabal/bin")
   (add-to-list 'exec-path (expand-file-name "~/.cabal/bin"))
   (when (file-exists-p "~/.cabal/bin/cabal")

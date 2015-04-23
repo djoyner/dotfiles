@@ -15,8 +15,8 @@
 	mnemonicprefix = true
 	# Allow diff to do basic copy and rename detection
 	renames = copies
-	# Use BeyondCompare3 for 'git difftool'
-	#tool = bc3
+	# Use p4merge for 'git difftool'
+	tool = p4mergetool
 
 [difftool]
 	# Don't waste my time between invocations of difftool
@@ -27,8 +27,12 @@
 	autosetupmerge = true
 
 [merge]
-	# Use BeyondCompare3 for 'git mergetool'
-	#tool = bc3
+	# Use p4merge for 'git mergetool'
+	tool = p4mergetool
+
+[mergetool]
+	# Don't keep pesky backup files
+	keepBackup = false
 
 [rerere]
 	# Enable recording of resolved conflicts so identical hunks can be auto-resolved
@@ -86,19 +90,15 @@
 	# File log
 	fl = log -u
 
-[difftool "bc3"]
-	# Path to BC3
-	#path = c:/program files (x86)/beyond compare 3/bcomp.exe
+[difftool "p4mergetool"]
+	cmd = /Applications/p4merge.app/Contents/Resources/launchp4merge $LOCAL $REMOTE
 
-[mergetool "bc3"]
-	# Path to BC3
-	#path = c:/program files (x86)/beyond compare 3/bcomp.exe
-	# BC3 knows what's up
-	#trustExitCode = true
+[mergetool "p4mergetool"]
+	cmd = /Applications/p4merge.app/Contents/Resources/launchp4merge $PWD/$BASE $PWD/$REMOTE $PWD/$LOCAL $PWD/$MERGED
+	trustExitCode = false
 
 [difftool "sourcetree"]
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path = 
 
 [mergetool "sourcetree"]
 	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"

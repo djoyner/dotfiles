@@ -1,7 +1,6 @@
 # exclude all
 *
 # except important dot files and subdirectories
-!.autorun.cmd
 !.bash_profile
 !.bashrc
 !.emacs

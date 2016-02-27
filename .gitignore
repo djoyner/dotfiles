@@ -12,6 +12,7 @@
 !.profile
 !.pylintrc
 !.screenrc
+!.spacemacs
 !.tmux.conf
 !.xmobarrc
 !.xmonad

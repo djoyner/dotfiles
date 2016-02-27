@@ -4,17 +4,12 @@
 case "$OSTYPE" in
     linux*)
         export PATH=/usr/local/bin:$PATH
-        export EDITOR="emacs -nw"
+        export EDITOR=~/bin/emacs
         ;;
 
     darwin*)
         export PATH=/usr/local/bin:$PATH
-        export EDITOR="/Applications/Emacs.app/Contents/MacOS/Emacs -nw"
-        ;;
-
-    cygwin*)
-        export EDITOR=vim
-        export CYGWIN="nodosfilewarning tty"
+        export EDITOR=~/bin/emacs
         ;;
 esac
 

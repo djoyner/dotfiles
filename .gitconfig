@@ -9,14 +9,18 @@
         # Global .gitignore
 	excludesfile = /Users/djoyner/.gitignore_global
 
+[gc]
+	# Turn off automatic garbage collection
+	auto = 0
+
 [diff]
 	# Tell diff to use mnemonic path prefixes instead of 'a' and 'b'...
 	# (i)ndex, (w)ork tree, (c)ommit, (o)bject
 	mnemonicprefix = true
 	# Allow diff to do basic copy and rename detection
 	renames = copies
-	# Use p4merge for 'git difftool'
-	tool = p4mergetool
+	# Setup for 'git difftool'
+	tool = sourcetree
 
 [difftool]
 	# Don't waste my time between invocations of difftool
@@ -27,8 +31,8 @@
 	autosetupmerge = true
 
 [merge]
-	# Use p4merge for 'git mergetool'
-	tool = p4mergetool
+	# Setup for 'git mergetool'
+	tool = sourcetree
 
 [mergetool]
 	# Don't keep pesky backup files
@@ -65,9 +69,7 @@
 	parents = show --pretty=format:%P -s
 	in = "!git fetch && git log ..FETCH_HEAD"
 	out = "!git fetch && git log FETCH_HEAD.."
-	# Reset HEAD shortcuts
-	r1 = reset HEAD^
-	r2 = reset HEAD^^
+	# Reset --hard shortcuts
 	rh1 = reset --hard HEAD^
 	rh2 = reset --hard HEAD^^
 	# Better logs
@@ -90,16 +92,10 @@
 	# File log
 	fl = log -u
 
-[difftool "p4mergetool"]
-	cmd = /Applications/p4merge.app/Contents/Resources/launchp4merge $LOCAL $REMOTE
-
-[mergetool "p4mergetool"]
-	cmd = /Applications/p4merge.app/Contents/Resources/launchp4merge $PWD/$BASE $PWD/$REMOTE $PWD/$LOCAL $PWD/$MERGED
-	trustExitCode = false
-
 [difftool "sourcetree"]
-	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	cmd = /Applications/p4merge.app/Contents/MacOS/p4merge \"$LOCAL\" \"$REMOTE\"
+	path = 
 
 [mergetool "sourcetree"]
-	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	cmd = /Applications/p4merge.app/Contents/MacOS/p4merge \"$BASE\" \"$LOCAL\" \"$REMOTE\" \"$MERGED\"
 	trustExitCode = true

@@ -58,7 +58,7 @@ else
 fi
 
 # Set window title
-if [ $TERM != "emacs" ] && [ $TERM != "dumb" ];
+if [ $TERM != "emacs" -a $TERM != "eterm-color" -a $TERM != "dumb" ];
 then
     PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME%%.*}:${PWD/#$HOME/~}\007"'
 fi
@@ -86,7 +86,7 @@ export MANPAGER=$PAGER
 
 ## Aliases
 case "$OSTYPE" in
-    linux*|cygwin*)
+    linux*)
         alias l='/bin/ls -alF --color=auto'
         alias l.='/bin/ls -dF .* --color=auto'
         alias ll='/bin/ls -lF --color=auto'
@@ -94,7 +94,6 @@ case "$OSTYPE" in
         ;;
 
     darwin*)
-        alias emacs='/Applications/Emacs.app/Contents/MacOS/Emacs -nw'
         alias l='/bin/ls -alFG'
         alias l.='/bin/ls -dFG .*'
         alias ll='/bin/ls -lFG'

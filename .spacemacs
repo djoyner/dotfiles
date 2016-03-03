@@ -13,7 +13,7 @@ values."
    dotspacemacs-distribution 'spacemacs
    ;; List of additional paths where to look for configuration layers.
    ;; Paths must have a trailing slash (i.e. `~/.mycontribs/')
-   dotspacemacs-configuration-layer-path '()
+   dotspacemacs-configuration-layer-path '("~/.spacemacs.djoyner/")
    ;; List of configuration layers to load. If it is the symbol `all' instead
    ;; of a list then all discovered layers will be installed.
    dotspacemacs-configuration-layers
@@ -24,6 +24,8 @@ values."
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
      auto-completion
+     djoyner-ibuffer
+     dockerfile
      emacs-lisp
      (git :variables
           git-gutter-use-fringe t)
@@ -31,7 +33,8 @@ values."
      go
      haskell
      html
-     ibuffer
+     (ibuffer :variables
+              ibuffer-group-buffers-by nil)
      javascript
      markdown
      org
@@ -43,13 +46,14 @@ values."
             shell-default-position 'bottom)
      shell-scripts
      spell-checking
+     sql
      syntax-checking
      version-control
      yaml
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
-   ;; packages then consider to create a layer, you can also put the
+   ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
    dotspacemacs-additional-packages '()
    ;; A list of packages and/or extensions that will not be install and loaded.
@@ -101,6 +105,8 @@ values."
    ;; Number of recent files to show in the startup buffer. Ignored if
    ;; `dotspacemacs-startup-lists' doesn't include `recents'. (default 5)
    dotspacemacs-startup-recent-list-size 5
+   ;; Default major mode of the scratch buffer (default `text-mode')
+   dotspacemacs-scratch-mode 'text-mode
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
@@ -230,9 +236,11 @@ values."
    ;; specified with an installed package.
    ;; Not used for now. (default nil)
    dotspacemacs-default-package-repository nil
-   ;; Delete whitespace while saving buffer. Possible values are `all',
-   ;; `trailing', `changed' or `nil'. Default is `changed' (cleanup whitespace
-   ;; on changed lines) (default 'changed)
+   ;; Delete whitespace while saving buffer. Possible values are `all'
+   ;; to aggressively delete empty line and long sequences of whitespace,
+   ;; `trailing' to delete only the whitespace at end of lines, `changed'to
+   ;; delete only whitespace for changed lines or `nil' to disable cleanup.
+   ;; (default nil)
    dotspacemacs-whitespace-cleanup 'changed
    ))
 
@@ -263,21 +271,19 @@ layers configuration. You are free to put any user code."
   (setq gofmt-command (expand-file-name "~/go/bin/goimports"))
 
   ;; Set some spacemacs toggles
-  (spacemacs/toggle-vi-tilde-fringe) ; off
+  (spacemacs/toggle-spelling-checking-off)
+  (spacemacs/toggle-vi-tilde-fringe-off)
 
-  ;; Override some spacemacs defaults
-  (setq-default indent-tabs-mode nil
-                tab-width 8
-                ibuffer-formats '((mark modified read-only " "
-                                        (name 40 40) " "
-                                        (size 6 -1 :right) " "
-                                        (mode 16 16 :left) " "
-                                        filename)
-                                  (mark " " (name 16 -1) " "
-                                        filename))
-                ibuffer-elide-long-columns t
-                ibuffer-eliding-string "&"
-                ibuffer-show-empty-filter-groups nil)
+  ;; Other overrides and defaults
+  (setq-default
+   ;; tabs
+   indent-tabs-mode nil
+   tab-width 8
+
+   ;; whitespace-mode
+   whitespace-style '(face tabs newline-mark tab-mark)
+   whitespace-display-mappings '((newline-mark 10 [172 10])
+                                 (tab-mark 9 [9655 9])))
   )
 
 ;; Do not write anything past this comment. This is where Emacs will

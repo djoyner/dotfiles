@@ -3,19 +3,16 @@
 # except important dot files and subdirectories
 !.bash_profile
 !.bashrc
-!.emacs
 !.ghci
 !.gitconfig
 !.gitignore
-!.gvimrc
 !.inputrc
 !.profile
 !.pylintrc
 !.screenrc
 !.spacemacs
+!.spacemacs.djoyner
 !.tmux.conf
 !.xmobarrc
 !.xmonad
 !.xsession
-!.vim
-!.vimrc

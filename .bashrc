@@ -11,11 +11,18 @@ set -b
 # Auto-update LINES and COLUMNS
 shopt -s checkwinsize
 
-# Append to history file, ignoring spaces and duplicates, expand history
+# Append to history file, ignoring spaces and duplicates, expand history, useful timestamp format
 shopt -s histappend
-HISTCONTROL=ignoreboth
+HISTCONTROL="erasedups:ignoreboth"
 HISTSIZE=1000
 HISTFILESIZE=2000
+HISTTIMEFORMAT='%F %T '
+
+# Don't record some commands
+export HISTIGNORE="&:[ ]*:exit:ls:bg:fg:history:clear"
+
+# Save multi-line commands as one command
+shopt -s cmdhist
 
 # Match filenames in case-insensitive fashion
 shopt -s nocaseglob
@@ -23,6 +30,15 @@ shopt -s nocaseglob
 # Don't search PATH for possible completions when completion is attempted on
 # an empty command line
 shopt -qs no_empty_cmd_completion
+
+# Allows space to complete and expand !$
+bind Space:magic-space
+
+# Perform file completion in a case insensitive fashion
+bind "set completion-ignore-case on"
+
+# Display matches for ambiguous patterns at first tab press
+bind "set show-all-if-ambiguous on"
 
 ## Enable 256-color terminal support
 if [ "$TERM" = "xterm" ] ; then

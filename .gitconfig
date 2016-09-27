@@ -55,20 +55,18 @@
 	# Basic abbreviations
 	br = branch -ra
 	ci = commit
-	co = checkout
 	cl = clone
+	co = checkout
+	cob = checkout -b
 	st = status -sb
 	r = reset
 	rh = reset --hard
 	sl = stash list
 	sa = stash apply
 	ss = stash save
+	up = pull --rebase --prune
         # Nuke branch
         nuke = "!f() { git branch -D "$1"; git push origin ":$1"; }; f"
-	# Mercurial replacements
-	parents = show --pretty=format:%P -s
-	in = "!git fetch && git log ..FETCH_HEAD"
-	out = "!git fetch && git log FETCH_HEAD.."
 	# Reset --hard shortcuts
 	rh1 = reset --hard HEAD^
 	rh2 = reset --hard HEAD^^

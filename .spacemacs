@@ -283,7 +283,11 @@ layers configuration. You are free to put any user code."
    ;; whitespace-mode
    whitespace-style '(face tabs newline-mark tab-mark)
    whitespace-display-mappings '((newline-mark 10 [172 10])
-                                 (tab-mark 9 [9655 9])))
+                                 (tab-mark 9 [9655 9]))
+
+   ;; js2-mode and json-mode indents
+   js2-basic-offset 2
+   js-indent-level 2)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will

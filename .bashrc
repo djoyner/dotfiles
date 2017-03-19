@@ -67,7 +67,7 @@ fi
 ## Other look and feel
 
 # Colorized prompt
-if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
+if [ -n "$(type -p tput)" ] && tput setaf 1 >&/dev/null; then
     PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[01;34m\] \w \[\033[00m\]\$ '
 else
     PS1="${debian_chroot:+($debian_chroot)}\u@\h \w \$ "
@@ -80,7 +80,7 @@ then
 fi
 
 # Load directory colors
-if [ -x /usr/bin/dircolors ]; then
+if [ -n "$(type -p dircolors)" ]; then
     eval "$(dircolors -b)"
 fi
 
@@ -88,36 +88,35 @@ fi
 export GREP_OPTIONS='--color=auto'
 
 # Make less more friendly for non-text input files, see lesspipe(1)
-[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+if [ -n "$(type -p lesspipe)" ]; then
+    eval "$(SHELL=/bin/sh lesspipe)"
+fi
+
 export PAGER=less
 export MANPAGER=$PAGER
 
-[ -x /bin/stty ] && {
-    # Turn off stop (^S) control character
-    stty stop undef
+# Turn off stop (^S) control character
+stty stop undef
 
-    # Don't echo control characters
-    stty -echoctl
-}
+# Don't echo control characters
+stty -echoctl
 
 ## Aliases
 case "$OSTYPE" in
     linux*)
-        alias l='/bin/ls -alF --color=auto'
-        alias l.='/bin/ls -dF .* --color=auto'
-        alias ll='/bin/ls -lF --color=auto'
-        alias ls='ls --color=auto'
+        alias l='env ls -alF --color=auto'
+        alias l.='env ls -dF .* --color=auto'
+        alias ll='env ls -lF --color=auto'
+        alias ls='env ls --color=auto'
         ;;
 
     darwin*)
-        alias l='/bin/ls -alFG'
-        alias l.='/bin/ls -dFG .*'
-        alias ll='/bin/ls -lFG'
-        alias ls='ls -G'
+        alias l='env ls -alFG'
+        alias l.='env ls -dFG .*'
+        alias ll='env ls -lFG'
+        alias ls='env ls -G'
         ;;
 esac
-
-alias z='clear'
 
 ## Local environment customization
 [ -f ~/.bashrc.local ] && . ~/.bashrc.local

@@ -4,12 +4,12 @@
 case "$OSTYPE" in
     linux*)
         export PATH=/usr/local/bin:$PATH
-        export EDITOR=~/bin/emacs
+        export EDITOR=emacs
         ;;
 
     darwin*)
         export PATH=/usr/local/bin:$PATH
-        export EDITOR=~/bin/emacs
+        export EDITOR=emacs
         ;;
 esac
 
@@ -17,9 +17,7 @@ export VISUAL=$EDITOR
 
 ## Prepend miscellaneous directories to PATH
 [ -d ~/bin ]                        && PATH=~/bin:$PATH
-[ -d ~/.cabal/bin ]                 && PATH=~/.cabal/bin:$PATH
 [ -d ~/go/bin ]                     && PATH=~/go/bin:$PATH
-[ -d ~/Library/Haskell/bin ]        && PATH=~/Library/Haskell/bin:$PATH
 [ -d /usr/local/git ]               && PATH=/usr/local/git/bin:$PATH
 [ -d /usr/local/go ]                && PATH=/usr/local/go/bin:$PATH
 

@@ -3,31 +3,32 @@
 ## OS-specific environment setup
 case "$OSTYPE" in
     linux*)
-        export PATH=/usr/local/bin:$PATH
+        PATH=/usr/local/bin:$PATH
         export EDITOR=emacs
+        export VISUAL=$EDITOR
         ;;
 
     darwin*)
-        export PATH=/usr/local/bin:$PATH
         export EDITOR=emacs
+        export VISUAL=$EDITOR
         ;;
 esac
 
-export VISUAL=$EDITOR
-
 ## Prepend miscellaneous directories to PATH
-[ -d ~/bin ]                        && PATH=~/bin:$PATH
-[ -d ~/go/bin ]                     && PATH=~/go/bin:$PATH
-[ -d /usr/local/git ]               && PATH=/usr/local/git/bin:$PATH
-[ -d /usr/local/go ]                && PATH=/usr/local/go/bin:$PATH
+[ -d ~/bin ]    && PATH=$PATH:~/bin:
+[ -d ~/go/bin ] && PATH=$PATH:~/go/bin
 
-## Finally, append . to the PATH
-export PATH=$PATH:.
+## Other environment setup
+[ -d /usr/local/go ] && export GOROOT=/usr/local/go
+[ -d ~/go ] && export GOPATH=~/go
 
 ## Local environment customization
 [ -f ~/.profile.local ] && . ~/.profile.local
 
 ## If running bash, source ~/.bashrc
 [ -n "$BASH_VERSION" -a -z "$POSIXLY_CORRECT" -a -f ~/.bashrc ] && . ~/.bashrc
+
+## Finally, append . to the PATH
+export PATH=$PATH:.
 
 ### end ~/.profile

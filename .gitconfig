@@ -13,6 +13,10 @@
 	# Turn off automatic garbage collection
 	auto = 0
 
+[branch]
+	# When branching off a remote branch, automatically set up tracking
+	autosetupmerge = true
+
 [diff]
 	# Tell diff to use mnemonic path prefixes instead of 'a' and 'b'...
 	# (i)ndex, (w)ork tree, (c)ommit, (o)bject
@@ -20,21 +24,19 @@
 	# Allow diff to do basic copy and rename detection
 	renames = copies
 	# Setup for 'git difftool'
-	tool = sourcetree
+	tool = Kaleidoscope
 
 [difftool]
 	# Don't waste my time between invocations of difftool
 	prompt = false
 
-[branch]
-	# When branching off a remote branch, automatically set up tracking
-	autosetupmerge = true
-
 [merge]
 	# Setup for 'git mergetool'
-	tool = sourcetree
+	tool = Kaleidoscope
 
 [mergetool]
+	# Don't waste my time between invocations of mergetool
+	prompt = false
 	# Don't keep pesky backup files
 	keepBackup = false
 
@@ -59,15 +61,11 @@
 	co = checkout
 	cob = checkout -b
 	st = status -sb
-	r = reset
-	rh = reset --hard
-	sl = stash list
-	sa = stash apply
-	ss = stash save
 	up = pull --rebase --prune
         # Nuke branch
         nuke = "!f() { git branch -D "$1"; git push origin ":$1"; }; f"
 	# Reset --hard shortcuts
+	rh = reset --hard
 	rh1 = reset --hard HEAD^
 	rh2 = reset --hard HEAD^^
 	# Better logs
@@ -90,10 +88,16 @@
 	# File log
 	fl = log -u
 
+[difftool "Kaleidoscope"]
+	cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
+
+[mergetool "Kaleidoscope"]
+	cmd = ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" \"$REMOTE\"
+
 [difftool "sourcetree"]
-	cmd = /Applications/p4merge.app/Contents/MacOS/p4merge \"$LOCAL\" \"$REMOTE\"
+	cmd = /usr/local/bin/ksdiff -w \"$LOCAL\" \"$REMOTE\"
 	path = 
 
 [mergetool "sourcetree"]
-	cmd = /Applications/p4merge.app/Contents/MacOS/p4merge \"$BASE\" \"$LOCAL\" \"$REMOTE\" \"$MERGED\"
+	cmd = /usr/local/bin/ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot
 	trustExitCode = true

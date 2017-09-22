@@ -60,10 +60,6 @@ if [ "$TERM" = "xterm" ] ; then
     fi
 fi
 
-## Other environment setup
-[ -d /usr/local/go ] && export GOROOT=/usr/local/go
-[ -d ~/go ] && export GOPATH=~/go
-
 ## Other look and feel
 
 # Colorized prompt

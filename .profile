@@ -15,7 +15,7 @@ case "$OSTYPE" in
 esac
 
 ## Prepend miscellaneous directories to PATH
-[ -d ~/bin ]    && PATH=$PATH:~/bin:
+[ -d ~/bin ]    && PATH=$PATH:~/bin
 [ -d ~/go/bin ] && PATH=$PATH:~/go/bin
 
 ## Other environment setup

@@ -39,7 +39,7 @@ values."
      auto-completion
      csv
      djoyner-ibuffer
-     dockerfile
+     docker
      emacs-lisp
      (git :variables
           git-gutter-use-fringe t)
@@ -63,7 +63,8 @@ values."
             shell-default-height 30
             shell-default-position 'bottom)
      shell-scripts
-     spell-checking
+     (spell-checking :variables
+                     spell-checking-enable-by-default nil)
      sql
      syntax-checking
      version-control
@@ -344,6 +345,9 @@ you should place your code here."
 
   ;; Use goimports instead of gofmt
   (setq gofmt-command (expand-file-name "~/go/bin/goimports"))
+
+  ;; Use aspell instead of ispell
+  (setq ispell-program-name "aspell")
 
   ;; Set some spacemacs toggles
   (spacemacs/toggle-spelling-checking-off)

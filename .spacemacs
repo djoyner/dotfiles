@@ -45,6 +45,7 @@ values."
           git-gutter-use-fringe t)
      github
      go
+     graphviz
      (haskell :variables
               haskell-completion-backend 'intero
               haskell-enable-hindent-style "johan-tibell")

@@ -1,10 +1,13 @@
-[include]
-	path = ~/.gitconfig.local
+[user]
+	name = David Joyner
+	email = david@joynerhome.net
 
 [core]
 	# Turn off git's line-ending conversions...
 	# whatever line endings are present in a file are used w/o translation
 	autocrlf = false
+        # Global .gitignore
+	excludesfile = /Users/djoyner/.gitignore_global
 
 [gc]
 	# Turn off automatic garbage collection

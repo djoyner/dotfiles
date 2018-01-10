@@ -80,9 +80,6 @@ if [ -n "$(type -p dircolors)" ]; then
     eval "$(dircolors -b)"
 fi
 
-# Use color in grep output
-export GREP_OPTIONS='--color=auto'
-
 # Make less more friendly for non-text input files, see lesspipe(1)
 if [ -n "$(type -p lesspipe)" ]; then
     eval "$(SHELL=/bin/sh lesspipe)"

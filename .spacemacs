@@ -38,7 +38,6 @@ values."
      ;; ----------------------------------------------------------------
      auto-completion
      csv
-     djoyner-ibuffer
      docker
      emacs-lisp
      (git :variables
@@ -53,7 +52,7 @@ values."
      helm
      html
      (ibuffer :variables
-              ibuffer-group-buffers-by nil)
+              ibuffer-group-buffers-by 'projects)
      javascript
      lua
      markdown

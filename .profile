@@ -15,8 +15,8 @@ case "$OSTYPE" in
 esac
 
 ## Prepend miscellaneous directories to PATH
-[ -d ~/bin ]    && PATH=$PATH:~/bin
-[ -d ~/go/bin ] && PATH=$PATH:~/go/bin
+[ -d ~/bin ]    && PATH=~/bin:$PATH
+[ -d ~/go/bin ] && PATH=~/go/bin:$PATH
 
 ## Other environment setup
 [ -d /usr/local/go ] && export GOROOT=/usr/local/go

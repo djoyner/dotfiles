@@ -111,6 +111,9 @@ case "$OSTYPE" in
         ;;
 esac
 
+## Load up "z"
+. ~/bin/z.sh
+
 ## Local environment customization
 [ -f ~/.bashrc.local ] && . ~/.bashrc.local
 

@@ -49,10 +49,10 @@ values."
      (haskell :variables
               haskell-completion-backend 'intero
               haskell-enable-hindent-style "johan-tibell")
-     helm
      html
      (ibuffer :variables
               ibuffer-group-buffers-by 'projects)
+     ivy
      javascript
      lua
      markdown
@@ -79,7 +79,9 @@ values."
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
-   dotspacemacs-additional-packages '()
+   dotspacemacs-additional-packages '(
+     ivy-posframe
+     )
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
    ;; A list of packages that will not be installed and loaded.
@@ -363,6 +365,11 @@ you should place your code here."
   ;; Set some spacemacs toggles
   (spacemacs/toggle-spelling-checking-off)
   (spacemacs/toggle-vi-tilde-fringe-off)
+
+  ;; Configure ivy-posframe
+  (require 'ivy-posframe)
+  (setq ivy-display-function 'ivy-posframe-display-at-frame-center
+        ivy-posframe-border-width 10)
 
   ;; Other overrides and defaults
   (setq-default

@@ -81,6 +81,7 @@ values."
    ;; configuration in `dotspacemacs/user-config'.
    dotspacemacs-additional-packages '(
      ivy-posframe
+     magit-todos
      )
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -370,6 +371,11 @@ you should place your code here."
   (require 'ivy-posframe)
   (setq ivy-display-function 'ivy-posframe-display-at-frame-center
         ivy-posframe-border-width 10)
+
+  ;; Config magit-todos
+  (require 'magit-todos)
+  (setq magit-todos-section-map nil)
+  (magit-todos-mode)
 
   ;; Other overrides and defaults
   (setq-default

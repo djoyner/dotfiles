@@ -61,7 +61,6 @@ This function should only modify configuration layer settings."
      javascript
      lua
      markdown
-     neotree
      nginx
      nixos
      org
@@ -501,7 +500,8 @@ before packages are loaded."
   (define-key evil-motion-state-map "k" 'evil-previous-visual-line)
 
   ;; Use goimports instead of gofmt
-  (setq gofmt-command (expand-file-name "~/go/bin/goimports"))
+  (setq go-format-before-save t
+        gofmt-command (expand-file-name "~/go/bin/goimports"))
 
   ;; Use aspell instead of ispell
   (setq ispell-program-name "aspell")
@@ -510,7 +510,8 @@ before packages are loaded."
   (spacemacs/toggle-spelling-checking-off)
   (spacemacs/toggle-vi-tilde-fringe-off)
 
-  ;; Configure ivy-posframe
+  ;; Configure ivy
+  (setq ivy-on-del-error-function #'ignore)
   (require 'ivy-posframe)
   (setq ivy-display-function 'ivy-posframe-display-at-frame-center
         ivy-posframe-border-width 10)

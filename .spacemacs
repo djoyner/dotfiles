@@ -52,8 +52,7 @@ This function should only modify configuration layer settings."
      graphviz
      (haskell :variables
               haskell-completion-backend 'intero
-              haskell-enable-hindent t
-              haskell-enable-hindent-style "johan-tibell")
+              haskell-enable-hindent t)
      html
      (ibuffer :variables
               ibuffer-group-buffers-by 'projects)
@@ -68,7 +67,6 @@ This function should only modify configuration layer settings."
           osx-command-as nil)
      python
      rust
-     salt
      (shell :variables
             shell-default-height 30
             shell-default-position 'bottom)
@@ -91,7 +89,6 @@ This function should only modify configuration layer settings."
    ;; Also include the dependencies as they will not be resolved automatically.
    dotspacemacs-additional-packages '(
      ivy-posframe
-     magit-todos
      )
 
    ;; A list of packages that cannot be updated.
@@ -181,7 +178,8 @@ It should only modify the values of Spacemacs settings."
    ;; section of the documentation for details on available variables.
    ;; (default 'vim)
    dotspacemacs-editing-style '(vim :variables
-                                    vim-style-remap-Y-to-y$ t)
+                                    vim-style-remap-Y-to-y$ t
+                                    vim-style-visual-feedback t)
 
    ;; If non-nil output loading progress in `*Messages*' buffer. (default nil)
    dotspacemacs-verbose-loading nil
@@ -499,16 +497,12 @@ before packages are loaded."
   (define-key evil-motion-state-map "j" 'evil-next-visual-line)
   (define-key evil-motion-state-map "k" 'evil-previous-visual-line)
 
-  ;; Use goimports instead of gofmt
-  (setq go-format-before-save t
-        gofmt-command (expand-file-name "~/go/bin/goimports"))
-
-  ;; Use aspell instead of ispell
-  (setq ispell-program-name "aspell")
-
   ;; Set some spacemacs toggles
   (spacemacs/toggle-spelling-checking-off)
   (spacemacs/toggle-vi-tilde-fringe-off)
+
+  ;; Use aspell instead of ispell
+  (setq ispell-program-name "aspell")
 
   ;; Configure ivy
   (setq ivy-on-del-error-function #'ignore)
@@ -516,16 +510,24 @@ before packages are loaded."
   (setq ivy-display-function 'ivy-posframe-display-at-frame-center
         ivy-posframe-border-width 10)
 
-  ;; Configure magit-todos
-  (require 'magit-todos)
-  (setq magit-todos-section-map nil)
-  (magit-todos-mode)
+  ;; Use goimports instead of gofmt
+  (setq go-format-before-save t
+        gofmt-command (expand-file-name "~/go/bin/goimports"))
+
+  ;; Configure hindent-mode
+  (require 'hindent)
+  (setq hindent-process-path "brittany")
 
   ;; Other overrides and defaults
   (setq-default
    ;; tabs
    indent-tabs-mode nil
    tab-width 8
+
+   ;; evil-goggles
+   evil-goggles-pulse (display-graphic-p)
+   evil-goggles-async-duration 0.25
+   evil-goggles-blocking-duration 0.1
 
    ;; whitespace-mode
    whitespace-style '(face tabs newline-mark tab-mark)

@@ -1,3 +1,0 @@
-#!/bin/sh
-
-[ -x /usr/sbin/system_profiler ] && /usr/sbin/system_profiler SPDisplaysDataType | grep -q "Retina: Yes"

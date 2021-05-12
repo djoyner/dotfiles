@@ -88,11 +88,11 @@ if [ -n "$(type -p dircolors)" ]; then
 fi
 
 ## Editor config
-if [[ -n $SSH_CONNECTION ]]; then
+if [[ -n "$SSH_CONNECTION" ]]; then
     export EDITOR=vim
 else
-    export EDITOR=emacs
-    export VISUAL=$EDITOR
+    export EDITOR="emacsclient -c"
+    export VISUAL="$EDITOR"
 fi
 
 ## Pager config
@@ -147,15 +147,6 @@ export GIT_COMMITTER_EMAIL=$GIT_AUTHOR_EMAIL
 
 ## Assumes dockerd is running in guest OS
 export DOCKER_HOST="tcp://debian-guest:2375/"
-
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
-#
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
 
 ## Local environment customization
 [ -f ~/.zshrc.local ] && . ~/.zshrc.local

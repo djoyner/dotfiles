@@ -1,18 +1,14 @@
 # exclude all
 *
 # except important dot files and subdirectories
-!.bash_profile
-!.bashrc
 !.ghci
 !.gitconfig
 !.gitignore
 !.inputrc
-!.profile
 !.pylintrc
 !.screenrc
 !.spacemacs
 !.spacemacs.djoyner
 !.tmux.conf
-!.xmobarrc
-!.xmonad
-!.xsession
+!.zshenv
+!.zshrc

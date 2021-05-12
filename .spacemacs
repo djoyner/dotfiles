@@ -32,8 +32,7 @@ This function should only modify configuration layer settings."
 
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
-   '(
-     ;; ----------------------------------------------------------------
+   '(;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press `SPC f e R' (Vim style) or
      ;; `M-m f e R' (Emacs style) to install them.
@@ -47,24 +46,32 @@ This function should only modify configuration layer settings."
           git-gutter-use-fringe t)
      github
      (go :variables
-         go-use-gometalinter t)
+         go-format-before-save t
+         go-use-golangci-lint t
+         gofmt-command (expand-file-name "~/go/bin/goimports"))
      graphviz
      (haskell :variables
-              haskell-completion-backend 'intero
+              haskell-completion-backend 'dante
               haskell-enable-hindent t)
+     helm
      html
      (ibuffer :variables
               ibuffer-group-buffers-by 'projects)
-     ivy
      javascript
-     lsp
+     (json :variables
+           js-indent-level 2)
+     (lsp :variables
+          lsp-rust-server 'rls)
      lua
-     markdown
+     (markdown :variables
+               markdown (expand-file-name "~/.nix-profile/bin/pandoc"))
      nginx
      nixos
-     org
+     (org :variables
+          org-enable-roam-support t)
      (osx :variables
           osx-command-as nil)
+     protobuf
      python
      rust
      (shell :variables
@@ -75,21 +82,21 @@ This function should only modify configuration layer settings."
                      spell-checking-enable-by-default nil)
      sql
      syntax-checking
-     windows-scripts
+     systemd
+     terraform
      version-control
      yaml
      )
 
-   ;; List of additional packages that will be installed without being
-   ;; wrapped in a layer. If you need some configuration for these
-   ;; packages, then consider creating a layer. You can also put the
-   ;; configuration in `dotspacemacs/user-config'.
-   ;; To use a local version of a package, use the `:location' property:
-   ;; '(your-package :location "~/path/to/your-package/")
+   ;; List of additional packages that will be installed without being wrapped
+   ;; in a layer (generally the packages are installed only and should still be
+   ;; loaded using load/require/use-package in the user-config section below in
+   ;; this file). If you need some configuration for these packages, then
+   ;; consider creating a layer. You can also put the configuration in
+   ;; `dotspacemacs/user-config'. To use a local version of a package, use the
+   ;; `:location' property: '(your-package :location "~/path/to/your-package/")
    ;; Also include the dependencies as they will not be resolved automatically.
-   dotspacemacs-additional-packages '(
-     ivy-posframe
-     )
+   dotspacemacs-additional-packages '()
 
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -129,9 +136,9 @@ It should only modify the values of Spacemacs settings."
    ;; portable dumper in the cache directory under dumps sub-directory.
    ;; To load it when starting Emacs add the parameter `--dump-file'
    ;; when invoking Emacs 27.1 executable on the command line, for instance:
-   ;;   ./emacs --dump-file=~/.emacs.d/.cache/dumps/spacemacs.pdmp
-   ;; (default spacemacs.pdmp)
-   dotspacemacs-emacs-dumper-dump-file "spacemacs.pdmp"
+   ;;   ./emacs --dump-file=$HOME/.emacs.d/.cache/dumps/spacemacs-27.1.pdmp
+   ;; (default (format "spacemacs-%s.pdmp" emacs-version))
+   dotspacemacs-emacs-dumper-dump-file (format "spacemacs-%s.pdmp" emacs-version)
 
    ;; If non-nil ELPA repositories are contacted via HTTPS whenever it's
    ;; possible. Set it to nil if you have no way to use HTTPS in your
@@ -151,9 +158,18 @@ It should only modify the values of Spacemacs settings."
    ;; (default '(100000000 0.1))
    dotspacemacs-gc-cons '(100000000 0.1)
 
+   ;; Set `read-process-output-max' when startup finishes.
+   ;; This defines how much data is read from a foreign process.
+   ;; Setting this >= 1 MB should increase performance for lsp servers
+   ;; in emacs 27.
+   ;; (default (* 1024 1024))
+   dotspacemacs-read-process-output-max (* 1024 1024)
+
    ;; If non-nil then Spacelpa repository is the primary source to install
    ;; a locked version of packages. If nil then Spacemacs will install the
-   ;; latest version of packages from MELPA. (default nil)
+   ;; latest version of packages from MELPA. Spacelpa is currently in
+   ;; experimental state please use only for testing purposes.
+   ;; (default nil)
    dotspacemacs-use-spacelpa nil
 
    ;; If non-nil then verify the signature for downloaded Spacelpa archives.
@@ -197,19 +213,37 @@ It should only modify the values of Spacemacs settings."
    ;; List of items to show in startup buffer or an association list of
    ;; the form `(list-type . list-size)`. If nil then it is disabled.
    ;; Possible values for list-type are:
-   ;; `recents' `bookmarks' `projects' `agenda' `todos'.
+   ;; `recents' `recents-by-project' `bookmarks' `projects' `agenda' `todos'.
    ;; List sizes may be nil, in which case
    ;; `spacemacs-buffer-startup-lists-length' takes effect.
+   ;; The exceptional case is `recents-by-project', where list-type must be a
+   ;; pair of numbers, e.g. `(recents-by-project . (7 .  5))', where the first
+   ;; number is the project limit and the second the limit on the recent files
+   ;; within a project.
    dotspacemacs-startup-lists '((recents . 5)
                                 (projects . 7))
 
    ;; True if the home buffer should respond to resize events. (default t)
    dotspacemacs-startup-buffer-responsive t
 
+   ;; The minimum delay in seconds between number key presses. (default 0.4)
+   dotspacemacs-startup-buffer-multi-digit-delay 0.4
+
    ;; Default major mode for a new empty buffer. Possible values are mode
    ;; names such as `text-mode'; and `nil' to use Fundamental mode.
    ;; (default `text-mode')
    dotspacemacs-new-empty-buffer-major-mode 'text-mode
+
+   ;; Default major mode of the scratch buffer (default `text-mode')
+   dotspacemacs-scratch-mode 'text-mode
+
+   ;; If non-nil, *scratch* buffer will be persistent. Things you write down in
+   ;; *scratch* buffer will be saved and restored automatically.
+   dotspacemacs-scratch-buffer-persistent nil
+
+   ;; If non-nil, `kill-buffer' on *scratch* buffer
+   ;; will bury it instead of killing.
+   dotspacemacs-scratch-buffer-unkillable nil
 
    ;; Initial message in the scratch buffer, such as "Welcome to Spacemacs!"
    ;; (default nil)
@@ -332,7 +366,7 @@ It should only modify the values of Spacemacs settings."
 
    ;; If non-nil the frame is fullscreen when Emacs starts up. (default nil)
    ;; (Emacs 24.4+ only)
-   dotspacemacs-fullscreen-at-startup nil
+   dotspacemacs-fullscreen-at-startup t
 
    ;; If non-nil `spacemacs/toggle-fullscreen' will not use native fullscreen.
    ;; Use to disable fullscreen animations in OSX. (default nil)
@@ -341,7 +375,7 @@ It should only modify the values of Spacemacs settings."
    ;; If non-nil the frame is maximized when Emacs starts up.
    ;; Takes effect only if `dotspacemacs-fullscreen-at-startup' is nil.
    ;; (default nil) (Emacs 24.4+ only)
-   dotspacemacs-maximized-at-startup nil
+   dotspacemacs-maximized-at-startup t
 
    ;; If non-nil the frame is undecorated when Emacs starts up. Combine this
    ;; variable with `dotspacemacs-maximized-at-startup' in OSX to obtain
@@ -367,12 +401,16 @@ It should only modify the values of Spacemacs settings."
    ;; If non-nil unicode symbols are displayed in the mode line.
    ;; If you use Emacs as a daemon and wants unicode characters only in GUI set
    ;; the value to quoted `display-graphic-p'. (default t)
-   dotspacemacs-mode-line-unicode-symbols t
+   dotspacemacs-mode-line-unicode-symbols nil
 
    ;; If non-nil smooth scrolling (native-scrolling) is enabled. Smooth
    ;; scrolling overrides the default behavior of Emacs which recenters point
    ;; when it reaches the top or bottom of the screen. (default t)
    dotspacemacs-smooth-scrolling t
+
+   ;; Show the scroll bar while scrolling. The auto hide time can be configured
+   ;; by setting this variable to a number. (default t)
+   dotspacemacs-scroll-bar-while-scrolling t
 
    ;; Control line numbers activation.
    ;; If set to `t', `relative' or `visual' then line numbers are enabled in all
@@ -401,13 +439,18 @@ It should only modify the values of Spacemacs settings."
                                                    text-mode
                                :size-limit-kb 1000)
 
-   ;; Code folding method. Possible values are `evil' and `origami'.
+   ;; Code folding method. Possible values are `evil', `origami' and `vimish'.
    ;; (default 'evil)
    dotspacemacs-folding-method 'evil
 
-   ;; If non-nil `smartparens-strict-mode' will be enabled in programming modes.
+   ;; If non-nil and `dotspacemacs-activate-smartparens-mode' is also non-nil,
+   ;; `smartparens-strict-mode' will be enabled in programming modes.
    ;; (default nil)
    dotspacemacs-smartparens-strict-mode nil
+
+   ;; If non-nil smartparens-mode will be enabled in programming modes.
+   ;; (default t)
+   dotspacemacs-activate-smartparens-mode t
 
    ;; If non-nil pressing the closing parenthesis `)' key in insert mode passes
    ;; over any automatically added closing parenthesis, bracket, quote, etc...
@@ -455,12 +498,18 @@ It should only modify the values of Spacemacs settings."
    ;; %n - Narrow if appropriate
    ;; %z - mnemonics of buffer, terminal, and keyboard coding systems
    ;; %Z - like %z, but including the end-of-line format
+   ;; If nil then Spacemacs uses default `frame-title-format' to avoid
+   ;; performance issues, instead of calculating the frame title by
+   ;; `spacemacs/title-prepare' all the time.
    ;; (default "%I@%S")
    dotspacemacs-frame-title-format "%a (%t)"
 
    ;; Format specification for setting the icon title format
    ;; (default nil - same as frame-title-format)
    dotspacemacs-icon-title-format nil
+
+   ;; Show trailing whitespace (default t)
+   dotspacemacs-show-trailing-whitespace t
 
    ;; Delete whitespace while saving buffer. Possible values are `all'
    ;; to aggressively delete empty line and long sequences of whitespace,
@@ -476,6 +525,13 @@ It should only modify the values of Spacemacs settings."
    ;; (default t)
    dotspacemacs-use-clean-aindent-mode t
 
+   ;; If non-nil shift your number row to match the entered keyboard layout
+   ;; (only in insert state). Currently supported keyboard layouts are:
+   ;; `qwerty-us', `qwertz-de' and `querty-ca-fr'.
+   ;; New layouts can be added in `spacemacs-editing' layer.
+   ;; (default nil)
+   dotspacemacs-swap-number-row nil
+
    ;; Either nil or a number of seconds. If non-nil zone out after the specified
    ;; number of seconds. (default nil)
    dotspacemacs-zone-out-when-idle nil
@@ -483,7 +539,14 @@ It should only modify the values of Spacemacs settings."
    ;; Run `spacemacs/prettify-org-buffer' when
    ;; visiting README.org files of Spacemacs.
    ;; (default nil)
-   dotspacemacs-pretty-docs nil))
+   dotspacemacs-pretty-docs nil
+
+   ;; If nil the home buffer shows the full path of agenda items
+   ;; and todos. If non nil only the file name is shown.
+   dotspacemacs-home-shorten-agenda-source nil
+
+   ;; If non-nil then byte-compile some of Spacemacs files.
+   dotspacemacs-byte-compile nil))
 
 (defun dotspacemacs/user-env ()
   "Environment variables setup.
@@ -499,8 +562,8 @@ This function is called immediately after `dotspacemacs/init', before layer
 configuration.
 It is mostly for variables that should be set before packages are loaded.
 If you are unsure, try setting them in `dotspacemacs/user-config' first."
-  (with-eval-after-load 'intero
-    (flycheck-add-next-checker 'intero '(warning . haskell-hlint)))
+  (when (eq system-type 'darwin)
+    (setq insert-directory-program (expand-file-name "~/.nix-profile/bin/ls")))
   )
 
 (defun dotspacemacs/user-load ()
@@ -532,22 +595,59 @@ before packages are loaded."
   ;; Use aspell instead of ispell
   (setq ispell-program-name "aspell")
 
-  ;; Configure ivy
-  (setq ivy-on-del-error-function #'ignore)
-  (require 'ivy-posframe)
-  (setq ivy-display-function 'ivy-posframe-display-at-frame-center
-        ivy-posframe-border-width 10)
-
-  ;; Add go's bin directory to the path
+  ;; Add go bin directories to the path
+  (add-to-list 'exec-path (expand-file-name "~/go/bin"))
   (add-to-list 'exec-path "/usr/local/go/bin/")
 
-  ;; Use goimports instead of gofmt
-  (setq go-format-before-save t
-        gofmt-command (expand-file-name "~/go/bin/goimports"))
+  ;; Configure haskell-mode
+  (require 'haskell-mode)
+  (add-hook 'haskell-mode-hook 'stack-exec-path-mode)
 
-  ;; Configure hindent-mode
-  (require 'hindent)
-  (setq hindent-process-path "brittany")
+  ;; Configure ibuffer-mode
+  (setq ibuffer-formats
+        `((mark modified read-only locked " "
+                (name 48 48 :left :elide)
+                " "
+                (size 9 -1 :right)
+                " "
+                (mode 16 16 :left :elide)
+                " " filename-and-process)
+          (mark " "
+                (name 48 -1)
+                " " filename)))
+
+  ;; Configure lsp-mode
+  (setq lsp-file-watch-threshold nil
+        lsp-ui-doc-max-height 50
+        ;;lsp-ui-sideline-show-code-actions nil
+        )
+
+  ;; Configure org-mode
+  (setq org-agenda-files '("~/org-roam"))
+
+  (setq org-roam-capture-templates
+        '(
+          ("d" "default" plain (function org-roam--capture-get-point)
+           "%?"
+           :file-name "%<%Y%m%d%H%M%S>-${slug}"
+           :head "#+title: ${title}\n#+created: %u\n#+last_modified: %U\n#+roam_tags:\n\n"
+           :immediate-finish t
+           :unnarrowed t)
+          ))
+
+  (setq org-roam-dailies-capture-templates
+        '(("d" "default" entry (function org-roam-capture--get-point)
+           "%?"
+           :file-name ,(concat org-roam-dailies-directory "%<%Y-%m-%d>")
+           :head "#+title: %<%Y-%m-%d>\n\n")
+          ))
+
+  (add-hook 'org-mode-hook (lambda ()
+                             (setq-local time-stamp-active t
+                                         time-stamp-start "^#\\+last_modified: [ \t]*"
+                                         time-stamp-end "$"
+                                         time-stamp-format "\[%Y-%m-%d %a %H:%M:%S\]")
+                             (add-hook 'before-save-hook 'time-stamp nil 'local)))
 
   ;; Other overrides and defaults
   (setq-default
@@ -563,11 +663,7 @@ before packages are loaded."
    ;; whitespace-mode
    whitespace-style '(face tabs newline-mark tab-mark)
    whitespace-display-mappings '((newline-mark 10 [172 10])
-                                 (tab-mark 9 [9655 9]))
-
-   ;; js2-mode and json-mode indents
-   js2-basic-offset 2
-   js-indent-level 2)
+                                 (tab-mark 9 [9655 9])))
   )
 
 ;; Do not write anything past this comment. This is where Emacs will

@@ -2,7 +2,7 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="/Users/djoyner/.oh-my-zsh"
+export ZSH="${HOME}/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -72,15 +72,29 @@ ZSH_THEME="essembeh"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-    aws
     docker
-    git
     ripgrep
 )
 
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
+
+## Prepend miscellaneous directories to PATH
+[ -d ~/bin ] && PATH=~/bin:$PATH
+[ -d ~/go/bin ] && PATH=~/go/bin:$PATH
+
+## Bootstrap Nix
+[ -e ~/.nix-profile/etc/profile.d/nix.sh ] && . ~/.nix-profile/etc/profile.d/nix.sh
+
+## Bootstrap Cargo
+[ -d ~/.cargo/bin ] && PATH=~/.cargo/bin:$PATH
+
+## Bootstrap pyenv
+if [ -d ~/.pyenv ]; then
+    export PYENV_ROOT="$HOME/.pyenv"
+    PATH=$PYENV_ROOT/bin:$PATH
+fi
 
 ## Load directory colors
 if [ -n "$(type -p dircolors)" ]; then
@@ -91,11 +105,12 @@ fi
 if [[ -n "$SSH_CONNECTION" ]]; then
     export EDITOR=vim
 else
-    export EDITOR="emacsclient -c"
-    export VISUAL="$EDITOR"
+    export EDITOR="emacsclient -t"
+    export VISUAL="emacsclient -c -a emacs"
 fi
 
 ## Pager config
+unset LESS
 export PAGER=less
 export MANPAGER=$PAGER
 export LESSHISTFILE=/dev/null
@@ -116,6 +131,7 @@ setopt extended_history
 setopt hist_expire_dups_first
 setopt hist_find_no_dups
 setopt inc_append_history
+unsetopt hist_verify
 
 HISTSIZE=1000
 SAVEHIST=2000
@@ -132,6 +148,11 @@ else
     alias l.='env ls -dFG .*'
     alias ll='env ls -lFG'
     alias ls='env ls -G'
+fi
+
+## Command completions
+if [ -n "$(type -p aws_completer)" ]; then
+    complete -C aws_completer aws
 fi
 
 ## Load up "z"

@@ -40,6 +40,8 @@ This function should only modify configuration layer settings."
      auto-completion
      better-defaults
      csv
+     djoyner-org-mode
+     djoyner-tla-tools
      docker
      emacs-lisp
      (git :variables
@@ -563,15 +565,17 @@ configuration.
 It is mostly for variables that should be set before packages are loaded.
 If you are unsure, try setting them in `dotspacemacs/user-config' first."
   (when (eq system-type 'darwin)
-    (setq insert-directory-program (expand-file-name "~/.nix-profile/bin/ls")))
+    (setq insert-directory-program (expand-file-name "~/.nix-profile/bin/ls"))
+    (setq-default quelpa-build-tar-executable (expand-file-name "~/.nix-profile/bin/tar"))
+    )
   )
 
 (defun dotspacemacs/user-load ()
   "Library to load while dumping.
 This function is called only while dumping Spacemacs configuration. You can
 `require' or `load' the libraries of your choice that will be included in the
-dump."
-  )
+dump.")
+
 
 (defun dotspacemacs/user-config ()
   "Configuration for user code:
@@ -618,12 +622,23 @@ before packages are loaded."
 
   ;; Configure lsp-mode
   (setq lsp-file-watch-threshold nil
-        lsp-ui-doc-max-height 50
+        ;;lsp-ui-doc-max-height 50
+        lsu-ui-doc-use-webkit t
         ;;lsp-ui-sideline-show-code-actions nil
         )
 
   ;; Configure org-mode
-  (setq org-agenda-files '("~/org-roam"))
+  (setq org-agenda-files '("~/Dropbox/org-agenda/amazon.org" "~/Dropbox/org-agenda/personal.org")
+        org-enforce-todo-checkbox-dependencies t
+        org-enforce-todo-dependencies t
+        org-log-into-drawer "LOGBOOK"
+        org-log-reschedule 'time
+        org-refile-allow-creating-parent-nodes 'confirm
+        org-refile-targets '((org-agenda-files :maxlevel . 2))
+        org-refile-use-outline-path 'file
+        org-roam-directory "~/Dropbox/org-roam"
+        org-track-ordered-property-with-tag t
+        org-use-property-inheritance t)
 
   (setq org-roam-capture-templates
         '(
@@ -631,7 +646,6 @@ before packages are loaded."
            "%?"
            :file-name "%<%Y%m%d%H%M%S>-${slug}"
            :head "#+title: ${title}\n#+created: %u\n#+last_modified: %U\n#+roam_tags:\n\n"
-           :immediate-finish t
            :unnarrowed t)
           ))
 
@@ -648,6 +662,8 @@ before packages are loaded."
                                          time-stamp-end "$"
                                          time-stamp-format "\[%Y-%m-%d %a %H:%M:%S\]")
                              (add-hook 'before-save-hook 'time-stamp nil 'local)))
+
+  (add-hook 'org-insert-heading-hook 'djoyner-org-mode/org-fix-blank-lines)
 
   ;; Other overrides and defaults
   (setq-default

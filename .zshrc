@@ -162,13 +162,6 @@ fi
 [ -d /usr/local/go ] && export GOROOT=/usr/local/go
 [ -d ~/go ] && export GOPATH=~/go
 
-## Override git author/committer email addresses for Spirent
-export GIT_AUTHOR_EMAIL="david.joyner@spirent.com"
-export GIT_COMMITTER_EMAIL=$GIT_AUTHOR_EMAIL
-
-## Assumes dockerd is running in guest OS
-export DOCKER_HOST="tcp://debian-guest:2375/"
-
 ## Local environment customization
 [ -f ~/.zshrc.local ] && . ~/.zshrc.local
 

@@ -25,11 +25,11 @@
 (require 'org)
 
 ;; Adapted from https://github.com/alphapapa/unpackaged.el
-(defun djoyner-org-mode/org-fix-blank-lines ()
+(defun djoyner-org-mode/org-fix-blank-lines (&optional prefix)
   "Ensure that blank lines exist between headings and between headings and their contents.
-Operates on the whole buffer. Ensures that blank lines exist
-after each headings's drawers."
-  (interactive)
+With prefix, operate on whole buffer. Ensures that blank lines
+exist after each headings's drawers."
+  (interactive "P")
   (org-map-entries (lambda ()
                      (org-with-wide-buffer
                       ;; `org-map-entries' narrows the buffer, which prevents us from seeing
@@ -54,4 +54,26 @@ after each headings's drawers."
                                    (org-at-heading-p)
                                    (looking-at-p "\n"))
                          (insert "\n"))))
-                   t nil))
+                   t (if prefix
+                         nil
+                       'tree)))
+
+(defun djoyner-org-mode/org-fix-blank-lines-whole-buffer ()
+  "Ensure that blank lines exist between headings and between headings and their contents.
+Operates on whole buffer. Ensures that blank lines exist after
+each headings's drawers."
+  (interactive)
+  (let ((current-prefix-arg t))
+    (djoyner-org-mode/org-fix-blank-lines))
+)
+
+;; Adapted from Rainer König's Udemy course materials
+(defun djoyner-org-mode/org-reset-checkbox-state-maybe ()
+  "Reset all checkboxes in an entry if the `RESET_CHECKBOXES' property is set"
+  (interactive "*")
+  (if (org-entry-get (point) "RESET_CHECKBOXES")
+      (org-reset-checkbox-state-subtree)))
+
+(defun djoyner-org-mode/org-checklist ()
+  (when (member org-state org-done-keywords) ;; org-state dynamically bound in org.el/org-todo
+    (djoyner-org-mode/org-reset-checkbox-state-maybe)))

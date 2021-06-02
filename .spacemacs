@@ -629,12 +629,29 @@ before packages are loaded."
 
   ;; Configure org-mode
   (setq org-agenda-files '("~/Dropbox/org-agenda/amazon.org" "~/Dropbox/org-agenda/personal.org")
+        org-capture-templates '(
+                                ("w" "Work")
+                                ("wn" "NEXT entry" entry (file+headline "~/Dropbox/org-agenda/amazon.org" "Capture")
+                                 (file "~/Dropbox/org-template/next.txt") :empty-lines-before 1 :empty-lines-after 1)
+                                ("wt" "TODO entry" entry (file+headline "~/Dropbox/org-agenda/amazon.org" "Capture")
+                                 (file "~/Dropbox/org-template/todo.txt") :empty-lines-before 1 :empty-lines-after 1)
+                                ("ws" "SOMEDAY entry" entry (file+headline "~/Dropbox/org-agenda/amazon.org" "Capture")
+                                 (file "~/Dropbox/org-template/someday.txt") :empty-lines-before 1 :empty-lines-after 1)
+                                ("a" "Article to read" entry (file+headline "~/Dropbox/org-agenda/personal.org" "Articles")
+                                 (file "~/Dropbox/org-template/article.txt") :empty-lines-before 1 :empty-lines-after 1)
+                                ("b" "Book to read" entry (file+headline "~/Dropbox/org-agenda/personal.org" "Books")
+                                 (file "~/Dropbox/org-template/book.txt") :empty-lines-before 1 :empty-lines-after 1)
+                                ("p" "Podcast to listen" entry (file+headline "~/Dropbox/org-agenda/personal.org" "Podcasts")
+                                 (file "~/Dropbox/org-template/podcast.txt") :empty-lines-before 1 :empty-lines-after 1)
+                                ("v" "Video to watch" entry (file+headline "~/Dropbox/org-agenda/personal.org" "Videos")
+                                 (file "~/Dropbox/org-template/video.txt") :empty-lines-before 1 :empty-lines-after 1))
         org-enforce-todo-checkbox-dependencies t
         org-enforce-todo-dependencies t
         org-log-into-drawer "LOGBOOK"
         org-log-reschedule 'time
+        org-outline-path-complete-in-steps nil
         org-refile-allow-creating-parent-nodes 'confirm
-        org-refile-targets '((org-agenda-files :maxlevel . 2))
+        org-refile-targets '((org-agenda-files :maxlevel . 1))
         org-refile-use-outline-path 'file
         org-roam-directory "~/Dropbox/org-roam"
         org-track-ordered-property-with-tag t
@@ -652,18 +669,21 @@ before packages are loaded."
   (setq org-roam-dailies-capture-templates
         '(("d" "default" entry (function org-roam-capture--get-point)
            "%?"
-           :file-name ,(concat org-roam-dailies-directory "%<%Y-%m-%d>")
+           :file-name "daily/%<%Y-%m-%d>"
            :head "#+title: %<%Y-%m-%d>\n\n")
           ))
+
+  (add-hook 'org-after-todo-state-change-hook 'djoyner-org-mode/org-checklist)
+
+  (add-hook 'org-insert-heading-hook 'djoyner-org-mode/org-fix-blank-lines)
 
   (add-hook 'org-mode-hook (lambda ()
                              (setq-local time-stamp-active t
                                          time-stamp-start "^#\\+last_modified: [ \t]*"
                                          time-stamp-end "$"
                                          time-stamp-format "\[%Y-%m-%d %a %H:%M:%S\]")
-                             (add-hook 'before-save-hook 'time-stamp nil 'local)))
-
-  (add-hook 'org-insert-heading-hook 'djoyner-org-mode/org-fix-blank-lines)
+                             (add-hook 'before-save-hook 'time-stamp nil 'local)
+                             (add-hook 'before-save-hook 'djoyner-org-mode/org-fix-blank-lines-whole-buffer nil 'local)))
 
   ;; Other overrides and defaults
   (setq-default

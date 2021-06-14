@@ -277,8 +277,8 @@ It should only modify the values of Spacemacs settings."
    ;; Default font or prioritized list of fonts. The `:size' can be specified as
    ;; a non-negative integer (pixel size), or a floating-point (point size).
    ;; Point size is recommended, because it's device independent. (default 10.0)
-   dotspacemacs-default-font '("Consolas"
-                               :size 12.0
+   dotspacemacs-default-font '("JuliaMono"
+                               :size 13.0
                                :weight normal
                                :width normal)
 
@@ -372,7 +372,7 @@ It should only modify the values of Spacemacs settings."
 
    ;; If non-nil the frame is fullscreen when Emacs starts up. (default nil)
    ;; (Emacs 24.4+ only)
-   dotspacemacs-fullscreen-at-startup t
+   dotspacemacs-fullscreen-at-startup nil
 
    ;; If non-nil `spacemacs/toggle-fullscreen' will not use native fullscreen.
    ;; Use to disable fullscreen animations in OSX. (default nil)
@@ -381,7 +381,7 @@ It should only modify the values of Spacemacs settings."
    ;; If non-nil the frame is maximized when Emacs starts up.
    ;; Takes effect only if `dotspacemacs-fullscreen-at-startup' is nil.
    ;; (default nil) (Emacs 24.4+ only)
-   dotspacemacs-maximized-at-startup t
+   dotspacemacs-maximized-at-startup nil
 
    ;; If non-nil the frame is undecorated when Emacs starts up. Combine this
    ;; variable with `dotspacemacs-maximized-at-startup' in OSX to obtain
@@ -635,23 +635,23 @@ before packages are loaded."
         )
 
   ;; Configure org-mode
-  (setq org-agenda-files '("~/Dropbox/org-agenda/amazon.org" "~/Dropbox/org-agenda/personal.org")
+  (setq org-agenda-files '("~/org-agenda/amazon.org" "~/org-agenda/personal.org")
         org-capture-templates '(
                                 ("w" "Work")
-                                ("wn" "NEXT entry" entry (file+headline "~/Dropbox/org-agenda/amazon.org" "Capture")
-                                 (file "~/Dropbox/org-template/next.txt") :empty-lines-before 1 :empty-lines-after 1)
-                                ("wt" "TODO entry" entry (file+headline "~/Dropbox/org-agenda/amazon.org" "Capture")
-                                 (file "~/Dropbox/org-template/todo.txt") :empty-lines-before 1 :empty-lines-after 1)
-                                ("ws" "SOMEDAY entry" entry (file+headline "~/Dropbox/org-agenda/amazon.org" "Capture")
-                                 (file "~/Dropbox/org-template/someday.txt") :empty-lines-before 1 :empty-lines-after 1)
-                                ("a" "Article to read" entry (file+headline "~/Dropbox/org-agenda/personal.org" "Articles")
-                                 (file "~/Dropbox/org-template/article.txt") :empty-lines-before 1 :empty-lines-after 1)
-                                ("b" "Book to read" entry (file+headline "~/Dropbox/org-agenda/personal.org" "Books")
-                                 (file "~/Dropbox/org-template/book.txt") :empty-lines-before 1 :empty-lines-after 1)
-                                ("p" "Podcast to listen" entry (file+headline "~/Dropbox/org-agenda/personal.org" "Podcasts")
-                                 (file "~/Dropbox/org-template/podcast.txt") :empty-lines-before 1 :empty-lines-after 1)
-                                ("v" "Video to watch" entry (file+headline "~/Dropbox/org-agenda/personal.org" "Videos")
-                                 (file "~/Dropbox/org-template/video.txt") :empty-lines-before 1 :empty-lines-after 1))
+                                ("wn" "NEXT entry" entry (file+headline "~/org-agenda/amazon.org" "Capture")
+                                 (file "~/org-template/next.txt") :empty-lines-before 1 :empty-lines-after 1)
+                                ("wt" "TODO entry" entry (file+headline "~/org-agenda/amazon.org" "Capture")
+                                 (file "~/org-template/todo.txt") :empty-lines-before 1 :empty-lines-after 1)
+                                ("ws" "SOMEDAY entry" entry (file+headline "~/org-agenda/amazon.org" "Capture")
+                                 (file "~/org-template/someday.txt") :empty-lines-before 1 :empty-lines-after 1)
+                                ("a" "Article to read" entry (file+headline "~/org-agenda/personal.org" "Articles")
+                                 (file "~/org-template/article.txt") :empty-lines-before 1 :empty-lines-after 1)
+                                ("b" "Book to read" entry (file+headline "~/org-agenda/personal.org" "Books")
+                                 (file "~/org-template/book.txt") :empty-lines-before 1 :empty-lines-after 1)
+                                ("p" "Podcast to listen" entry (file+headline "~/org-agenda/personal.org" "Podcasts")
+                                 (file "~/org-template/podcast.txt") :empty-lines-before 1 :empty-lines-after 1)
+                                ("v" "Video to watch" entry (file+headline "~/org-agenda/personal.org" "Videos")
+                                 (file "~/org-template/video.txt") :empty-lines-before 1 :empty-lines-after 1))
         org-enforce-todo-checkbox-dependencies t
         org-enforce-todo-dependencies t
         org-log-into-drawer "LOGBOOK"
@@ -660,7 +660,7 @@ before packages are loaded."
         org-refile-allow-creating-parent-nodes 'confirm
         org-refile-targets '((org-agenda-files :maxlevel . 1))
         org-refile-use-outline-path 'file
-        org-roam-directory "~/Dropbox/org-roam"
+        org-roam-directory "~/org-roam"
         org-track-ordered-property-with-tag t
         org-use-property-inheritance t)
 
@@ -674,10 +674,11 @@ before packages are loaded."
           ))
 
   (setq org-roam-dailies-capture-templates
-        '(("d" "default" entry (function org-roam-capture--get-point)
+        '(("d" "default" plain (function org-roam--capture-get-point)
            "%?"
            :file-name "daily/%<%Y-%m-%d>"
-           :head "#+title: %<%Y-%m-%d>\n\n")
+           :head "#+title: %<%Y-%m-%d (%A)>\n#+roam_tags:\n\n* Most Important Tasks\n\n  - [ ] "
+           :unnarrowed t)
           ))
 
   (add-hook 'org-after-todo-state-change-hook 'djoyner-org-mode/org-checklist)

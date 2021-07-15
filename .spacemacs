@@ -635,22 +635,69 @@ before packages are loaded."
         )
 
   ;; Configure org-mode
-  (setq org-agenda-files '("~/org-agenda/amazon.org" "~/org-agenda/personal.org")
+  (setq org-agenda-custom-commands '(
+                                     ("A" . "Agendas")
+                                     ("AT" "Daily overview"
+                                      ((agenda ""
+	                                       ((org-agenda-overriding-header "Daily overview")
+		                                (org-agenda-span 1)
+		                                (org-agenda-sorting-strategy
+		                                 (quote
+		                                  (time-up priority-down)))))
+                                       nil nil))
+                                     ("AW" "Weekly overview" agenda ""
+                                      ((org-agenda-overriding-header "Weekly overview")))
+                                     ("AM" "Monthly overview" agenda ""
+                                      ((org-agenda-overriding-header "Monthly overview"))
+                                      (org-agenda-span
+	                               (quote month))
+                                      (org-deadline-warning-days 0)
+                                      (org-agenda-sorting-strategy
+	                               (quote
+	                                (time-up priority-down tag-up))))
+                                     ("W" . "Weekly Review Helper")
+                                     ("Wn" "New tasks" tags "NEW"
+                                      ((org-agenda-overriding-header "NEW Tasks")))
+                                     ("Ww" "Check WAITING tasks" todo "WAITING"
+                                      ((org-agenda-overriding-header "WAITING tasks")))
+                                     ("Ws" "Check SOMEDAY tasks" todo "SOMEDAY"
+                                      ((org-agenda-overriding-header "SOMEDAY tasks")))
+                                     ("Wp" "Plan unscheduled tasks" todo "TODO|NEXT"
+                                      ((org-agenda-overriding-header "Unscheduled tasks")
+                                       (org-agenda-skip-function
+	                                (quote
+	                                 (org-agenda-skip-entry-if
+	                                  (quote scheduled)
+	                                  (quote deadline))))))
+                                     ("Wf" "Check finished tasks" todo "DONE|CANCELLED"
+                                      ((org-agenda-overriding-header "Finished tasks"))))
+        org-agenda-files '("~/org-agenda/amazon.org" "~/org-agenda/personal.org")
         org-capture-templates '(
+                                ("p" "Personal")
+                                ("pt" "TODO entry" entry (file+headline "~/org-agenda/personal.org" "Capture")
+                                 (file "~/org-template/todo.txt") :empty-lines-before 1 :empty-lines-after 1)
+                                ("ps" "SOMEDAY entry" entry (file+headline "~/org-agenda/personal.org" "Capture")
+                                 (file "~/org-template/someday.txt") :empty-lines-before 1 :empty-lines-after 1)
+                                ("pa" "Article to read" entry (file+headline "~/org-agenda/personal.org" "Capture")
+                                 (file "~/org-template/article.txt") :empty-lines-before 1 :empty-lines-after 1)
+                                ("pb" "Book to read" entry (file+headline "~/org-agenda/personal.org" "Capture")
+                                 (file "~/org-template/book.txt") :empty-lines-before 1 :empty-lines-after 1)
+                                ("pp" "Podcast to listen" entry (file+headline "~/org-agenda/personal.org" "Capture")
+                                 (file "~/org-template/podcast.txt") :empty-lines-before 1 :empty-lines-after 1)
+                                ("pv" "Video to watch" entry (file+headline "~/org-agenda/personal.org" "Capture")
+                                 (file "~/org-template/video.txt") :empty-lines-before 1 :empty-lines-after 1)
                                 ("w" "Work")
-                                ("wn" "NEXT entry" entry (file+headline "~/org-agenda/amazon.org" "Capture")
-                                 (file "~/org-template/next.txt") :empty-lines-before 1 :empty-lines-after 1)
                                 ("wt" "TODO entry" entry (file+headline "~/org-agenda/amazon.org" "Capture")
                                  (file "~/org-template/todo.txt") :empty-lines-before 1 :empty-lines-after 1)
                                 ("ws" "SOMEDAY entry" entry (file+headline "~/org-agenda/amazon.org" "Capture")
                                  (file "~/org-template/someday.txt") :empty-lines-before 1 :empty-lines-after 1)
-                                ("a" "Article to read" entry (file+headline "~/org-agenda/personal.org" "Articles")
+                                ("wa" "Article to read" entry (file+headline "~/org-agenda/amazon.org" "Capture")
                                  (file "~/org-template/article.txt") :empty-lines-before 1 :empty-lines-after 1)
-                                ("b" "Book to read" entry (file+headline "~/org-agenda/personal.org" "Books")
+                                ("wb" "Book to read" entry (file+headline "~/org-agenda/amazon.org" "Capture")
                                  (file "~/org-template/book.txt") :empty-lines-before 1 :empty-lines-after 1)
-                                ("p" "Podcast to listen" entry (file+headline "~/org-agenda/personal.org" "Podcasts")
+                                ("wp" "Podcast to listen" entry (file+headline "~/org-agenda/amazon.org" "Capture")
                                  (file "~/org-template/podcast.txt") :empty-lines-before 1 :empty-lines-after 1)
-                                ("v" "Video to watch" entry (file+headline "~/org-agenda/personal.org" "Videos")
+                                ("wv" "Video to watch" entry (file+headline "~/org-agenda/amazon.org" "Capture")
                                  (file "~/org-template/video.txt") :empty-lines-before 1 :empty-lines-after 1))
         org-enforce-todo-checkbox-dependencies t
         org-enforce-todo-dependencies t

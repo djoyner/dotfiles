@@ -90,6 +90,12 @@ source $ZSH/oh-my-zsh.sh
 ## Bootstrap Cargo
 [ -d ~/.cargo/bin ] && PATH=~/.cargo/bin:$PATH
 
+## Bootstrap NVM
+if [ -d ~/.nvm ]; then
+    export NVM_DIR="$HOME/.nvm"
+    [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+fi
+
 ## Bootstrap pyenv
 if [ -d ~/.pyenv ]; then
     export PYENV_ROOT="$HOME/.pyenv"

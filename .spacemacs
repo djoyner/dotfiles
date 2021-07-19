@@ -600,7 +600,7 @@ before packages are loaded."
 
   ;; Set some spacemacs toggles
   (spacemacs/toggle-spelling-checking-off)
-  (spacemacs/toggle-vi-tilde-fringe-off)
+  ;(spacemacs/toggle-vi-tilde-fringe-off)
 
   ;; Delete by moving files to trash
   (require 'magit)

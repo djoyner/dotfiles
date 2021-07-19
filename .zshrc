@@ -1,3 +1,21 @@
+# Prelude to handle Tramp
+# ref: https://www.emacswiki.org/emacs/TrampMode (Troubleshooting)
+if [[ "$TERM" == "dumb" ]]
+then
+    unsetopt zle
+    unsetopt prompt_cr
+    unsetopt prompt_subst
+    if whence -w precmd >/dev/null; then
+        unfunction precmd
+    fi
+    if whence -w preexec >/dev/null; then
+        unfunction preexec
+    fi
+    unset zle_bracketed_paste
+    PS1='$ '
+    return
+fi
+
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
@@ -81,6 +99,7 @@ source $ZSH/oh-my-zsh.sh
 # User configuration
 
 ## Prepend miscellaneous directories to PATH
+[ -d ~/.local/bin ] && PATH=~/.local/bin:$PATH
 [ -d ~/bin ] && PATH=~/bin:$PATH
 [ -d ~/go/bin ] && PATH=~/go/bin:$PATH
 

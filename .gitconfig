@@ -57,7 +57,7 @@
 	st = status -sb
 	up = pull --rebase --prune
         # Nuke branch
-        nuke = "!f() { git branch -D "$1"; git push origin ":$1"; }; f"
+        #nuke = "!f() { git branch -D "$1"; git push origin ":$1"; }; f"
 	# Reset --hard shortcuts
 	rh = reset --hard
 	rh1 = reset --hard HEAD^

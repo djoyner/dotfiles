@@ -610,10 +610,6 @@ before packages are loaded."
   ;; Use aspell instead of ispell
   (setq ispell-program-name "aspell")
 
-  ;; Add go bin directories to the path
-  (add-to-list 'exec-path (expand-file-name "~/go/bin"))
-  (add-to-list 'exec-path "/usr/local/go/bin/")
-
   ;; Configure haskell-mode
   (require 'haskell-mode)
   (add-hook 'haskell-mode-hook 'stack-exec-path-mode)

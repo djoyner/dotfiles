@@ -100,6 +100,7 @@ source $ZSH/oh-my-zsh.sh
 
 ## Prepend miscellaneous directories to PATH
 [ -d ~/.local/bin ] && PATH=~/.local/bin:$PATH
+[ -d ~/.toolbox/bin ] && PATH=~/.toolbox/bin:$PATH
 [ -d ~/bin ] && PATH=~/bin:$PATH
 [ -d ~/go/bin ] && PATH=~/go/bin:$PATH
 

@@ -714,18 +714,18 @@ before packages are loaded."
 
   (setq org-roam-capture-templates
         '(
-          ("d" "default" plain (function org-roam--capture-get-point)
+          ("d" "default" plain ;(function org-roam--capture-get-point)
            "%?"
-           :file-name "%<%Y%m%d%H%M%S>-${slug}"
-           :head "#+title: ${title}\n#+created: %u\n#+last_modified: %U\n#+roam_tags:\n\n"
+           :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
+                              "#+title: ${title}\n#+created: %u\n#+last_modified: %U\n#+roam_tags:\n\n")
            :unnarrowed t)
           ))
 
   (setq org-roam-dailies-capture-templates
-        '(("d" "default" plain (function org-roam--capture-get-point)
+        '(("d" "default" plain ;(function org-roam--capture-get-point)
            "%?"
-           :file-name "daily/%<%Y-%m-%d>"
-           :head "#+title: %<%Y-%m-%d (%A)>\n#+roam_tags:\n\n* Most Important Tasks\n\n  - [ ] "
+           :target (file+head "%<%Y-%m-%d>.org"
+                              "#+title: %<%Y-%m-%d (%A)>\n#+roam_tags:\n\n* Most Important Tasks\n\n  - [ ] ")
            :unnarrowed t)
           ))
 

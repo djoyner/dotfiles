@@ -143,7 +143,7 @@ export LESSHISTFILE=/dev/null
 
 ## Make less more friendly for non-text input files, see lesspipe(1)
 if [ -n "$(type -p lesspipe.sh)" ]; then
-    export LESSOPEN="| lesspipe.sh %s"
+    export LESSOPEN="| lesspipe.sh %s" LESS_ADVANCED_PREPROCESSOR=1
 fi
 
 ## Turn off stop (^S) control character

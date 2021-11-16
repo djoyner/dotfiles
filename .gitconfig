@@ -7,7 +7,7 @@
 	# whatever line endings are present in a file are used w/o translation
 	autocrlf = false
         # Global .gitignore
-	excludesfile = /Users/djoyner/.gitignore_global
+	excludesfile = /Users/dbjoyner/.gitignore_global
 
 [gc]
 	# Turn off automatic garbage collection

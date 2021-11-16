@@ -32,7 +32,8 @@ This function should only modify configuration layer settings."
 
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
-   '(;; ----------------------------------------------------------------
+   '(
+     ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press `SPC f e R' (Vim style) or
      ;; `M-m f e R' (Emacs style) to install them.
@@ -52,9 +53,6 @@ This function should only modify configuration layer settings."
          go-use-golangci-lint t
          gofmt-command (expand-file-name "~/go/bin/goimports"))
      graphviz
-     (haskell :variables
-              haskell-completion-backend 'dante
-              haskell-enable-hindent t)
      helm
      html
      (ibuffer :variables
@@ -65,8 +63,7 @@ This function should only modify configuration layer settings."
      (lsp :variables
           lsp-rust-server 'rust-analyzer)
      lua
-     (markdown :variables
-               markdown (expand-file-name "~/.nix-profile/bin/pandoc"))
+     markdown
      nginx
      nixos
      (org :variables
@@ -571,10 +568,10 @@ This function is called immediately after `dotspacemacs/init', before layer
 configuration.
 It is mostly for variables that should be set before packages are loaded.
 If you are unsure, try setting them in `dotspacemacs/user-config' first."
-  (when (eq system-type 'darwin)
-    (setq insert-directory-program (expand-file-name "~/.nix-profile/bin/ls"))
-    (setq-default quelpa-build-tar-executable (expand-file-name "~/.nix-profile/bin/tar"))
-    )
+  ;; (when (eq system-type 'darwin)
+  ;;   (setq insert-directory-program (expand-file-name "~/.nix-profile/bin/ls"))
+  ;;   (setq-default quelpa-build-tar-executable (expand-file-name "~/.nix-profile/bin/tar"))
+  ;;   )
   (setq org-roam-v2-ack t)
   )
 
@@ -601,19 +598,12 @@ before packages are loaded."
 
   ;; Set some spacemacs toggles
   (spacemacs/toggle-spelling-checking-off)
-  ;(spacemacs/toggle-vi-tilde-fringe-off)
+  (spacemacs/toggle-vi-tilde-fringe-off)
 
   ;; Delete by moving files to trash
   (require 'magit)
   (setq delete-by-moving-to-trash nil
         magit-delete-by-moving-to-trash nil)
-
-  ;; Use aspell instead of ispell
-  (setq ispell-program-name "aspell")
-
-  ;; Configure haskell-mode
-  (require 'haskell-mode)
-  (add-hook 'haskell-mode-hook 'stack-exec-path-mode)
 
   ;; Configure ibuffer-mode
   (setq ibuffer-formats
@@ -630,9 +620,11 @@ before packages are loaded."
 
   ;; Configure lsp-mode
   (setq lsp-file-watch-threshold nil
+        lsp-ui-doc-enable t
         ;;lsp-ui-doc-max-height 50
-        lsu-ui-doc-use-webkit t
-        ;;lsp-ui-sideline-show-code-actions nil
+        lsp-ui-doc-position 'bottom
+        ;;lsp-ui-doc-use-webkit t
+        lsp-ui-sideline-show-code-actions nil
         )
 
   ;; Configure org-mode
@@ -750,6 +742,9 @@ before packages are loaded."
    indent-tabs-mode nil
    tab-width 8
 
+   ;; general evil-mode customization
+   evil-want-Y-yank-to-eol t
+
    ;; evil-goggles
    evil-goggles-pulse (display-graphic-p)
    evil-goggles-async-duration 0.25
@@ -768,4 +763,4 @@ before packages are loaded."
 This is an auto-generated function, do not modify its content directly, use
 Emacs customize menu instead.
 This function is called at the very end of Spacemacs initialization."
-  )
+)

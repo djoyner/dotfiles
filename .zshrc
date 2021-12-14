@@ -1,21 +1,3 @@
-# Prelude to handle Tramp
-# ref: https://www.emacswiki.org/emacs/TrampMode (Troubleshooting)
-if [[ "$TERM" == "dumb" ]]
-then
-    unsetopt zle
-    unsetopt prompt_cr
-    unsetopt prompt_subst
-    if whence -w precmd >/dev/null; then
-        unfunction precmd
-    fi
-    if whence -w preexec >/dev/null; then
-        unfunction preexec
-    fi
-    unset zle_bracketed_paste
-    PS1='$ '
-    return
-fi
-
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
@@ -128,12 +110,8 @@ if [ -n "$(type -p dircolors)" ]; then
 fi
 
 ## Editor config
-if [[ -n "$SSH_CONNECTION" ]]; then
-    export EDITOR=vim
-else
-    export EDITOR="emacsclient -t"
-    export VISUAL="emacsclient -c -a emacs"
-fi
+export EDITOR=vim
+export VISUAL=vim
 
 ## Pager config
 unset LESS
@@ -175,6 +153,9 @@ else
     alias ll='env ls -lFG'
     alias ls='env ls -G'
 fi
+
+alias vi=nvim
+alias vim=nvim
 
 ## Command completions
 if [ -n "$(type -p aws_completer)" ]; then

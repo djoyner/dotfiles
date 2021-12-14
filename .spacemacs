@@ -95,7 +95,8 @@ This function should only modify configuration layer settings."
    ;; `dotspacemacs/user-config'. To use a local version of a package, use the
    ;; `:location' property: '(your-package :location "~/path/to/your-package/")
    ;; Also include the dependencies as they will not be resolved automatically.
-   dotspacemacs-additional-packages '(exec-path-from-shell)
+   dotspacemacs-additional-packages '(dired-collapse
+                                      exec-path-from-shell)
 
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -275,7 +276,7 @@ It should only modify the values of Spacemacs settings."
    ;; a non-negative integer (pixel size), or a floating-point (point size).
    ;; Point size is recommended, because it's device independent. (default 10.0)
    dotspacemacs-default-font '("JuliaMono"
-                               :size 13.0
+                               :size 14.0
                                :weight normal
                                :width normal)
 
@@ -605,6 +606,9 @@ before packages are loaded."
   (setq delete-by-moving-to-trash nil
         magit-delete-by-moving-to-trash nil)
 
+  ;; Configured dired-mode
+  (add-hook 'dired-mode-hook 'dired-collapse-mode)
+
   ;; Configure ibuffer-mode
   (setq ibuffer-formats
         `((mark modified read-only locked " "
@@ -709,7 +713,7 @@ before packages are loaded."
           ("d" "default" plain ;(function org-roam--capture-get-point)
            "%?"
            :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
-                              "#+title: ${title}\n#+created: %u\n#+last_modified: %U\n#+roam_tags:\n\n")
+                              "#+title: ${title}\n#+created: %u\n#+last_modified: %U\n#+filetags:\n\n")
            :unnarrowed t)
           ))
 
@@ -717,7 +721,7 @@ before packages are loaded."
         '(("d" "default" plain ;(function org-roam--capture-get-point)
            "%?"
            :target (file+head "%<%Y-%m-%d>.org"
-                              "#+title: %<%Y-%m-%d (%A)>\n#+roam_tags:\n\n* Most Important Tasks\n\n  - [ ] ")
+                              "#+title: %<%Y-%m-%d (%A)>\n#+filetags:\n\n* Most Important Tasks\n\n  - [ ] ")
            :unnarrowed t)
           ))
 

@@ -172,5 +172,8 @@ fi
 ## Local environment customization
 [ -f ~/.zshrc.local ] && . ~/.zshrc.local
 
+## Disable log4j silliness
+export JAVA_TOOLS_OPTIONS="-Dlog4j2.formatMsgNoLookups=true"
+
 ## Finally, append . to the PATH
 export PATH=$PATH:.

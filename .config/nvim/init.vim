@@ -19,8 +19,12 @@ Plugin 'editorconfig/editorconfig-vim'
 Plugin 'airblade/vim-rooter'
 Plugin 'tpope/vim-commentary'
 Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-repeat'
 Plugin 'LucHermitte/lh-vim-lib'
 Plugin 'LucHermitte/lh-brackets'
+Plugin 'voldikss/vim-floaterm'
+Plugin 'farmergreg/vim-lastplace'
+Plugin 'sickill/vim-pasta'
 
 " GUI enhancements
 Plugin 'chriskempson/base16-vim'
@@ -38,23 +42,21 @@ Plugin 'hrsh7th/cmp-cmdline'
 Plugin 'hrsh7th/nvim-cmp'
 Plugin 'nvim-lua/lsp_extensions.nvim'
 Plugin 'ray-x/lsp_signature.nvim'
+Plugin 'AndrewRadev/splitjoin.vim'
 
 " Only because nvim-cmp requires snippets
 Plugin 'hrsh7th/cmp-vsnip'
 Plugin 'hrsh7th/vim-vsnip'
 
 " Syntactic language support
-Plugin 'cespare/vim-toml'
-Plugin 'stephpy/vim-yaml'
+let g:polyglot_disabled = ['rust']
+Plugin 'sheerun/vim-polyglot'
 Plugin 'simrat39/rust-tools.nvim'
-Plugin 'rhysd/vim-clang-format'
-Plugin 'godlygeek/tabular'
-Plugin 'plasticboy/vim-markdown'
 
 " rust-tools dependencies
-Plugin 'nvim-lua/popup.nvim'
 Plugin 'nvim-lua/plenary.nvim'
 Plugin 'nvim-telescope/telescope.nvim'
+Plugin 'nvim-telescope/telescope-ui-select.nvim'
 
 " Postamble
 call vundle#end()
@@ -88,13 +90,13 @@ set listchars+=eol:¬            " End of line.
 set matchpairs=(:),{:},[:],<:>  " Character pairs for use with %, 'showmatch'
 set matchtime=3                 " In tenths of seconds.
 set mouse=a                     " Enable mouse support (all modes).
-set scrolloff=2                 " Context lines at top and bottom of display.
+set scrolloff=8                 " Context lines at top and bottom of display.
 set shortmess+=c                " Don't show ins-completion-menu messages.
 set shortmess+=I                " Don't show the Vim welcome screen.
 set showcmd                     " Display incomplete commands.
 set showmatch                   " When a bracket is inserted, briefly jump to the matching one.
 set noshowmode                  " Don't show Insert, Replace or Visual on the last line.
-set signcolumn=yes              " Always draw sign column.
+set signcolumn=yes:2            " Always draw sign column.
 set nosmartindent               " 'smartindent' breaks right-shifting of # lines.
 set notimeout                   " Do not time out waiting for key code sequences.
 set nottimeout                  " Likewise in the TUI.
@@ -133,7 +135,7 @@ set shiftround                  " Round indent to a multiple of 'shiftwidth'.
 set shiftwidth=2                " Number of spaces to use for indent and unindent.
 set showbreak=↪                 " String to put at start of lines that have been wrapped.
 set sidescroll=1                " Number of chars to scroll when scrolling sideways.
-set sidescrolloff=5             " Context columns at left and right.
+set sidescrolloff=8             " Context columns at left and right.
 set smarttab                    " Tab respects 'shiftwidth', 'tabstop', 'softtabstop'.
 set softtabstop=8               " Edit as if tabs are 8 characters wide.
 set tabstop=8                   " Set the visible width of tabs.
@@ -239,38 +241,42 @@ lua << END
         vim.fn["vsnip#anonymous"](args.body)
       end,
     },
+
     mapping = {
       ['<CR>'] = cmp.mapping.confirm {
         behavior = cmp.ConfirmBehavior.Insert,
         select = true,
       },
+
       ['<Tab>'] = function(fallback)
         if not cmp.select_next_item() then
-          if vim.bo.buftype ~= 'prompt' and has_words_before() then
+          if vim.bo.buftype == 'prompt' and has_words_before() then
             cmp.complete()
           else
             fallback()
           end
         end
       end,
+
       ['<S-Tab>'] = function(fallback)
         if not cmp.select_prev_item() then
-          if vim.bo.buftype ~= 'prompt' and has_words_before() then
+          if vim.bo.buftype == 'prompt' and has_words_before() then
             cmp.complete()
           else
             fallback()
           end
         end
       end,
+
+      ['<Up>'] = cmp.mapping(cmp.mapping.select_prev_item(), { 'i', 'c' }),
+      ['<Down>'] = cmp.mapping(cmp.mapping.select_next_item(), { 'i', 'c' }),
     },
+
     sources = cmp.config.sources({
       { name = 'nvim_lsp' },
     }, {
       { name = 'path' },
     }),
-    experimental = {
-      ghost_text = true,
-    },
   })
 
   -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
@@ -343,8 +349,17 @@ lua << END
       find_files = {
         find_command = { "fd", "--type", "file", "--follow", "--strip-cwd-prefix" }
       }
-    }
+    },
+    extensions = {
+      ["ui-select"] = {
+        require("telescope.themes").get_dropdown {
+            -- even more opts
+        }
+      }
+    },
   })
+
+  require("telescope").load_extension("ui-select")
 
   -- Setup rust-tools
   require('rust-tools').setup({
@@ -385,14 +400,28 @@ END
 """ Plugin Settings
 """
 
-" rooter
-let g:rooter_patterns = ['.git', 'package.json', '!node_modules']
+" editorconfig
+let g:EditorConfig_exclude_patterns = ['fugitive://.*']
+
+" floaterm
+let g:floaterm_keymap_toggle = '<F1>'
+let g:floaterm_keymap_next = '<F2>'
+let g:floaterm_keymap_prev = '<F3>'
+let g:floaterm_keymap_new = '<F4>'
+
+let g:floaterm_gitcommit='floaterm'
+let g:floaterm_autoinsert=1
+let g:floaterm_width=0.8
+let g:floaterm_height=0.8
+let g:floaterm_wintitle=0
+let g:floaterm_autoclose=1
 
 " lh-brackets
+let g:cb_disable_default = { '[': 'nv', '{': 'nv' }
 let g:marker_define_jump_mappings = 0
 let g:usemarks = 0
 
-" Lightline
+" lightline
 let g:lightline = {
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
@@ -407,6 +436,15 @@ let g:lightline = {
       \ },
       \ }
 
+" pasta
+let g:pasta_disabled_filetypes = ['fugitive']
+
+" rust
+let g:rustfmt_autosave = 1
+let g:rustfmt_emit_files = 1
+let g:rustfmt_fail_silently = 0
+
+" securemodelines
 let g:secure_modelines_allowed_items = [
                 \ "textwidth",   "tw",
                 \ "softtabstop", "sts",
@@ -420,36 +458,28 @@ let g:secure_modelines_allowed_items = [
                 \ "colorcolumn"
                 \ ]
 
-" Markdown
+" vim-markdown
 let g:vim_markdown_new_list_item_indent = 0
 let g:vim_markdown_auto_insert_bullets = 0
 let g:vim_markdown_frontmatter = 1
 
-" Rust
-let g:rustfmt_autosave = 1
-let g:rustfmt_emit_files = 1
-let g:rustfmt_fail_silently = 0
+" vim-rooter
+let g:rooter_patterns = ['.git', 'package.json', '!node_modules']
 
 """
 """ Autocommands
 """
 
-" When editing a file, always jump to the last known cursor position. Don't do
-" it when the position is invalid or when inside an event handler (happens
-" when dropping a file on gvim).
-au BufReadPost *
-    \ if line("'\"") > 0 && line("'\"") <= line("$") |
-    \     exe "normal g`\"" |
-    \ endif
-
 " Auto-format on save
 au BufWritePre *.rs lua vim.lsp.buf.formatting_sync(nil, 1000)
 
-" Show diagnostic popup on cursor hold
-"au CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics({focusable=false})
-
 " Resize Vim windows to equal heights and widths when Vim itself is resized.
 au VimResized * wincmd =
+
+augroup FloatermCustomisations
+    autocmd!
+    autocmd ColorScheme * highlight FloatermBorder guibg=none
+augroup END
 
 """
 """ Leaders
@@ -457,15 +487,18 @@ au VimResized * wincmd =
 let mapleader = "\<Space>"
 let maplocalleader = ","
 
-nmap <leader>f <cmd>lua require('telescope.builtin').find_files({cwd=vim.fn.FindRootDirectory()})<cr>
 nmap <leader>b <cmd>lua require('telescope.builtin').buffers()<cr> 
+nmap <leader>f <cmd>lua require('telescope.builtin').find_files({cwd=vim.fn.FindRootDirectory()})<cr>
 nmap <leader>r <cmd>lua require('rust-tools.runnables').runnables()<cr>
 nmap <leader>s <cmd>lua require('telescope.builtin').live_grep({previewer=false})<cr>
 nmap <leader>g <cmd>Git<cr>
 nmap <leader>w <cmd>w<cr>
 
-" <leader><leader> toggles between buffers
+" <leader><leader> toggles between buffers.
 nnoremap <leader><leader> <c-^>
+
+" Delete all buffers.
+nmap <leader>Q :bufdo bdelete<cr>
 
 " Edit another file in the same directory as the current file.
 nmap <leader>e :e <c-r>=expand("%:p:h") . '/'<cr>
@@ -500,6 +533,10 @@ nnoremap <leader>Y :%y "*<cr>
 noremap <leader>p :set paste<cr>"*p<cr>:set nopaste<cr>
 noremap <leader>P :set paste<cr>"*P<cr>:set nopaste<cr>
 
+" Make it easier to work with init.vim.
+nmap <leader>ve :edit ~/.config/nvim/init.vim<cr>
+nmap <leader>vr :source ~/.config/nvim/init.vim<cr>
+
 """
 """ Other key mappings
 """
@@ -531,8 +568,6 @@ nnoremap / /\v
 vnoremap / /\v
 nnoremap ? ?\v
 vnoremap ? ?\v
-" TODO
-cnoremap %s/ %sm/
 
 " Tab/shift-tab to indent/outdent in visual mode.
 vnoremap <tab> >gv
@@ -541,6 +576,11 @@ vnoremap <s-tab> <gv
 " Keep selection when indenting/outdenting.
 vnoremap > >gv
 vnoremap < <gv
+
+" Maintain the cursor position when yanking a visual selection.
+" http://ddrscott.github.io/blog/2016/yank-without-jank/
+vnoremap y myy`y
+vnoremap Y myy$`y
 
 " Center the display line after searches and jumps.
 nnoremap <silent> n nzz

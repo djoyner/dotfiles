@@ -81,6 +81,7 @@ source $ZSH/oh-my-zsh.sh
 # User configuration
 
 ## Prepend miscellaneous directories to PATH
+[ -d ~/.local/bin ] && PATH=~/.local/bin:$PATH
 [ -d ~/bin ] && PATH=~/bin:$PATH
 [ -d ~/go/bin ] && PATH=~/go/bin:$PATH
 
@@ -89,6 +90,12 @@ source $ZSH/oh-my-zsh.sh
 
 ## Bootstrap Cargo
 [ -d ~/.cargo/bin ] && PATH=~/.cargo/bin:$PATH
+
+## Bootstrap NVM
+if [ -d ~/.nvm ]; then
+    export NVM_DIR="$HOME/.nvm"
+    [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+fi
 
 ## Bootstrap pyenv
 if [ -d ~/.pyenv ]; then
@@ -102,12 +109,8 @@ if [ -n "$(type -p dircolors)" ]; then
 fi
 
 ## Editor config
-if [[ -n "$SSH_CONNECTION" ]]; then
-    export EDITOR=vim
-else
-    export EDITOR="emacsclient -t"
-    export VISUAL="emacsclient -c -a emacs"
-fi
+export EDITOR=vim
+export VISUAL=vim
 
 ## Pager config
 unset LESS
@@ -117,7 +120,7 @@ export LESSHISTFILE=/dev/null
 
 ## Make less more friendly for non-text input files, see lesspipe(1)
 if [ -n "$(type -p lesspipe.sh)" ]; then
-    export LESSOPEN="| lesspipe.sh %s"
+    export LESSOPEN="| lesspipe.sh %s" LESS_ADVANCED_PREPROCESSOR=1
 fi
 
 ## Turn off stop (^S) control character
@@ -149,6 +152,9 @@ else
     alias ll='env ls -lFG'
     alias ls='env ls -G'
 fi
+
+alias vi=nvim
+alias vim=nvim
 
 ## Command completions
 if [ -n "$(type -p aws_completer)" ]; then

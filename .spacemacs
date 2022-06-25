@@ -32,7 +32,8 @@ This function should only modify configuration layer settings."
 
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
-   '(;; ----------------------------------------------------------------
+   '(
+     ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press `SPC f e R' (Vim style) or
      ;; `M-m f e R' (Emacs style) to install them.
@@ -52,9 +53,6 @@ This function should only modify configuration layer settings."
          go-use-golangci-lint t
          gofmt-command (expand-file-name "~/go/bin/goimports"))
      graphviz
-     (haskell :variables
-              haskell-completion-backend 'dante
-              haskell-enable-hindent t)
      helm
      html
      (ibuffer :variables
@@ -63,10 +61,9 @@ This function should only modify configuration layer settings."
      (json :variables
            js-indent-level 2)
      (lsp :variables
-          lsp-rust-server 'rls)
+          lsp-rust-server 'rust-analyzer)
      lua
-     (markdown :variables
-               markdown (expand-file-name "~/.nix-profile/bin/pandoc"))
+     markdown
      nginx
      nixos
      (org :variables
@@ -98,7 +95,8 @@ This function should only modify configuration layer settings."
    ;; `dotspacemacs/user-config'. To use a local version of a package, use the
    ;; `:location' property: '(your-package :location "~/path/to/your-package/")
    ;; Also include the dependencies as they will not be resolved automatically.
-   dotspacemacs-additional-packages '()
+   dotspacemacs-additional-packages '(dired-collapse
+                                      exec-path-from-shell)
 
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -228,6 +226,9 @@ It should only modify the values of Spacemacs settings."
    ;; True if the home buffer should respond to resize events. (default t)
    dotspacemacs-startup-buffer-responsive t
 
+   ;; Show numbers before the startup list lines. (default t)
+   dotspacemacs-show-startup-list-numbers t
+
    ;; The minimum delay in seconds between number key presses. (default 0.4)
    dotspacemacs-startup-buffer-multi-digit-delay 0.4
 
@@ -271,10 +272,11 @@ It should only modify the values of Spacemacs settings."
    ;; (default t)
    dotspacemacs-colorize-cursor-according-to-state t
 
-   ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
-   ;; quickly tweak the mode-line size to make separators look not too crappy.
-   dotspacemacs-default-font '("Consolas"
-                               :size 12.0
+   ;; Default font or prioritized list of fonts. The `:size' can be specified as
+   ;; a non-negative integer (pixel size), or a floating-point (point size).
+   ;; Point size is recommended, because it's device independent. (default 10.0)
+   dotspacemacs-default-font '("JuliaMono"
+                               :size 14.0
                                :weight normal
                                :width normal)
 
@@ -368,7 +370,7 @@ It should only modify the values of Spacemacs settings."
 
    ;; If non-nil the frame is fullscreen when Emacs starts up. (default nil)
    ;; (Emacs 24.4+ only)
-   dotspacemacs-fullscreen-at-startup t
+   dotspacemacs-fullscreen-at-startup nil
 
    ;; If non-nil `spacemacs/toggle-fullscreen' will not use native fullscreen.
    ;; Use to disable fullscreen animations in OSX. (default nil)
@@ -377,7 +379,7 @@ It should only modify the values of Spacemacs settings."
    ;; If non-nil the frame is maximized when Emacs starts up.
    ;; Takes effect only if `dotspacemacs-fullscreen-at-startup' is nil.
    ;; (default nil) (Emacs 24.4+ only)
-   dotspacemacs-maximized-at-startup t
+   dotspacemacs-maximized-at-startup nil
 
    ;; If non-nil the frame is undecorated when Emacs starts up. Combine this
    ;; variable with `dotspacemacs-maximized-at-startup' in OSX to obtain
@@ -418,8 +420,8 @@ It should only modify the values of Spacemacs settings."
    ;; If set to `t', `relative' or `visual' then line numbers are enabled in all
    ;; `prog-mode' and `text-mode' derivatives. If set to `relative', line
    ;; numbers are relative. If set to `visual', line numbers are also relative,
-   ;; but lines are only visual lines are counted. For example, folded lines
-   ;; will not be counted and wrapped lines are counted as multiple lines.
+   ;; but only visual lines are counted. For example, folded lines will not be
+   ;; counted and wrapped lines are counted as multiple lines.
    ;; This variable can also be set to a property list for finer control:
    ;; '(:relative nil
    ;;   :visual nil
@@ -520,12 +522,15 @@ It should only modify the values of Spacemacs settings."
    ;; (default nil)
    dotspacemacs-whitespace-cleanup 'changed
 
-   ;; If non nil activate `clean-aindent-mode' which tries to correct
-   ;; virtual indentation of simple modes. This can interfer with mode specific
+   ;; If non-nil activate `clean-aindent-mode' which tries to correct
+   ;; virtual indentation of simple modes. This can interfere with mode specific
    ;; indent handling like has been reported for `go-mode'.
    ;; If it does deactivate it here.
    ;; (default t)
    dotspacemacs-use-clean-aindent-mode t
+
+   ;; Accept SPC as y for prompts if non-nil. (default nil)
+   dotspacemacs-use-SPC-as-y nil
 
    ;; If non-nil shift your number row to match the entered keyboard layout
    ;; (only in insert state). Currently supported keyboard layouts are:
@@ -544,7 +549,7 @@ It should only modify the values of Spacemacs settings."
    dotspacemacs-pretty-docs nil
 
    ;; If nil the home buffer shows the full path of agenda items
-   ;; and todos. If non nil only the file name is shown.
+   ;; and todos. If non-nil only the file name is shown.
    dotspacemacs-home-shorten-agenda-source nil
 
    ;; If non-nil then byte-compile some of Spacemacs files.
@@ -564,10 +569,11 @@ This function is called immediately after `dotspacemacs/init', before layer
 configuration.
 It is mostly for variables that should be set before packages are loaded.
 If you are unsure, try setting them in `dotspacemacs/user-config' first."
-  (when (eq system-type 'darwin)
-    (setq insert-directory-program (expand-file-name "~/.nix-profile/bin/ls"))
-    (setq-default quelpa-build-tar-executable (expand-file-name "~/.nix-profile/bin/tar"))
-    )
+  ;; (when (eq system-type 'darwin)
+  ;;   (setq insert-directory-program (expand-file-name "~/.nix-profile/bin/ls"))
+  ;;   (setq-default quelpa-build-tar-executable (expand-file-name "~/.nix-profile/bin/tar"))
+  ;;   )
+  (setq org-roam-v2-ack t)
   )
 
 (defun dotspacemacs/user-load ()
@@ -583,6 +589,10 @@ This function is called at the very end of Spacemacs startup, after layer
 configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
+  ;; Initialize PATH from the shell
+  (when (memq window-system '(mac ns x))
+    (exec-path-from-shell-initialize))
+
   ;; Move by display lines
   (define-key evil-motion-state-map "j" 'evil-next-visual-line)
   (define-key evil-motion-state-map "k" 'evil-previous-visual-line)
@@ -596,16 +606,8 @@ before packages are loaded."
   (setq delete-by-moving-to-trash nil
         magit-delete-by-moving-to-trash nil)
 
-  ;; Use aspell instead of ispell
-  (setq ispell-program-name "aspell")
-
-  ;; Add go bin directories to the path
-  (add-to-list 'exec-path (expand-file-name "~/go/bin"))
-  (add-to-list 'exec-path "/usr/local/go/bin/")
-
-  ;; Configure haskell-mode
-  (require 'haskell-mode)
-  (add-hook 'haskell-mode-hook 'stack-exec-path-mode)
+  ;; Configured dired-mode
+  (add-hook 'dired-mode-hook 'dired-collapse-mode)
 
   ;; Configure ibuffer-mode
   (setq ibuffer-formats
@@ -622,29 +624,78 @@ before packages are loaded."
 
   ;; Configure lsp-mode
   (setq lsp-file-watch-threshold nil
+        lsp-ui-doc-enable t
         ;;lsp-ui-doc-max-height 50
-        lsu-ui-doc-use-webkit t
-        ;;lsp-ui-sideline-show-code-actions nil
+        lsp-ui-doc-position 'bottom
+        ;;lsp-ui-doc-use-webkit t
+        lsp-ui-sideline-show-code-actions nil
         )
 
   ;; Configure org-mode
-  (setq org-agenda-files '("~/Dropbox/org-agenda/amazon.org" "~/Dropbox/org-agenda/personal.org")
+  (setq org-agenda-custom-commands '(
+                                     ("A" . "Agendas")
+                                     ("AT" "Daily overview"
+                                      ((agenda ""
+	                                       ((org-agenda-overriding-header "Daily overview")
+		                                (org-agenda-span 1)
+		                                (org-agenda-sorting-strategy
+		                                 (quote
+		                                  (time-up priority-down)))))
+                                       nil nil))
+                                     ("AW" "Weekly overview" agenda ""
+                                      ((org-agenda-overriding-header "Weekly overview")))
+                                     ("AM" "Monthly overview" agenda ""
+                                      ((org-agenda-overriding-header "Monthly overview"))
+                                      (org-agenda-span
+	                               (quote month))
+                                      (org-deadline-warning-days 0)
+                                      (org-agenda-sorting-strategy
+	                               (quote
+	                                (time-up priority-down tag-up))))
+                                     ("W" . "Weekly Review Helper")
+                                     ("Wn" "New tasks" tags "NEW"
+                                      ((org-agenda-overriding-header "NEW Tasks")))
+                                     ("Ww" "Check WAITING tasks" todo "WAITING"
+                                      ((org-agenda-overriding-header "WAITING tasks")))
+                                     ("Ws" "Check SOMEDAY tasks" todo "SOMEDAY"
+                                      ((org-agenda-overriding-header "SOMEDAY tasks")))
+                                     ("Wp" "Plan unscheduled tasks" todo "TODO|NEXT"
+                                      ((org-agenda-overriding-header "Unscheduled tasks")
+                                       (org-agenda-skip-function
+	                                (quote
+	                                 (org-agenda-skip-entry-if
+	                                  (quote scheduled)
+	                                  (quote deadline))))))
+                                     ("Wf" "Check finished tasks" todo "DONE|CANCELLED"
+                                      ((org-agenda-overriding-header "Finished tasks"))))
+        org-agenda-files '("~/org-agenda/amazon.org" "~/org-agenda/personal.org")
         org-capture-templates '(
+                                ("p" "Personal")
+                                ("pt" "TODO entry" entry (file+headline "~/org-agenda/personal.org" "Capture")
+                                 (file "~/org-template/todo.txt") :empty-lines-before 1 :empty-lines-after 1)
+                                ("ps" "SOMEDAY entry" entry (file+headline "~/org-agenda/personal.org" "Capture")
+                                 (file "~/org-template/someday.txt") :empty-lines-before 1 :empty-lines-after 1)
+                                ("pa" "Article to read" entry (file+headline "~/org-agenda/personal.org" "Capture")
+                                 (file "~/org-template/article.txt") :empty-lines-before 1 :empty-lines-after 1)
+                                ("pb" "Book to read" entry (file+headline "~/org-agenda/personal.org" "Capture")
+                                 (file "~/org-template/book.txt") :empty-lines-before 1 :empty-lines-after 1)
+                                ("pp" "Podcast to listen" entry (file+headline "~/org-agenda/personal.org" "Capture")
+                                 (file "~/org-template/podcast.txt") :empty-lines-before 1 :empty-lines-after 1)
+                                ("pv" "Video to watch" entry (file+headline "~/org-agenda/personal.org" "Capture")
+                                 (file "~/org-template/video.txt") :empty-lines-before 1 :empty-lines-after 1)
                                 ("w" "Work")
-                                ("wn" "NEXT entry" entry (file+headline "~/Dropbox/org-agenda/amazon.org" "Capture")
-                                 (file "~/Dropbox/org-template/next.txt") :empty-lines-before 1 :empty-lines-after 1)
-                                ("wt" "TODO entry" entry (file+headline "~/Dropbox/org-agenda/amazon.org" "Capture")
-                                 (file "~/Dropbox/org-template/todo.txt") :empty-lines-before 1 :empty-lines-after 1)
-                                ("ws" "SOMEDAY entry" entry (file+headline "~/Dropbox/org-agenda/amazon.org" "Capture")
-                                 (file "~/Dropbox/org-template/someday.txt") :empty-lines-before 1 :empty-lines-after 1)
-                                ("a" "Article to read" entry (file+headline "~/Dropbox/org-agenda/personal.org" "Articles")
-                                 (file "~/Dropbox/org-template/article.txt") :empty-lines-before 1 :empty-lines-after 1)
-                                ("b" "Book to read" entry (file+headline "~/Dropbox/org-agenda/personal.org" "Books")
-                                 (file "~/Dropbox/org-template/book.txt") :empty-lines-before 1 :empty-lines-after 1)
-                                ("p" "Podcast to listen" entry (file+headline "~/Dropbox/org-agenda/personal.org" "Podcasts")
-                                 (file "~/Dropbox/org-template/podcast.txt") :empty-lines-before 1 :empty-lines-after 1)
-                                ("v" "Video to watch" entry (file+headline "~/Dropbox/org-agenda/personal.org" "Videos")
-                                 (file "~/Dropbox/org-template/video.txt") :empty-lines-before 1 :empty-lines-after 1))
+                                ("wt" "TODO entry" entry (file+headline "~/org-agenda/amazon.org" "Capture")
+                                 (file "~/org-template/todo.txt") :empty-lines-before 1 :empty-lines-after 1)
+                                ("ws" "SOMEDAY entry" entry (file+headline "~/org-agenda/amazon.org" "Capture")
+                                 (file "~/org-template/someday.txt") :empty-lines-before 1 :empty-lines-after 1)
+                                ("wa" "Article to read" entry (file+headline "~/org-agenda/amazon.org" "Capture")
+                                 (file "~/org-template/article.txt") :empty-lines-before 1 :empty-lines-after 1)
+                                ("wb" "Book to read" entry (file+headline "~/org-agenda/amazon.org" "Capture")
+                                 (file "~/org-template/book.txt") :empty-lines-before 1 :empty-lines-after 1)
+                                ("wp" "Podcast to listen" entry (file+headline "~/org-agenda/amazon.org" "Capture")
+                                 (file "~/org-template/podcast.txt") :empty-lines-before 1 :empty-lines-after 1)
+                                ("wv" "Video to watch" entry (file+headline "~/org-agenda/amazon.org" "Capture")
+                                 (file "~/org-template/video.txt") :empty-lines-before 1 :empty-lines-after 1))
         org-enforce-todo-checkbox-dependencies t
         org-enforce-todo-dependencies t
         org-log-into-drawer "LOGBOOK"
@@ -653,24 +704,25 @@ before packages are loaded."
         org-refile-allow-creating-parent-nodes 'confirm
         org-refile-targets '((org-agenda-files :maxlevel . 1))
         org-refile-use-outline-path 'file
-        org-roam-directory "~/Dropbox/org-roam"
+        org-roam-directory "~/org-roam"
         org-track-ordered-property-with-tag t
         org-use-property-inheritance t)
 
   (setq org-roam-capture-templates
         '(
-          ("d" "default" plain (function org-roam--capture-get-point)
+          ("d" "default" plain ;(function org-roam--capture-get-point)
            "%?"
-           :file-name "%<%Y%m%d%H%M%S>-${slug}"
-           :head "#+title: ${title}\n#+created: %u\n#+last_modified: %U\n#+roam_tags:\n\n"
+           :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
+                              "#+title: ${title}\n#+created: %u\n#+last_modified: %U\n#+filetags:\n\n")
            :unnarrowed t)
           ))
 
   (setq org-roam-dailies-capture-templates
-        '(("d" "default" entry (function org-roam-capture--get-point)
+        '(("d" "default" plain ;(function org-roam--capture-get-point)
            "%?"
-           :file-name "daily/%<%Y-%m-%d>"
-           :head "#+title: %<%Y-%m-%d>\n\n")
+           :target (file+head "%<%Y-%m-%d>.org"
+                              "#+title: %<%Y-%m-%d (%A)>\n#+filetags:\n\n* Most Important Tasks\n\n  - [ ] ")
+           :unnarrowed t)
           ))
 
   (add-hook 'org-after-todo-state-change-hook 'djoyner-org-mode/org-checklist)
@@ -685,11 +737,17 @@ before packages are loaded."
                              (add-hook 'before-save-hook 'time-stamp nil 'local)
                              (add-hook 'before-save-hook 'djoyner-org-mode/org-fix-blank-lines-whole-buffer nil 'local)))
 
+  ;; Configure rust-mode
+  (setq rust-format-on-save t)
+
   ;; Other overrides and defaults
   (setq-default
    ;; tabs
    indent-tabs-mode nil
    tab-width 8
+
+   ;; general evil-mode customization
+   evil-want-Y-yank-to-eol t
 
    ;; evil-goggles
    evil-goggles-pulse (display-graphic-p)
@@ -709,4 +767,4 @@ before packages are loaded."
 This is an auto-generated function, do not modify its content directly, use
 Emacs customize menu instead.
 This function is called at the very end of Spacemacs initialization."
-  )
+)

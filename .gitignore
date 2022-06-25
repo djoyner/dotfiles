@@ -1,12 +1,10 @@
 # exclude all
 *
 # except important dot files and subdirectories
-!.ghci
+!.config/nvim/init.vim
 !.gitconfig
 !.gitignore
 !.inputrc
-!.pylintrc
-!.screenrc
 !.spacemacs
 !.spacemacs.djoyner
 !.tmux.conf

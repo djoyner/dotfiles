@@ -487,7 +487,7 @@ augroup END
 let mapleader = "\<Space>"
 let maplocalleader = ","
 
-nmap <leader>b <cmd>lua require('telescope.builtin').buffers()<cr> 
+nmap <leader>b <cmd>lua require('telescope.builtin').buffers()<cr>
 nmap <leader>f <cmd>lua require('telescope.builtin').find_files({cwd=vim.fn.FindRootDirectory()})<cr>
 nmap <leader>r <cmd>lua require('rust-tools.runnables').runnables()<cr>
 nmap <leader>s <cmd>lua require('telescope.builtin').live_grep({previewer=false})<cr>

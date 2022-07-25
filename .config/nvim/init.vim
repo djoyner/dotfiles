@@ -577,11 +577,6 @@ vnoremap <s-tab> <gv
 vnoremap > >gv
 vnoremap < <gv
 
-" Maintain the cursor position when yanking a visual selection.
-" http://ddrscott.github.io/blog/2016/yank-without-jank/
-vnoremap y myy`y
-vnoremap Y myy$`y
-
 " Center the display line after searches and jumps.
 nnoremap <silent> n nzz
 nnoremap <silent> N Nzz

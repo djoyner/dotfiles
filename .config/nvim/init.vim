@@ -296,7 +296,7 @@ lua << END
   })
 
   -- Setup lspconfig
-  local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+  local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
   local on_attach = function(client, bufnr)
     local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
@@ -487,7 +487,7 @@ augroup END
 let mapleader = "\<Space>"
 let maplocalleader = ","
 
-nmap <leader>b <cmd>lua require('telescope.builtin').buffers()<cr> 
+nmap <leader>b <cmd>lua require('telescope.builtin').buffers()<cr>
 nmap <leader>f <cmd>lua require('telescope.builtin').find_files({cwd=vim.fn.FindRootDirectory()})<cr>
 nmap <leader>r <cmd>lua require('rust-tools.runnables').runnables()<cr>
 nmap <leader>s <cmd>lua require('telescope.builtin').live_grep({previewer=false})<cr>
@@ -576,11 +576,6 @@ vnoremap <s-tab> <gv
 " Keep selection when indenting/outdenting.
 vnoremap > >gv
 vnoremap < <gv
-
-" Maintain the cursor position when yanking a visual selection.
-" http://ddrscott.github.io/blog/2016/yank-without-jank/
-vnoremap y myy`y
-vnoremap Y myy$`y
 
 " Center the display line after searches and jumps.
 nnoremap <silent> n nzz
